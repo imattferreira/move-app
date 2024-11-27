@@ -4,9 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "docker:clean": "docker compose rm -fsv",
     "docker:start": "docker compose up -d",
     "docker:stop": "docker compose stop",
-    "docker:clean": "docker compose rm -fsv",
+    "start": "nodemon src/main.ts",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },

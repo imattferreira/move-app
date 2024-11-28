@@ -4,18 +4,16 @@ interface Input {
   accountId: string;
 }
 
-type Output =
-  | {
-    id: string;
-    name: string;
-    email: string;
-    cpf: string;
-    carPlate: string | null;
-    isPassenger: boolean;
-    isDriver?: boolean;
-    password: string;
-  }
-  | { message: number };
+type Output = {
+  id: string;
+  name: string;
+  email: string;
+  cpf: string;
+  carPlate: string | null;
+  isPassenger: boolean;
+  isDriver?: boolean;
+  password: string;
+};
 
 class GetAccount {
   constructor(private readonly accountsRepository: AccountsRepository) { }
@@ -24,7 +22,7 @@ class GetAccount {
     const account = await this.accountsRepository.findByAccountId(input.accountId);
 
     if (!account) {
-      return { message: -1 };
+      throw new Error('account not found');
     }
 
     return {

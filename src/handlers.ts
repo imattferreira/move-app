@@ -4,31 +4,32 @@ import SignUp from "./use-cases/signup";
 import GetAccount from "./use-cases/get-account";
 
 export async function signup(req: Request, res: Response) {
- 	const input = req.body;
+ 	try {
+    const input = req.body;
 
-   const accountsRepository = new PsqlAccountsRepository();
-   const signup = new SignUp(accountsRepository);
+    const accountsRepository = new PsqlAccountsRepository();
+    const signup = new SignUp(accountsRepository);
 
-   const output = await signup.execute(input);
+    const output = await signup.execute(input);
 
-   if ('message' in output) {
-     return res.status(422).json({ message: output.message });
-   }
-
-   return res.json(output);
+    return res.json(output);
+  } catch (err: any) {
+    return res.status(422).json({ message: err.message });
+  }
 }
 
 export async function getAccountById(req: Request, res: Response) {
-  const accountId = req.params.accountId;
+  try {
+    const accountId = req.params.accountId;
 
-  const accountsRepository = new PsqlAccountsRepository();
-  const getAccount = new GetAccount(accountsRepository);
+    const accountsRepository = new PsqlAccountsRepository();
+    const getAccount = new GetAccount(accountsRepository);
 
-  const output = await getAccount.execute({ accountId });
+    const output = await getAccount.execute({ accountId });
 
-  if ('message' in output) {
-    return res.sendStatus(404);
+    return res.json(output);
+
+  } catch (err: any) {
+    return res.status(404).json({ message: err.message });
   }
-
-  return res.json(output);
 }

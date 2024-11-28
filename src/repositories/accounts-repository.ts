@@ -3,7 +3,7 @@ import Account from "../entities/account";
 
 export default interface AccountsRepository {
   save(account: Account): Promise<void>;
-  findByAccountId(email: string): Promise<Account | null>;
+  findByAccountId(accountId: string): Promise<Account | null>;
   findByEmail(email: string): Promise<Account | null>;
 }
 

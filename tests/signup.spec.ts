@@ -13,7 +13,7 @@ describe('POST /signup', () => {
 
     const signupRes = await makeRequest<{ accountId: string }>('/signup', input);
 
-    expect(signupRes.status).toBe(200);
+    expect(signupRes.status).toBe(201);
     expect(signupRes.data.accountId).toBeDefined();
 
     const registeredAccountRes = await makeRequest<Record<string, unknown>>(
@@ -24,9 +24,9 @@ describe('POST /signup', () => {
     expect(registeredAccountRes.data.name).toBe(input.name);
     expect(registeredAccountRes.data.email).toBe(input.email);
     expect(registeredAccountRes.data.cpf).toBe(input.cpf);
-    expect(registeredAccountRes.data.isDriver).toBe(true);
-    expect(registeredAccountRes.data.isPassenger).toBe(false);
-    expect(registeredAccountRes.data.carPlate).toBe(input.carPlate);
+    expect(registeredAccountRes.data.is_driver).toBe(true);
+    expect(registeredAccountRes.data.is_passenger).toBe(false);
+    expect(registeredAccountRes.data.car_plate).toBe(input.carPlate);
     expect(registeredAccountRes.data.password).toBe(input.password);
   });
 
@@ -51,7 +51,7 @@ describe('POST /signup', () => {
       name: 'John Doe',
       email: 'john6@doe.com',
       cpf: '475.646.550-11',
-      isPasenger: true,
+      is_passenger: true,
       password: '123456'
     };
 

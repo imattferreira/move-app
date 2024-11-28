@@ -20,7 +20,7 @@ class Account {
     isPassenger: boolean,
     isDriver: boolean,
     password: string,
-  ) {
+  ): Account {
     const id = crypto.randomUUID();
 
     return new Account(

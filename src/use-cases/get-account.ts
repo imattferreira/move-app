@@ -9,9 +9,9 @@ type Output = {
   name: string;
   email: string;
   cpf: string;
-  carPlate: string | null;
-  isPassenger: boolean;
-  isDriver?: boolean;
+  car_plate: string | null;
+  is_passenger: boolean;
+  is_driver: boolean;
   password: string;
 };
 
@@ -30,9 +30,9 @@ class GetAccount {
       name: account.name,
       email: account.email,
       cpf: account.cpf,
-      carPlate: account.carPlate,
-      isPassenger: account.isPassenger,
-      isDriver: account.isDriver,
+      car_plate: account.carPlate,
+      is_passenger: account.isPassenger,
+      is_driver: account.isDriver,
       password: account.password
     };
   }

@@ -21,6 +21,8 @@ describe('SignUp', () => {
 
     const account = await accountsRepository.findByAccountId(output.accountId);
 
+    // TODO: invert
+    // TODO: convert input and output from snake_case to camelCase
     expect(account?.name).toBe(input.name);
     expect(account?.email).toBe(input.email);
     expect(account?.cpf).toBe(input.cpf);

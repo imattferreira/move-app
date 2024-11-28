@@ -1,0 +1,36 @@
+import Ride from "../entities/ride";
+import { RidesRepositoryInMemory } from "../repositories/rides-repository";
+import GetRide from "./get-ride";
+
+describe('GetRide', () => {
+  it('should be able to get info about a existing ride', async () => {
+    const ridesRepository = new RidesRepositoryInMemory();
+    const getRide = new GetRide(ridesRepository);
+
+    const ride = Ride.create(
+      Math.random().toString(),
+      0,
+      0,
+      12312312,
+      12312312,
+      52423423,
+      1245245
+    );
+
+    await ridesRepository.save(ride);
+    const output = await getRide.execute({ rideId: ride.id });
+
+    expect(output.id).toBe(ride.id);
+    expect(output.passenger_id).toBe(ride.passengerId);
+    expect(output.driver_id).toBe(ride.driverId);
+    expect(output.status).toBe(ride.status);
+    expect(output.fare).toBe(ride.fare);
+    expect(output.distance).toBe(ride.distance);
+    expect(output.from_lat).toBe(ride.fromLat);
+    expect(output.from_long).toBe(ride.fromLong);
+    expect(output.to_lat).toBe(ride.toLat);
+    expect(output.to_long).toBe(ride.toLong);
+  });
+
+  it.skip('should not be able to get info about a non-existing ride', async () => { });
+});

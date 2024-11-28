@@ -35,6 +35,6 @@ describe('GetAccount', () => {
 
     const accountId = Math.random().toString();
 
-    expect(getAccount.execute({ accountId })).rejects.toThrow('account not found');
+    await expect(getAccount.execute({ accountId })).rejects.toThrow('account not found');
   });
 });

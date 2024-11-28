@@ -9,6 +9,7 @@ import GetRide from './use-cases/get-ride';
 
 export async function signup(req: Request, res: Response): Promise<void> {
  	try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const input = camelfy(req.body) as any;
 
     const accountsRepository = new PsqlAccountsRepository();
@@ -17,6 +18,7 @@ export async function signup(req: Request, res: Response): Promise<void> {
     const output = await signup.execute(input);
 
     res.status(201).json(snakefy(output));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     res.status(422).json({ message: err.message });
   }
@@ -32,6 +34,7 @@ export async function getAccountById(req: Request, res: Response): Promise<void>
     const output = await getAccount.execute({ accountId });
 
     res.json(snakefy(output));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     res.status(404).json({ message: err.message });
   }
@@ -39,6 +42,7 @@ export async function getAccountById(req: Request, res: Response): Promise<void>
 
 export async function requestRide(req: Request, res: Response): Promise<void> {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const input = camelfy(req.body) as any;
 
     const accountsRepository = new PsqlAccountsRepository();
@@ -48,6 +52,7 @@ export async function requestRide(req: Request, res: Response): Promise<void> {
     const output = await requestRide.execute(input);
 
     res.status(201).json(snakefy(output));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     // TODO: adjust status code
     res.status(422).json({ message: err.message });
@@ -64,6 +69,7 @@ export async function getRide(req: Request, res: Response): Promise<void> {
     const output = await requestRide.execute({ rideId });
 
     res.json(snakefy(output));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     // TODO: adjust status code
     res.status(404).json({ message: err.message });

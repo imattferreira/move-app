@@ -1,4 +1,4 @@
-const isObj = (data: any): data is Record<string, unknown> =>
+const isObj = (data: unknown): data is Record<string, unknown> =>
   typeof data === 'object' && data !== null && !Array.isArray(data);
 
 export function snakefy<T extends Record<string, unknown>>(

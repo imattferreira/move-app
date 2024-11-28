@@ -1,20 +1,20 @@
-import type RidesRepository from "../repositories/rides-repository";
+import type RidesRepository from '../repositories/rides-repository';
 
 interface Input {
   rideId: string;
 }
 
-interface Output {
+type Output = {
   id: string;
-  passenger_id: string;
-  driver_id: string | null;
+  passengerId: string;
+  driverId: string | null;
   status: string;
   fare: number;
   distance: number;
-  from_lat: number;
-  from_long: number;
-  to_lat: number;
-  to_long: number;
+  fromLat: number;
+  fromLong: number;
+  toLat: number;
+  toLong: number;
   date: string;
 }
 
@@ -35,10 +35,10 @@ class GetRide {
       status: ride.status,
       fare: ride.fare,
       distance: ride.distance,
-      from_lat: ride.from_lat,
-      from_long: ride.from_long,
-      to_lat: ride.to_lat,
-      to_long: ride.to_long,
+      fromLat: ride.fromLat,
+      fromLong: ride.fromLong,
+      toLat: ride.toLat,
+      toLong: ride.toLong,
       date: ride.date.toUTCString()
     };
   }

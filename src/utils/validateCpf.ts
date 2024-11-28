@@ -3,7 +3,7 @@ const FIRST_DIGIT_FACTOR = 10;
 const SECOND_DIGIT_FACTOR = 11;
 
 export default function validateCpf(cpf: string) {
-	cpf = cpf.replace(/\D/g, "");
+  cpf = cpf.replace(/\D/g, '');
 
 	if (cpf.length !== CPF_VALID_LENGTH) {
     return false;

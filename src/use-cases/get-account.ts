@@ -1,4 +1,4 @@
-import type AccountsRepository from "../repositories/accounts-repository";
+import type AccountsRepository from '../repositories/accounts-repository';
 
 interface Input {
   accountId: string;
@@ -9,9 +9,9 @@ type Output = {
   name: string;
   email: string;
   cpf: string;
-  car_plate: string | null;
-  is_passenger: boolean;
-  is_driver: boolean;
+  carPlate: string | null;
+  isPassenger: boolean;
+  isDriver: boolean;
   password: string;
 };
 
@@ -30,9 +30,9 @@ class GetAccount {
       name: account.name,
       email: account.email,
       cpf: account.cpf,
-      car_plate: account.carPlate,
-      is_passenger: account.isPassenger,
-      is_driver: account.isDriver,
+      carPlate: account.carPlate,
+      isPassenger: account.isPassenger,
+      isDriver: account.isDriver,
       password: account.password
     };
   }

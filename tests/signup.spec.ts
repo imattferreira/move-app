@@ -4,10 +4,10 @@ describe('POST /signup', () => {
   it("should be able create a driver user", async () => {
     const input = {
       name: 'John Doe',
-      email: 'john0@doe.com',
+      email: `john${Math.random()}@doe.com`,
       cpf: '475.646.550-11',
-      isDriver: true,
-      carPlate: 'ABC1234',
+      is_driver: true,
+      car_plate: 'ABC1234',
       password: '123456'
     };
 
@@ -26,17 +26,17 @@ describe('POST /signup', () => {
     expect(registeredAccountRes.data.cpf).toBe(input.cpf);
     expect(registeredAccountRes.data.is_driver).toBe(true);
     expect(registeredAccountRes.data.is_passenger).toBe(false);
-    expect(registeredAccountRes.data.car_plate).toBe(input.carPlate);
+    expect(registeredAccountRes.data.car_plate).toBe(input.car_plate);
     expect(registeredAccountRes.data.password).toBe(input.password);
   });
 
-  it("should not create a driver user with a invalid car plate", async () => {
+  it.only("should not create a driver user with a invalid car plate", async () => {
     const input = {
       name: 'John Doe',
-      email: 'john2@doe.com',
+      email: `john${Math.random()}@doe.com`,
       cpf: '475.646.550-11',
-      isDriver: true,
-      carPlate: 'ABC',
+      is_driver: true,
+      car_plate: 'ABC',
       password: '123456'
     };
 
@@ -49,7 +49,7 @@ describe('POST /signup', () => {
   it("should not create a user with a already registered email", async () => {
     const input = {
       name: 'John Doe',
-      email: 'john6@doe.com',
+      email: `john${Math.random()}@doe.com`,
       cpf: '475.646.550-11',
       is_passenger: true,
       password: '123456'

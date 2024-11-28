@@ -1,6 +1,6 @@
-import Ride from "../entities/ride";
-import { RidesRepositoryInMemory } from "../repositories/rides-repository";
-import GetRide from "./get-ride";
+import Ride from '../entities/ride';
+import { RidesRepositoryInMemory } from '../repositories/rides-repository';
+import GetRide from './get-ride';
 
 describe('GetRide', () => {
   it('should be able to get info about a existing ride', async () => {
@@ -21,16 +21,23 @@ describe('GetRide', () => {
     const output = await getRide.execute({ rideId: ride.id });
 
     expect(output.id).toBe(ride.id);
-    expect(output.passenger_id).toBe(ride.passengerId);
-    expect(output.driver_id).toBe(ride.driverId);
+    expect(output.passengerId).toBe(ride.passengerId);
+    expect(output.driverId).toBe(ride.driverId);
     expect(output.status).toBe(ride.status);
     expect(output.fare).toBe(ride.fare);
     expect(output.distance).toBe(ride.distance);
-    expect(output.from_lat).toBe(ride.fromLat);
-    expect(output.from_long).toBe(ride.fromLong);
-    expect(output.to_lat).toBe(ride.toLat);
-    expect(output.to_long).toBe(ride.toLong);
+    expect(output.fromLat).toBe(ride.fromLat);
+    expect(output.fromLong).toBe(ride.fromLong);
+    expect(output.toLat).toBe(ride.toLat);
+    expect(output.toLong).toBe(ride.toLong);
   });
 
-  it.skip('should not be able to get info about a non-existing ride', async () => { });
+  it('should not be able to get info about a non-existing ride', async () => {
+    const ridesRepository = new RidesRepositoryInMemory();
+    const getRide = new GetRide(ridesRepository);
+
+    const rideId = Math.random().toString();
+
+    expect(getRide.execute({ rideId })).rejects.toThrow("ride not found");
+  });
 });

@@ -1,16 +1,16 @@
-import Ride from "../entities/ride";
-import type AccountsRepository from "../repositories/accounts-repository";
-import type RidesRepository from "../repositories/rides-repository";
+import Ride from '../entities/ride';
+import type AccountsRepository from '../repositories/accounts-repository';
+import type RidesRepository from '../repositories/rides-repository';
 
 interface Input {
   passengerId: string;
-  from_lat: number;
-  from_long: number;
-  to_lat: number;
-  to_long: number;
+  fromLat: number;
+  fromLong: number;
+  toLat: number;
+  toLong: number;
 }
 
-interface Output {
+type Output = {
   rideId: string;
 }
 
@@ -45,10 +45,10 @@ class RequestRide {
       input.passengerId,
       0,
       0,
-      input.from_lat,
-      input.from_long,
-      input.to_lat,
-      input.to_long
+      input.fromLat,
+      input.fromLong,
+      input.toLat,
+      input.toLong
     );
 
     await this.ridesRepository.save(ride);

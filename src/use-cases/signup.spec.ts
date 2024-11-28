@@ -1,8 +1,8 @@
-import { AccountsRepositoryInMemory } from "../repositories/accounts-repository";
-import SignUp from "./signup";
+import { AccountsRepositoryInMemory } from '../repositories/accounts-repository';
+import SignUp from './signup';
 
 describe('SignUp', () => {
-  it("should be able create a driver user", async () => {
+  it('should be able create a driver user', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const signup = new SignUp(accountsRepository);
 
@@ -21,8 +21,6 @@ describe('SignUp', () => {
 
     const account = await accountsRepository.findByAccountId(output.accountId);
 
-    // TODO: invert
-    // TODO: convert input and output from snake_case to camelCase
     expect(account?.name).toBe(input.name);
     expect(account?.email).toBe(input.email);
     expect(account?.cpf).toBe(input.cpf);
@@ -32,7 +30,7 @@ describe('SignUp', () => {
     expect(account?.password).toBe(input.password);
   });
 
-  it("should be able create a passenger user", async () => {
+  it('should be able create a passenger user', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const signup = new SignUp(accountsRepository);
 
@@ -58,7 +56,7 @@ describe('SignUp', () => {
     expect(account?.password).toBe(input.password);
   });
 
-  it("should not create a driver user with a invalid car plate", async () => {
+  it('should not create a driver user with a invalid car plate', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const signup = new SignUp(accountsRepository);
 
@@ -74,7 +72,7 @@ describe('SignUp', () => {
     await expect(signup.execute(input)).rejects.toThrow('invalid [carPlate] field');
   });
 
-  it("should not create a user with a invalid name", async () => {
+  it('should not create a user with a invalid name', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const signup = new SignUp(accountsRepository);
 
@@ -89,7 +87,7 @@ describe('SignUp', () => {
     await expect(signup.execute(input)).rejects.toThrow('invalid [name] field');
   });
 
-  it("should not create a user with a invalid email", async () => {
+  it('should not create a user with a invalid email', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const signup = new SignUp(accountsRepository);
 
@@ -104,7 +102,7 @@ describe('SignUp', () => {
     await expect(signup.execute(input)).rejects.toThrow('invalid [email] field');
   });
 
-  it("should not create a user with a invalid CPF", async () => {
+  it('should not create a user with a invalid CPF', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const signup = new SignUp(accountsRepository);
 
@@ -119,7 +117,7 @@ describe('SignUp', () => {
     await expect(signup.execute(input)).rejects.toThrow('invalid [cpf] field');
   });
 
-  it("should not create a user with a already registered email", async () => {
+  it('should not create a user with a already registered email', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const signup = new SignUp(accountsRepository);
 

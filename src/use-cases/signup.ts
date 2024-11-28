@@ -1,5 +1,5 @@
-import type AccountsRepository from "../repositories/accounts-repository";
-import validateCpf from "../utils/validateCpf";
+import type AccountsRepository from '../repositories/accounts-repository';
+import validateCpf from '../utils/validateCpf';
 import Account from '../entities/account';
 
 interface Input {

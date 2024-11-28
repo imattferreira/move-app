@@ -1,9 +1,9 @@
-import Account from "../entities/account";
-import { AccountsRepositoryInMemory } from "../repositories/accounts-repository";
-import GetAccount from "./get-account";
+import Account from '../entities/account';
+import { AccountsRepositoryInMemory } from '../repositories/accounts-repository';
+import GetAccount from './get-account';
 
 describe('GetAccount', () => {
-  it('should be able to get info about a existing ride', async () => {
+  it('should be able to get info about a existing account', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const getAccount = new GetAccount(accountsRepository);
 
@@ -23,18 +23,18 @@ describe('GetAccount', () => {
     expect(output.name).toBe(account.name);
     expect(output.email).toBe(account.email);
     expect(output.cpf).toBe(account.cpf);
-    expect(output.is_driver).toBe(true);
-    expect(output.is_passenger).toBe(false);
-    expect(output.car_plate).toBe(account.carPlate);
+    expect(output.isPassenger).toBe(true);
+    expect(output.isDriver).toBe(false);
+    expect(output.carPlate).toBe(account.carPlate);
     expect(output.password).toBe(account.password);
   });
 
-  it('should not be able to get info about a non-existing ride', async () => {
+  it('should not be able to get info about a non-existing accunt', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const getAccount = new GetAccount(accountsRepository);
 
     const accountId = Math.random().toString();
 
-    expect(getAccount.execute({ accountId })).rejects.toThrow("account not found");
+    expect(getAccount.execute({ accountId })).rejects.toThrow('account not found');
   });
 });

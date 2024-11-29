@@ -30,7 +30,9 @@ class SignUp {
       throw new Error('invalid [cpf] field');
     }
 
-    const registeredUser = await this.accountsRepository.findByEmail(input.email);
+    const registeredUser = await this.accountsRepository.findByEmail(
+      input.email
+    );
 
     if (registeredUser) {
       throw new Error('[email] already registered');

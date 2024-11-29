@@ -1,11 +1,14 @@
-import { makeAccountFactory } from "./factories/entities";
-import { makeRequest } from "./utils";
+import { makeAccountFactory } from './factories/entities';
+import { makeRequest } from './utils';
 
 describe('POST /signup', () => {
-  it("should be able create a driver user", async () => {
+  it('should be able create a driver user', async () => {
     const input = makeAccountFactory({ is_driver: true });
 
-    const signupRes = await makeRequest<{ account_id: string }>('/signup', input);
+    const signupRes = await makeRequest<{ account_id: string }>(
+      '/signup',
+      input
+    );
 
     expect(signupRes.status).toBe(201);
     expect(signupRes.data.account_id).toBeDefined();
@@ -24,22 +27,22 @@ describe('POST /signup', () => {
     expect(registeredAccountRes.data.password).toBe(input.password);
   });
 
-  it("should not create a driver user with a invalid car plate", async () => {
+  it('should not create a driver user with a invalid car plate', async () => {
     const input = makeAccountFactory({ is_driver: true, car_plate: 'ABC' });
 
     const res = await makeRequest<{ message: number }>('/signup', input);
 
     expect(res.status).toBe(422);
-    expect(res.data.message).toBe("invalid [carPlate] field");
+    expect(res.data.message).toBe('invalid [carPlate] field');
   });
 
-  it("should not create a user with a already registered email", async () => {
+  it('should not create a user with a already registered email', async () => {
     const input = makeAccountFactory({ is_passenger: true });
 
     await makeRequest('/signup', input);
     const res = await makeRequest<{ message: number }>('/signup', input);
 
     expect(res.status).toBe(422);
-    expect(res.data.message).toBe("[email] already registered");
+    expect(res.data.message).toBe('[email] already registered');
   });
 });

@@ -7,7 +7,10 @@ const BASE_URL = 'http://localhost:3000';
 
 export function makeRequest<T>(endpoint: string): Promise<Response<T>>;
 
-export function makeRequest<T>(endpoint: string, data: Record<string, unknown>): Promise<Response<T>>;
+export function makeRequest<T>(
+  endpoint: string,
+  data: Record<string, unknown>
+): Promise<Response<T>>;
 
 export async function makeRequest<T>(
   endpoint: string,
@@ -27,5 +30,5 @@ export async function makeRequest<T>(
   return {
     status: res.status,
     data: (await res.json()) as T
-  }
+  };
 }

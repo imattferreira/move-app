@@ -2,13 +2,16 @@ import pgp from 'pg-promise';
 import Ride from '../entities/ride';
 import { sql } from '../utils/query';
 
+// LSP - Liskov Substitution Principle
 export default interface RidesRepository {
   save(ride: Ride): Promise<void>;
   findByRideId(rideId: string): Promise<Ride | null>;
-  findLastRideOfPassenger(passengerId: string): Promise<Ride | null>;
-}
+  hasActiveRideOfPassenger(passengerId: string): Promise<boolean>;
+};
 
+// Repository Pattern
 export class PsqlRidesRepository implements RidesRepository {
+  // SRP - Single Responsability Principle
   async save(ride: Ride): Promise<void> {
     const query = sql`
       INSERT INTO ccca.ride (
@@ -79,40 +82,24 @@ export class PsqlRidesRepository implements RidesRepository {
       Number(ride.from_long),
       Number(ride.to_lat),
       Number(ride.to_long),
-      new Date(ride.date),
+      new Date(ride.date)
     );
   }
 
-  async findLastRideOfPassenger(passengerId: string): Promise<Ride | null> {
+  async hasActiveRideOfPassenger(passengerId: string): Promise<boolean> {
     const query = sql`
-      SELECT * FROM ccca.ride
-      WHERE passenger_id = $1
-      ORDER BY date DESC
-      LIMIT 1;
+      SELECT EXISTS (
+        SELECT 1 FROM ccca.ride
+        WHERE passenger_id = $1 AND status <> 'completed'
+      );
     `;
     const params = [passengerId];
     const connection = pgp()('postgres://postgres:123456@localhost:5432/app');
 
-    const [ride] = await connection.query(query, params);
+    const [{ exists }] = await connection.query(query, params);
     await connection.$pool.end();
 
-    if (!ride) {
-      return null;
-    }
-
-    return new Ride(
-      ride.ride_id,
-      ride.passenger_id,
-      ride.driver_id,
-      ride.status,
-      Number(ride.fare),
-      Number(ride.distance),
-      Number(ride.from_lat),
-      Number(ride.from_long),
-      Number(ride.to_lat),
-      Number(ride.to_long),
-      new Date(ride.date),
-    );
+    return exists;
   }
 }
 
@@ -133,11 +120,10 @@ export class RidesRepositoryInMemory implements RidesRepository {
     return ride || null;
   }
 
-  async findLastRideOfPassenger(passengerId: string): Promise<Ride | null> {
+  async hasActiveRideOfPassenger(passengerId: string): Promise<boolean> {
     const ride = this.stored
-      .sort((a, b) => b.date.getTime() - a.date.getTime())
-      .find((ride) => ride.passengerId === passengerId);
+      .find((ride) => ride.passengerId === passengerId && ride.status !== 'completed');
 
-    return ride || null;
+    return !!ride;
   }
 }

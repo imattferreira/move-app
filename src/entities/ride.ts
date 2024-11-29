@@ -14,9 +14,10 @@ class Ride {
     readonly fromLong: number,
     readonly toLat: number,
     readonly toLong: number,
-    readonly date: Date,
-  ) {}
+    readonly date: Date
+  ) { }
 
+  // Factory-Method Pattern (GoF)
   static create(
     passengerId: string,
     fare: number,
@@ -24,7 +25,7 @@ class Ride {
     fromLat: number,
     fromLong: number,
     toLat: number,
-    toLong: number,
+    toLong: number
   ): Ride {
     const id = crypto.randomUUID();
     const now = new Date();

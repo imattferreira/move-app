@@ -24,7 +24,10 @@ export async function signup(req: Request, res: Response): Promise<void> {
   }
 }
 
-export async function getAccountById(req: Request, res: Response): Promise<void> {
+export async function getAccountById(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const accountId = req.params.accountId;
 

@@ -1,7 +1,7 @@
-import Account from "../entities/account";
-import { AccountsRepositoryInMemory } from "../repositories/accounts-repository";
-import { RidesRepositoryInMemory } from "../repositories/rides-repository";
-import RequestRide from "./request-ride";
+import Account from '../entities/account';
+import { AccountsRepositoryInMemory } from '../repositories/accounts-repository';
+import { RidesRepositoryInMemory } from '../repositories/rides-repository';
+import RequestRide from './request-ride';
 
 describe('RequestRide', () => {
   it('should be able request a new ride', async () => {
@@ -23,10 +23,10 @@ describe('RequestRide', () => {
 
     const input = {
       passengerId: passenger.id,
-      fromLat: 0,
-      fromLong: 0,
-      toLat: 0,
-      toLong: 0
+      fromLat: -27.584905257808835,
+  		fromLong: -48.545022195325124,
+  		toLat: -27.496887588317275,
+  		toLong: -48.522234807851476
     };
 
     const output = await requestRide.execute(input);
@@ -63,15 +63,15 @@ describe('RequestRide', () => {
 
     const input = {
       passengerId: Math.random().toString(),
-      fromLat: 0,
-      fromLong: 0,
-      toLat: 0,
-      toLong: 0
+      fromLat: -27.584905257808835,
+  		fromLong: -48.545022195325124,
+  		toLat: -27.496887588317275,
+  		toLong: -48.522234807851476
     };
 
     await expect(
       requestRide.execute(input)
-    ).rejects.toThrow("account not found");
+    ).rejects.toThrow('account not found');
   });
 
   it('should not able request a new ride when passenger is a driver', async () => {
@@ -101,7 +101,7 @@ describe('RequestRide', () => {
 
     await expect(
       requestRide.execute(input)
-    ).rejects.toThrow("account needs to be of a passenger");
+    ).rejects.toThrow('account needs to be of a passenger');
   });
 
   it('should not be able request a new ride when passenger already have a ride in progress', async () => {
@@ -123,16 +123,16 @@ describe('RequestRide', () => {
 
     const input = {
       passengerId: passenger.id,
-      fromLat: 0,
-      fromLong: 0,
-      toLat: 0,
-      toLong: 0
+      fromLat: -27.584905257808835,
+  		fromLong: -48.545022195325124,
+  		toLat: -27.496887588317275,
+  		toLong: -48.522234807851476
     };
 
     await requestRide.execute(input);
 
     await expect(
       requestRide.execute(input)
-    ).rejects.toThrow("account already have a ride in progress");
+    ).rejects.toThrow('account already have a ride in progress');
   });
 });

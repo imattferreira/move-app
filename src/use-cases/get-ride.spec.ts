@@ -38,6 +38,6 @@ describe('GetRide', () => {
 
     const rideId = Math.random().toString();
 
-    await expect(getRide.execute({ rideId })).rejects.toThrow("ride not found");
+    await expect(getRide.execute({ rideId })).rejects.toThrow('ride not found');
   });
 });

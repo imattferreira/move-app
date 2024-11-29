@@ -17,7 +17,7 @@ type Output = {
 class RequestRide {
   constructor(
     private readonly accountsRepository: AccountsRepository,
-    private readonly ridesRepository: RidesRepository,
+    private readonly ridesRepository: RidesRepository
   ) {}
 
   async execute(input: Input): Promise<Output> {
@@ -33,11 +33,11 @@ class RequestRide {
       throw new Error('account needs to be of a passenger');
     }
 
-    const lastRide = await this.ridesRepository.findLastRideOfPassenger(
+    const hasActiveRide = await this.ridesRepository.hasActiveRideOfPassenger(
       passenger.id
     );
 
-    if (lastRide && lastRide.status !== 'completed') {
+    if (hasActiveRide) {
       throw new Error('account already have a ride in progress');
     }
 

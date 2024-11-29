@@ -8,7 +8,7 @@ describe('snakefy', () => {
       carPlate: 'ABC-123',
       address: {
         street: 'Wall Street',
-        streetNumber: 123,
+        streetNumber: 123
       },
       children: [
         {
@@ -17,10 +17,10 @@ describe('snakefy', () => {
           school: {
             address: {
               street: 'Wall Street',
-              streetNumber: 123,
+              streetNumber: 123
             },
             deggree: 2,
-            hasSibling: false,
+            hasSibling: false
           }
         }
       ]
@@ -31,7 +31,7 @@ describe('snakefy', () => {
       car_plate: 'ABC-123',
       address: {
         street: 'Wall Street',
-        street_number: 123,
+        street_number: 123
       },
       children: [
         {
@@ -40,10 +40,10 @@ describe('snakefy', () => {
           school: {
             address: {
               street: 'Wall Street',
-              street_number: 123,
+              street_number: 123
             },
             deggree: 2,
-            has_sibling: false,
+            has_sibling: false
           }
         }
       ]
@@ -63,7 +63,7 @@ describe('camelfy', () => {
       car_plate: 'ABC-123',
       address: {
         street: 'Wall Street',
-        street_number: 123,
+        street_number: 123
       },
       children: [
         {
@@ -72,10 +72,10 @@ describe('camelfy', () => {
           school: {
             address: {
               street: 'Wall Street',
-              street_number: 123,
+              street_number: 123
             },
             deggree: 2,
-            has_sibling: false,
+            has_sibling: false
           }
         }
       ]
@@ -86,7 +86,7 @@ describe('camelfy', () => {
       carPlate: 'ABC-123',
       address: {
         street: 'Wall Street',
-        streetNumber: 123,
+        streetNumber: 123
       },
       children: [
         {
@@ -95,10 +95,10 @@ describe('camelfy', () => {
           school: {
             address: {
               street: 'Wall Street',
-              streetNumber: 123,
+              streetNumber: 123
             },
             deggree: 2,
-            hasSibling: false,
+            hasSibling: false
           }
         }
       ]

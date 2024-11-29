@@ -9,7 +9,7 @@ class Account {
     readonly carPlate: string | null = null,
     readonly isPassenger: boolean,
     readonly isDriver: boolean,
-    readonly password: string,
+    readonly password: string
   ) {}
 
   static create(
@@ -19,7 +19,7 @@ class Account {
     carPlate: string | null = null,
     isPassenger: boolean,
     isDriver: boolean,
-    password: string,
+    password: string
   ): Account {
     const id = crypto.randomUUID();
 

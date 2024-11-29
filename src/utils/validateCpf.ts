@@ -28,7 +28,7 @@ function calculateDigit(cpf: string, factor: number) {
 
 	for (const digit of cpf) {
 		if (factor > 1) {
-		  total += parseInt(digit) * factor--
+		  total += parseInt(digit) * factor--;
 		}
 	}
 

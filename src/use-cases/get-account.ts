@@ -16,10 +16,18 @@ type Output = {
 };
 
 class GetAccount {
+  /**
+  * DIP - Dependency Inversion Principle
+  *
+  * If this contract was designed exclusived only for this use-case specifities,
+  * this could also be ISP - Interface Segregation Principle
+  */
   constructor(private readonly accountsRepository: AccountsRepository) { }
 
   async execute(input: Input): Promise<Output> {
-    const account = await this.accountsRepository.findByAccountId(input.accountId);
+    const account = await this.accountsRepository.findByAccountId(
+      input.accountId
+    );
 
     if (!account) {
       throw new Error('account not found');

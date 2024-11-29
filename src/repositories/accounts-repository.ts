@@ -6,7 +6,7 @@ export default interface AccountsRepository {
   save(account: Account): Promise<void>;
   findByAccountId(accountId: string): Promise<Account | null>;
   findByEmail(email: string): Promise<Account | null>;
-}
+};;;;;;;;;;
 
 export class PsqlAccountsRepository implements AccountsRepository {
   async save(account: Account): Promise<void> {

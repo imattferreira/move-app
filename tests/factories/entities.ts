@@ -1,4 +1,4 @@
-import { type Optional } from "../../src/utils/types";
+import { type Optional } from '../../src/utils/types';
 
 type Account = {
   name: string,
@@ -18,7 +18,9 @@ type Ride = {
   to_long: number;
 }
 
-export function makeAccountFactory(fieldsToOverride: Optional<Account>): Account {
+export function makeAccountFactory(
+  fieldsToOverride: Optional<Account>
+): Account {
   return {
     name: 'John Doe',
     email: `john${Math.random()}@doe.com`,
@@ -34,10 +36,10 @@ export function makeAccountFactory(fieldsToOverride: Optional<Account>): Account
 export function makeRideFactory(fieldsToOverride: Optional<Ride>): Ride {
   return {
     passenger_id: Math.random().toString(),
-    from_lat: 0,
-    from_long: 0,
-    to_lat: 0,
-    to_long: 0,
+    from_lat: -27.584905257808835,
+		from_long: -48.545022195325124,
+		to_lat: -27.496887588317275,
+		to_long: -48.522234807851476,
     ...fieldsToOverride
   };
 }

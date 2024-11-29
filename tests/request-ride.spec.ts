@@ -1,25 +1,18 @@
+import { makeAccountFactory, makeRideFactory } from "./factories/entities";
 import { makeRequest } from "./utils";
 
 describe('POST /rides', () => {
   it('should be able request a new ride', async () => {
-    const signupRes = await makeRequest<{ account_id: string }>('/signup', {
-      name: 'John Doe',
-      email: `john${Math.random()}@doe.com`,
-      cpf: '475.646.550-11',
-      is_passenger: true,
-      car_plate: 'ABC1234',
-      password: '123456'
-    });
+    const signupRes = await makeRequest<{ account_id: string }>(
+        '/signup',
+        makeAccountFactory({
+        is_passenger: true,
+        is_driver: false,
+      })
+    );
 
     const passengerId = signupRes.data.account_id;
-
-    const input = {
-      passengerId: passengerId,
-      fromLat: 0,
-      fromLong: 0,
-      toLat: 0,
-      toLong: 0
-    };
+    const input = makeRideFactory({ passenger_id: passengerId });
 
     const requestRideRes = await makeRequest<{ ride_id: string }>('/rides', input);
 
@@ -32,32 +25,24 @@ describe('POST /rides', () => {
     expect(registeredRideRes.data?.status).toBe('requested');
     expect(registeredRideRes.data?.fare).toBe(0);
     expect(registeredRideRes.data?.distance).toBe(0);
-    expect(registeredRideRes.data?.from_lat).toBe(input.fromLat);
-    expect(registeredRideRes.data?.from_long).toBe(input.fromLong);
-    expect(registeredRideRes.data?.to_lat).toBe(input.toLat);
-    expect(registeredRideRes.data?.to_long).toBe(input.toLong);
+    expect(registeredRideRes.data?.from_lat).toBe(input.from_lat);
+    expect(registeredRideRes.data?.from_long).toBe(input.from_long);
+    expect(registeredRideRes.data?.to_lat).toBe(input.to_lat);
+    expect(registeredRideRes.data?.to_long).toBe(input.to_long);
     expect(registeredRideRes.data?.date).toBeDefined();
   });
 
   it('should not be able request a new ride when passenger already have a ride in progress', async () => {
-    const signupRes = await makeRequest<{ account_id: string }>('/signup', {
-      name: 'John Doe',
-      email: `john${Math.random()}@doe.com`,
-      cpf: '475.646.550-11',
-      is_passenger: true,
-      car_plate: 'ABC1234',
-      password: '123456'
-    });
+    const signupRes = await makeRequest<{ account_id: string }>(
+      '/signup',
+      makeAccountFactory({
+        is_passenger: true,
+        is_driver: false,
+      })
+    );
 
     const passengerId = signupRes.data.account_id;
-
-    const input = {
-      passengerId: passengerId,
-      fromLat: 0,
-      fromLong: 0,
-      toLat: 0,
-      toLong: 0
-    };
+    const input = makeRideFactory({ passenger_id: passengerId });
 
     await makeRequest<{ ride_id: string }>('/rides', input);
     const requestRideRes = await makeRequest<{ message: string }>('/rides', input);

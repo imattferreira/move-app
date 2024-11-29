@@ -1,15 +1,9 @@
+import { makeAccountFactory } from "./factories/entities";
 import { makeRequest } from "./utils";
 
 describe('POST /signup', () => {
   it("should be able create a driver user", async () => {
-    const input = {
-      name: 'John Doe',
-      email: `john${Math.random()}@doe.com`,
-      cpf: '475.646.550-11',
-      is_driver: true,
-      car_plate: 'ABC1234',
-      password: '123456'
-    };
+    const input = makeAccountFactory({ is_driver: true });
 
     const signupRes = await makeRequest<{ account_id: string }>('/signup', input);
 
@@ -31,14 +25,7 @@ describe('POST /signup', () => {
   });
 
   it("should not create a driver user with a invalid car plate", async () => {
-    const input = {
-      name: 'John Doe',
-      email: `john${Math.random()}@doe.com`,
-      cpf: '475.646.550-11',
-      is_driver: true,
-      car_plate: 'ABC',
-      password: '123456'
-    };
+    const input = makeAccountFactory({ is_driver: true, car_plate: 'ABC' });
 
     const res = await makeRequest<{ message: number }>('/signup', input);
 
@@ -47,13 +34,7 @@ describe('POST /signup', () => {
   });
 
   it("should not create a user with a already registered email", async () => {
-    const input = {
-      name: 'John Doe',
-      email: `john${Math.random()}@doe.com`,
-      cpf: '475.646.550-11',
-      is_passenger: true,
-      password: '123456'
-    };
+    const input = makeAccountFactory({ is_passenger: true });
 
     await makeRequest('/signup', input);
     const res = await makeRequest<{ message: number }>('/signup', input);

@@ -30,7 +30,7 @@ class RequestRide {
     }
 
     if (!passenger.isPassenger) {
-      throw new Error('account needs to be a passenger');
+      throw new Error('account needs to be of a passenger');
     }
 
     const lastRide = await this.ridesRepository.findLastRideOfPassenger(

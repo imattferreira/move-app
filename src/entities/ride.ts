@@ -21,10 +21,10 @@ class Ride {
     passengerId: string,
     fare: number,
     distance: number,
-    from_lat: number,
-    from_long: number,
-    to_lat: number,
-    to_long: number,
+    fromLat: number,
+    fromLong: number,
+    toLat: number,
+    toLong: number,
   ): Ride {
     const id = crypto.randomUUID();
     const now = new Date();
@@ -36,10 +36,10 @@ class Ride {
       'requested',
       fare,
       distance,
-      from_lat,
-      from_long,
-      to_lat,
-      to_long,
+      fromLat,
+      fromLong,
+      toLat,
+      toLong,
       now
     );
   }

@@ -11,13 +11,13 @@ describe('POST /signup', () => {
       password: '123456'
     };
 
-    const signupRes = await makeRequest<{ accountId: string }>('/signup', input);
+    const signupRes = await makeRequest<{ account_id: string }>('/signup', input);
 
     expect(signupRes.status).toBe(201);
-    expect(signupRes.data.accountId).toBeDefined();
+    expect(signupRes.data.account_id).toBeDefined();
 
     const registeredAccountRes = await makeRequest<Record<string, unknown>>(
-      `/accounts/${signupRes.data.accountId}`
+      `/accounts/${signupRes.data.account_id}`
     );
 
     expect(registeredAccountRes.status).toBe(200);
@@ -30,7 +30,7 @@ describe('POST /signup', () => {
     expect(registeredAccountRes.data.password).toBe(input.password);
   });
 
-  it.only("should not create a driver user with a invalid car plate", async () => {
+  it("should not create a driver user with a invalid car plate", async () => {
     const input = {
       name: 'John Doe',
       email: `john${Math.random()}@doe.com`,

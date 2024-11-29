@@ -1,5 +1,7 @@
 import crypto from 'node:crypto';
+import validateCpf from '../utils/validateCpf';
 
+// Entity
 class Account {
   constructor(
     readonly id: string,
@@ -10,7 +12,23 @@ class Account {
     readonly isPassenger: boolean,
     readonly isDriver: boolean,
     readonly password: string
-  ) {}
+  ) {
+    if (!name.match(/[a-zA-Z] [a-zA-Z]+/)) {
+      throw new Error('invalid [name] field');
+    }
+
+    if (!email.match(/^(.+)@(.+)$/)) {
+      throw new Error('invalid [email] field');
+    }
+
+    if (!validateCpf(cpf)) {
+      throw new Error('invalid [cpf] field');
+    }
+
+    if (isDriver && !carPlate?.match(/[A-Z]{3}[0-9]{4}/)) {
+      throw new Error('invalid [carPlate] field');
+    }
+  }
 
   static create(
     name: string,

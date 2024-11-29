@@ -17,7 +17,7 @@ class Ride {
     readonly date: Date
   ) { }
 
-  // Factory-Method Pattern (GoF)
+  // Static Factory Method Pattern (GoF)
   static create(
     passengerId: string,
     fare: number,

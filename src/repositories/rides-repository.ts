@@ -1,5 +1,6 @@
 import pgp from 'pg-promise';
 import Ride from '../entities/ride';
+import { sql } from '../utils/query';
 
 export default interface RidesRepository {
   save(ride: Ride): Promise<void>;
@@ -9,7 +10,32 @@ export default interface RidesRepository {
 
 export class PsqlRidesRepository implements RidesRepository {
   async save(ride: Ride): Promise<void> {
-    const query = 'INSERT INTO ccca.ride (ride_id, passenger_id, driver_id, status, fare, distance, from_lat, from_long, to_lat, to_long, date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);';
+    const query = sql`
+      INSERT INTO ccca.ride (
+      ride_id,
+      passenger_id,
+      driver_id,
+      status,
+      fare,
+      distance,
+      from_lat,
+      from_long,
+      to_lat,
+      to_long,
+      date
+    ) VALUES (
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    $7,
+    $8,
+    $9,
+    $10,
+    $11
+    );`;
     const params = [
       ride.id,
       ride.passengerId,
@@ -31,7 +57,7 @@ export class PsqlRidesRepository implements RidesRepository {
   }
 
   async findByRideId(rideId: string): Promise<Ride | null> {
-    const query = 'SELECT * FROM ccca.ride WHERE ride_id = $1';
+    const query = sql`SELECT * FROM ccca.ride WHERE ride_id = $1`;
     const params = [rideId];
     const connection = pgp()('postgres://postgres:123456@localhost:5432/app');
 
@@ -58,7 +84,12 @@ export class PsqlRidesRepository implements RidesRepository {
   }
 
   async findLastRideOfPassenger(passengerId: string): Promise<Ride | null> {
-    const query = 'SELECT * FROM ccca.ride WHERE passenger_id = $1 ORDER BY date DESC LIMIT 1;';
+    const query = sql`
+      SELECT * FROM ccca.ride
+      WHERE passenger_id = $1
+      ORDER BY date DESC
+      LIMIT 1;
+    `;
     const params = [passengerId];
     const connection = pgp()('postgres://postgres:123456@localhost:5432/app');
 

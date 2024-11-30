@@ -9,8 +9,6 @@ describe('GetRide', () => {
 
     const ride = Ride.create(
       Math.random().toString(),
-      0,
-      0,
       12312312,
       12312312,
       52423423,

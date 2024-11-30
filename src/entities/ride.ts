@@ -20,21 +20,23 @@ class Ride {
   // Static Factory Method Pattern (GoF)
   static create(
     passengerId: string,
-    fare: number,
-    distance: number,
     fromLat: number,
     fromLong: number,
     toLat: number,
     toLong: number
   ): Ride {
     const id = crypto.randomUUID();
+    const driverId = null;
+    const status = 'requested';
+    const fare = 0;
+    const distance = 0;
     const now = new Date();
 
     return new Ride(
       id,
       passengerId,
-      null,
-      'requested',
+      driverId,
+      status,
       fare,
       distance,
       fromLat,

@@ -1,14 +1,17 @@
 import pgp from 'pg-promise';
 import Account from '../entities/account';
 import { sql } from '../utils/query';
+import DatabaseConnection from '../adapters/database-connection';
 
 export default interface AccountsRepository {
   save(account: Account): Promise<void>;
   findByAccountId(accountId: string): Promise<Account | null>;
   findByEmail(email: string): Promise<Account | null>;
-};;;;;;;;;;
+};
 
 export class PsqlAccountsRepository implements AccountsRepository {
+  constructor(private readonly connection: DatabaseConnection) {}
+
   async save(account: Account): Promise<void> {
     const query = sql`
       INSERT INTO ccca.account (
@@ -40,19 +43,17 @@ export class PsqlAccountsRepository implements AccountsRepository {
       account.isDriver,
       account.password
     ];
-    const connection = pgp()('postgres://postgres:123456@localhost:5432/app');
 
-    await connection.query(query, params);
-    await connection.$pool.end();
+    await this.connection.query(query, params);
+    await this.connection.close();
   }
 
   async findByAccountId(accountId: string): Promise<Account | null> {
     const query = 'SELECT * FROM ccca.account WHERE account_id = $1';
     const params = [accountId];
-    const connection = pgp()('postgres://postgres:123456@localhost:5432/app');
 
-    const [account] = await connection.query(query, params);
-    await connection.$pool.end();
+    const [account] = await this.connection.query(query, params);
+    await this.connection.close();
 
     if (!account) {
       return null;
@@ -73,10 +74,9 @@ export class PsqlAccountsRepository implements AccountsRepository {
   async findByEmail(email: string): Promise<Account | null> {
     const query = sql`SELECT * FROM ccca.account WHERE email = $1`;
     const params = [email];
-    const connection = pgp()('postgres://postgres:123456@localhost:5432/app');
 
-    const [account] = await connection.query(query, params);
-    await connection.$pool.end();
+    const [account] = await this.connection.query(query, params);
+    await this.connection.close();
 
     if (!account) {
       return null;

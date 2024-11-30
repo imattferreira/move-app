@@ -22,7 +22,7 @@ describe('Account', () => {
       'John Doe',
       'john0@doe.com',
       '475.646.550-11',
-      'ABC1234',
+      null,
       true,
       false,
       '123456'

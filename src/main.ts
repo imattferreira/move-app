@@ -1,12 +1,28 @@
-import express from 'express';
-import { getAccountById, getRide, requestRide, signup } from './handlers';
+// Composition Root
+import { PgPromiseAdapter } from './adapters/database-connection';
+import { ExpressAdapter } from './adapters/http-server';
+import AccountsController from './controllers/accounts-controller';
+import RidesController from './controllers/rides-controller';
+import { PsqlAccountsRepository } from './repositories/accounts-repository';
+import { PsqlRidesRepository } from './repositories/rides-repository';
+import GetAccount from './use-cases/get-account';
+import GetRide from './use-cases/get-ride';
+import RequestRide from './use-cases/request-ride';
+import SignUp from './use-cases/signup';
 
-const app = express();
-app.use(express.json());
 
-app.post('/signup', signup);
-app.get('/accounts/:accountId', getAccountById);
-app.post('/rides', requestRide);
-app.get('/rides/:rideId', getRide);
+const httpServer = new ExpressAdapter();
+const connection = new PgPromiseAdapter();
 
-app.listen(3000);
+const accountsRepository = new PsqlAccountsRepository(connection);
+const ridesRepository = new PsqlRidesRepository(connection);
+
+const signup = new SignUp(accountsRepository);
+const getAccount = new GetAccount(accountsRepository);
+const requestRide = new RequestRide(accountsRepository, ridesRepository);
+const getRide = new GetRide(ridesRepository);
+
+new AccountsController(httpServer, signup, getAccount);
+new RidesController(httpServer, requestRide, getRide);
+
+httpServer.listen(3000);

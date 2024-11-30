@@ -43,8 +43,6 @@ class RequestRide {
 
     const ride = Ride.create(
       input.passengerId,
-      0,
-      0,
       input.fromLat,
       input.fromLong,
       input.toLat,

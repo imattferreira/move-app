@@ -1,13 +1,13 @@
 
 export function sql(expressions: TemplateStringsArray): string {
-  let inlined = '';
+  let statement = '';
 
   for (const expr of expressions) {
     if (expr.trim() === '\n') {
       continue;
     }
 
-    inlined += expr
+    statement += expr
       .replace(/\s+/g, ' ')
       .replace(/\n/g, '')
       .replace(/\(\s/g, '(')
@@ -15,5 +15,5 @@ export function sql(expressions: TemplateStringsArray): string {
       .trim();
   }
 
-  return inlined;
+  return statement;
 }

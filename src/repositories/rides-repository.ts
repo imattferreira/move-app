@@ -1,6 +1,7 @@
 import pgp from 'pg-promise';
 import Ride from '../entities/ride';
 import { sql } from '../utils/query';
+import DatabaseConnection from '../adapters/database-connection';
 
 // LSP - Liskov Substitution Principle
 export default interface RidesRepository {
@@ -9,8 +10,15 @@ export default interface RidesRepository {
   hasActiveRideOfPassenger(passengerId: string): Promise<boolean>;
 };
 
-// Repository Pattern
+/**
+* DAO -> deals directly with database tables (similar with ORMs) and
+* returns DTOs.
+* Repository Pattern -> intermediary between entities and database and returns
+* the restored entity.
+*/
 export class PsqlRidesRepository implements RidesRepository {
+  constructor(private readonly connection: DatabaseConnection) {}
+
   // SRP - Single Responsability Principle
   async save(ride: Ride): Promise<void> {
     const query = sql`
@@ -52,20 +60,17 @@ export class PsqlRidesRepository implements RidesRepository {
       ride.toLong,
       ride.date
     ];
-    // TODO: fix duplicated connection warnings
-    const connection = pgp()('postgres://postgres:123456@localhost:5432/app');
 
-    await connection.query(query, params);
-    await connection.$pool.end();
+    await this.connection.query(query, params);
+    await this.connection.close();
   }
 
   async findByRideId(rideId: string): Promise<Ride | null> {
     const query = sql`SELECT * FROM ccca.ride WHERE ride_id = $1`;
     const params = [rideId];
-    const connection = pgp()('postgres://postgres:123456@localhost:5432/app');
 
-    const [ride] = await connection.query(query, params);
-    await connection.$pool.end();
+    const [ride] = await this.connection.query(query, params);
+    await this.connection.close();
 
     if (!ride) {
       return null;
@@ -94,10 +99,9 @@ export class PsqlRidesRepository implements RidesRepository {
       );
     `;
     const params = [passengerId];
-    const connection = pgp()('postgres://postgres:123456@localhost:5432/app');
 
-    const [{ exists }] = await connection.query(query, params);
-    await connection.$pool.end();
+    const [{ exists }] = await this.connection.query(query, params);
+    await this.connection.close();
 
     return exists;
   }

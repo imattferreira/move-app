@@ -1,5 +1,5 @@
 import Ride from '~/domain/entities/ride';
-import { sql } from '../utils/query';
+import { sql } from '~/infra/repositories/utils/query';
 import DatabaseConnection from '~/infra/database/database-connection';
 import RidesRepository from '~/application/repositories/rides-repository';
 

@@ -1,6 +1,6 @@
 import AccountsRepository from '~/application/repositories/accounts-repository';
 import Account from '~/domain/entities/account';
-import { sql } from '../utils/query';
+import { sql } from '~/infra/repositories/utils/query';
 import DatabaseConnection from '~/infra/database/database-connection';
 
 class PsqlAccountsRepository implements AccountsRepository {

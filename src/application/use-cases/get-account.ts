@@ -1,4 +1,4 @@
-import type AccountsRepository from '../repositories/accounts-repository';
+import type AccountsRepository from '~/application/repositories/accounts-repository';
 
 type Input = {
   accountId: string;
@@ -22,7 +22,7 @@ class GetAccount {
    * If this contract was designed exclusively only for this use-case
    * specificities, this could also be ISP - Interface Segregation Principle
    */
-  constructor(private readonly accountsRepository: AccountsRepository) {}
+  constructor(private readonly accountsRepository: AccountsRepository) { }
 
   async execute(input: Input): Promise<Output> {
     const account = await this.accountsRepository.findById(input.accountId);

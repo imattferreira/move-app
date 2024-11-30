@@ -1,46 +1,34 @@
 {
   "name": "move-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/main.js",
   "license": "MIT",
   "scripts": {
     "docker:clean": "docker compose rm -fsv",
     "docker:start": "docker compose up -d",
     "docker:stop": "docker compose stop",
-    "start": "nodemon",
+    "tsx": "tsx watch src/main.ts",
     "test": "jest",
     "lint": "eslint --fix",
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "pg-promise": "^11.5.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",
     "@stylistic/eslint-plugin": "^2.11.0",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.4",
+    "@types/node": "^22.10.1",
     "eslint": "^9.16.0",
     "globals": "^15.12.0",
     "jest": "^29.6.4",
-    "nodemon": "^3.0.1",
-    "pg-promise": "^11.5.4",
     "ts-jest": "^29.1.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.2.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
     "typescript-eslint": "^8.16.0"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "**/*.test.ts",
-      "**/*.spec.ts",
-      ".git",
-      "node_modules"
-    ],
-    "watch": [
-      "src"
-    ],
-    "exec": "node -r tsconfig-paths/register -r ts-node/register ./src/main.ts",
-    "ext": "ts, js"
   }
 }

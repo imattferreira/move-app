@@ -1,6 +1,6 @@
 import Ride from '~/domain/entities/ride';
-import type AccountsRepository from '../repositories/accounts-repository';
-import type RidesRepository from '../repositories/rides-repository';
+import type AccountsRepository from '~/application/repositories/accounts-repository';
+import type RidesRepository from '~/application/repositories/rides-repository';
 
 type Input = {
   passengerId: string;

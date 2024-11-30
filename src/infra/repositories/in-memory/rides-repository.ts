@@ -1,7 +1,7 @@
-import RidesRepository from "../../../../application/repositories/rides-repository";
-import Ride from "../../../../domain/entities/ride";
+import RidesRepository from "../../../application/repositories/rides-repository";
+import Ride from "../../../domain/entities/ride";
 
-export class RidesRepositoryInMemory implements RidesRepository {
+class RidesRepositoryInMemory implements RidesRepository {
   private stored: Ride[];
 
   constructor() {
@@ -19,10 +19,17 @@ export class RidesRepositoryInMemory implements RidesRepository {
   }
 
   async hasActiveRideOfPassenger(passengerId: string): Promise<boolean> {
-    const ride = this.stored
-      .find((ride) => ride.passengerId === passengerId && ride.status !== 'completed');
+    const ride = this.stored.find(
+      (ride) => ride.passengerId === passengerId && ride.status !== "completed"
+    );
 
     return !!ride;
+  }
+
+  async update(ride: Ride): Promise<void> {
+    const rideIndex = this.stored.findIndex((r) => r.id === ride.id);
+
+    this.stored[rideIndex] = ride;
   }
 }
 

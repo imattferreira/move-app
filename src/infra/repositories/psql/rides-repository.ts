@@ -98,6 +98,21 @@ class PsqlRidesRepository implements RidesRepository {
 
     return exists;
   }
+
+  async update(ride: Ride): Promise<void> {
+    const query = sql`
+     UPDATE ccca.ride
+     SET
+     driver_id = $1,
+     status = $2,
+     distance = $3,
+     WHERE ride_id = $4
+    `;
+    const params = [ride.driverId, ride.status, ride.distance, ride.id];
+
+    await this.connection.query(query, params);
+    await this.connection.close();
+  }
 }
 
 export default PsqlRidesRepository;

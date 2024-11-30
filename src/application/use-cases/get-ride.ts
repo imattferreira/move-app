@@ -1,4 +1,4 @@
-import type RidesRepository from '../../infra/repositories/rides-repository';
+import type RidesRepository from "../repositories/rides-repository";
 
 interface Input {
   rideId: string;
@@ -16,7 +16,7 @@ type Output = {
   toLat: number;
   toLong: number;
   date: string;
-}
+};
 
 class GetRide {
   constructor(private readonly ridesRepository: RidesRepository) {}
@@ -25,7 +25,7 @@ class GetRide {
     const ride = await this.ridesRepository.findByRideId(input.rideId);
 
     if (!ride) {
-      throw new Error('ride not found');
+      throw new Error("ride not found");
     }
 
     return {
@@ -39,7 +39,7 @@ class GetRide {
       fromLong: ride.fromLong,
       toLat: ride.toLat,
       toLong: ride.toLong,
-      date: ride.date.toUTCString()
+      date: ride.date.toUTCString(),
     };
   }
 }

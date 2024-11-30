@@ -1,13 +1,13 @@
 import crypto from 'node:crypto';
 
-type RideStatus = 'requested' | 'progress' | 'completed';
+type RideStatus = 'requested' | 'accepted' | 'progress' | 'completed';
 
 class Ride {
   constructor(
     readonly id: string,
     readonly passengerId: string,
-    readonly driverId: string | null,
-    readonly status: RideStatus,
+    public driverId: string | null,
+    public status: RideStatus,
     readonly fare: number,
     readonly distance: number,
     readonly fromLat: number,
@@ -45,6 +45,15 @@ class Ride {
       toLong,
       now
     );
+  }
+
+  attachDriver(driverId: string): void {
+    if (this.status !== 'requested') {
+      throw new Error('ride already accepted');
+    }
+
+    this.driverId = driverId;
+    this.status = 'accepted';
   }
 }
 

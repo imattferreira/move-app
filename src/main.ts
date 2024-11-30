@@ -10,6 +10,7 @@ import GetRide from './application/use-cases/get-ride';
 import RequestRide from './application/use-cases/request-ride';
 import SignUp from './application/use-cases/signup';
 import AcceptRide from './application/use-cases/accept-ride';
+import StartRide from './application/use-cases/start-ride';
 
 const httpServer = new ExpressAdapter();
 const connection = new PgPromiseAdapter();
@@ -22,8 +23,9 @@ const getAccount = new GetAccount(accountsRepository);
 const requestRide = new RequestRide(accountsRepository, ridesRepository);
 const getRide = new GetRide(ridesRepository);
 const acceptRide = new AcceptRide(accountsRepository, ridesRepository);
+const startRide = new StartRide(ridesRepository);
 
 new AccountsController(httpServer, signup, getAccount);
-new RidesController(httpServer, requestRide, getRide, acceptRide);
+new RidesController(httpServer, requestRide, getRide, acceptRide, startRide);
 
 httpServer.listen(3000);

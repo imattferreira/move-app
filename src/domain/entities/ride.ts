@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 
-type RideStatus = 'requested' | 'accepted' | 'progress' | 'completed';
+type RideStatus = 'requested' | 'accepted' | 'in_progress' | 'completed';
 
 class Ride {
   constructor(
@@ -54,6 +54,10 @@ class Ride {
 
     this.driverId = driverId;
     this.status = 'accepted';
+  }
+
+  start(): void {
+    this.status = 'in_progress';
   }
 }
 

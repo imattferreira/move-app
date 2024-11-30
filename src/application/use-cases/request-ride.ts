@@ -1,4 +1,4 @@
-import Ride from '../../domain/entities/ride';
+import Ride from '~/domain/entities/ride';
 import type AccountsRepository from '../repositories/accounts-repository';
 import type RidesRepository from '../repositories/rides-repository';
 

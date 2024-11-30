@@ -1,5 +1,5 @@
-import AccountsRepository from "../../../application/repositories/accounts-repository";
-import Account from "../../../domain/entities/account";
+import AccountsRepository from "~/application/repositories/accounts-repository";
+import Account from "~/domain/entities/account";
 
 class AccountsRepositoryInMemory implements AccountsRepository {
   private stored: Account[];

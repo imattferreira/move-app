@@ -1,4 +1,4 @@
-import RidesRepository from "../repositories/rides-repository";
+import RidesRepository from "~/application/repositories/rides-repository";
 
 interface Input {
   rideId: string;

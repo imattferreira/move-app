@@ -1,7 +1,7 @@
-import PositionsRepository from "../../../application/repositories/positions-repository";
-import Position from "../../../domain/entities/position";
-import DatabaseConnection from "../../database/database-connection";
-import { sql } from "../utils/query";
+import PositionsRepository from "~/application/repositories/positions-repository";
+import Position from "~/domain/entities/position";
+import DatabaseConnection from "~/infra/database/database-connection";
+import { sql } from "~/infra/repositories/utils/query";
 
 class PsqlPositionsRepository implements PositionsRepository {
   constructor(private readonly connection: DatabaseConnection) {}

@@ -1,7 +1,7 @@
-import Account from "../../domain/entities/account";
-import Ride from "../../domain/entities/ride";
-import AccountsRepositoryInMemory from "../../infra/repositories/in-memory/accounts-repository";
-import RidesRepositoryInMemory from "../../infra/repositories/in-memory/rides-repository";
+import Account from "~/domain/entities/account";
+import Ride from "~/domain/entities/ride";
+import AccountsRepositoryInMemory from "~/infra/repositories/in-memory/accounts-repository";
+import RidesRepositoryInMemory from "~/infra/repositories/in-memory/rides-repository";
 import AcceptRide from "./accept-ride";
 
 describe('AcceptRide', () => {

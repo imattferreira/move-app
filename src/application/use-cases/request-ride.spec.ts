@@ -1,6 +1,6 @@
-import Account from '../../domain/entities/account';
-import AccountsRepositoryInMemory from '../../infra/repositories/in-memory/accounts-repository';
-import RidesRepositoryInMemory from '../../infra/repositories/in-memory/rides-repository';
+import Account from '~/domain/entities/account';
+import AccountsRepositoryInMemory from '~/infra/repositories/in-memory/accounts-repository';
+import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 import RequestRide from './request-ride';
 
 describe('RequestRide', () => {

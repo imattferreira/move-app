@@ -1,5 +1,5 @@
-import RidesRepository from "../../../application/repositories/rides-repository";
-import Ride from "../../../domain/entities/ride";
+import RidesRepository from "~/application/repositories/rides-repository";
+import Ride from "~/domain/entities/ride";
 
 class RidesRepositoryInMemory implements RidesRepository {
   private stored: Ride[];

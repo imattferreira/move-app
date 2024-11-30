@@ -1,6 +1,6 @@
 // Framework & Adapter (Clean Arch)
 import express, { type Request, type Response, type Express } from 'express';
-import { camelfy, snakefy } from '../../utils/object';
+import { camelfy, snakefy } from '~/utils/object';
 
 type HttpMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 

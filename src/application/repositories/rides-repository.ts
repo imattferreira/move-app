@@ -1,4 +1,4 @@
-import Ride from "../../domain/entities/ride";
+import Ride from "~/domain/entities/ride";
 
 // LSP - Liskov Substitution Principle
 interface RidesRepository {

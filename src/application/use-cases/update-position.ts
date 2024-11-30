@@ -1,6 +1,6 @@
-import Position from "../../domain/entities/position";
-import PositionsRepository from "../repositories/positions-repository";
-import RidesRepository from "../repositories/rides-repository";
+import Position from "~/domain/entities/position";
+import PositionsRepository from "~/application/repositories/positions-repository";
+import RidesRepository from "~/application/repositories/rides-repository";
 
 interface Input {
   rideId: string;

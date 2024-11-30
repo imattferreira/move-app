@@ -1,6 +1,6 @@
-import Ride from "../../domain/entities/ride";
-import PositionsRepositoryInMemory from "../../infra/repositories/in-memory/positions-repository";
-import RidesRepositoryInMemory from "../../infra/repositories/in-memory/rides-repository";
+import Ride from "~/domain/entities/ride";
+import PositionsRepositoryInMemory from "~/infra/repositories/in-memory/positions-repository";
+import RidesRepositoryInMemory from "~/infra/repositories/in-memory/rides-repository";
 import UpdatePosition from "./update-position";
 
 describe('UpdatePosition', () => {

@@ -1,4 +1,4 @@
-import { type Optional } from '../../src/utils/types';
+import { type Optional } from '~/utils/types';
 
 type Account = {
   name: string,

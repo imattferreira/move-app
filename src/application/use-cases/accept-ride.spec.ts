@@ -14,7 +14,7 @@ describe('AcceptRide', () => {
       'John Doe',
       'john@doe.com',
       '475.646.550-11',
-      null,
+      'ABC1234',
       false,
       true,
       '1233456'
@@ -96,8 +96,6 @@ describe('AcceptRide', () => {
       rideId: ride.id
     };
 
-    await acceptRide.execute(input);
-
     await expect(acceptRide.execute(input)).rejects.toThrow(
       'user needs to be a driver to accept a ride'
     );
@@ -112,7 +110,7 @@ describe('AcceptRide', () => {
       'John Doe',
       'john@doe.com',
       '475.646.550-11',
-      null,
+      'ABC1234',
       false,
       true,
       '1233456'
@@ -149,7 +147,7 @@ describe('AcceptRide', () => {
       'John Doe',
       'john@doe.com',
       '475.646.550-11',
-      null,
+      'ABC1234',
       false,
       true,
       '1233456'

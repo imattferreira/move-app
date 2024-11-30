@@ -58,7 +58,7 @@ describe('StartRide', () => {
     await ridesRepository.save(ride);
 
     const input = {
-      rideId: Math.random().toString()
+      rideId: ride.id
     };
 
     await startRide.execute(input);

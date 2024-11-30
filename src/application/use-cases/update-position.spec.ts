@@ -21,6 +21,7 @@ describe('UpdatePosition', () => {
     );
 
     ride.attachDriver(Math.random().toString());
+    ride.start();
 
     await ridesRepository.save(ride);
 

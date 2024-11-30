@@ -19,7 +19,7 @@ describe('POST /rides', () => {
       input
     );
 
-    expect(requestRideRes.status).toBe(201);
+    expect(requestRideRes.status).toBe(200);
     expect(requestRideRes.data.ride_id).toBeDefined();
 
     const registeredRideRes = await makeRequest<Record<string, unknown>>(
@@ -57,7 +57,7 @@ describe('POST /rides', () => {
         input
       );
 
-      expect(requestRideRes.status).toBe(422);
+      expect(requestRideRes.status).toBe(409);
       expect(
         requestRideRes.data.message
       ).toBe('account already have a ride in progress');

@@ -1,5 +1,6 @@
 // Framework & Adapter (Clean Arch)
 import express, { type Request, type Response, type Express } from 'express';
+import Exception from '~/application/exceptions/exception';
 import { camelfy, snakefy } from '~/utils/object';
 import type { Object } from '~/utils/types';
 
@@ -57,7 +58,9 @@ export class ExpressAdapter implements HttpServer {
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       catch (err: any) {
-        res.status(422).json({ message: err.message });
+        const { status, message } = this.parseException(err);
+
+        res.status(status).json({ message });
       }
     };
 
@@ -66,5 +69,23 @@ export class ExpressAdapter implements HttpServer {
 
   listen(port: number): void {
     this.app.listen(port);
+  }
+
+  private parseException(
+    exception: Exception
+  ): { status: number; message: string } {
+    switch (exception?.reason) {
+      case 'invalid':
+        return { status: 400, message: exception.getMessage() };
+      case 'forbidden':
+        return { status: 403, message: exception.getMessage() };
+      case 'not_found':
+        return { status: 404, message: exception.getMessage() };
+      case 'conflict':
+        return { status: 409, message: exception.getMessage() };
+      default:
+        return { status: 500, message: 'internal server error' };
+        break;
+    }
   }
 }

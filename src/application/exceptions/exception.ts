@@ -5,6 +5,10 @@ abstract class Exception extends Error {
     super(reason);
     this.message = `${reason}__${message}`;
   }
+
+  getMessage(): string {
+    return this.message.split('__')[1];
+  }
 }
 
 export default Exception;

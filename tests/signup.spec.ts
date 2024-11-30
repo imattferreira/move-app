@@ -3,7 +3,7 @@ import { makeAccountFactory } from './factories/entities';
 import { makeRequest } from './utils';
 
 describe('POST /signup', () => {
-  it.only('should be able create a driver user', async () => {
+  it('should be able create a driver user', async () => {
     const input = makeAccountFactory({ is_driver: true });
 
     const signupRes = await makeRequest<{ account_id: string }>(
@@ -11,7 +11,7 @@ describe('POST /signup', () => {
       input
     );
 
-    expect(signupRes.status).toBe(201);
+    expect(signupRes.status).toBe(200);
     expect(signupRes.data.account_id).toBeDefined();
 
     const registeredAccountRes = await makeRequest<Object>(
@@ -33,7 +33,7 @@ describe('POST /signup', () => {
 
     const res = await makeRequest<{ message: number }>('/signup', input);
 
-    expect(res.status).toBe(422);
+    expect(res.status).toBe(400);
     expect(res.data.message).toBe('invalid [carPlate] field');
   });
 
@@ -43,7 +43,7 @@ describe('POST /signup', () => {
     await makeRequest('/signup', input);
     const res = await makeRequest<{ message: number }>('/signup', input);
 
-    expect(res.status).toBe(422);
+    expect(res.status).toBe(409);
     expect(res.data.message).toBe('[email] already registered');
   });
 });

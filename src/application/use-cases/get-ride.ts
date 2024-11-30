@@ -22,7 +22,7 @@ class GetRide {
   constructor(private readonly ridesRepository: RidesRepository) {}
 
   async execute(input: Input): Promise<Output> {
-    const ride = await this.ridesRepository.findByRideId(input.rideId);
+    const ride = await this.ridesRepository.findById(input.rideId);
 
     if (!ride) {
       throw new Error("ride not found");

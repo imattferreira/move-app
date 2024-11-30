@@ -29,7 +29,7 @@ describe('UpdatePosition', () => {
 
     await updatePosition.execute(input);
 
-    const positions = await positionsRepository.findAllByRideId(ride.id);
+    const positions = await positionsRepository.findAllById(ride.id);
 
     expect(positions).toHaveLength(1);
     expect(positions[0].id).toBeDefined();

@@ -25,7 +25,7 @@ class GetAccount {
   constructor(private readonly accountsRepository: AccountsRepository) { }
 
   async execute(input: Input): Promise<Output> {
-    const account = await this.accountsRepository.findByAccountId(
+    const account = await this.accountsRepository.findById(
       input.accountId
     );
 

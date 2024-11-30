@@ -48,10 +48,6 @@ class Ride {
   }
 
   attachDriver(driverId: string): void {
-    if (this.status !== 'requested') {
-      throw new Error('ride already accepted');
-    }
-
     this.driverId = driverId;
     this.status = 'accepted';
   }

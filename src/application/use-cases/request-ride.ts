@@ -21,7 +21,7 @@ class RequestRide {
   ) {}
 
   async execute(input: Input): Promise<Output> {
-    const passenger = await this.accountsRepository.findByAccountId(
+    const passenger = await this.accountsRepository.findById(
       input.passengerId
     );
 

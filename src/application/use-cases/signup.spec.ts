@@ -19,7 +19,7 @@ describe('SignUp', () => {
 
     expect(output?.accountId).toBeDefined();
 
-    const account = await accountsRepository.findByAccountId(output.accountId);
+    const account = await accountsRepository.findById(output.accountId);
 
     expect(account?.name).toBe(input.name);
     expect(account?.email).toBe(input.email);

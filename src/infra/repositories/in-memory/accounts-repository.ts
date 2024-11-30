@@ -12,7 +12,7 @@ class AccountsRepositoryInMemory implements AccountsRepository {
     this.stored.push(account);
   }
 
-  async findByAccountId(accountId: string): Promise<Account | null> {
+  async findById(accountId: string): Promise<Account | null> {
     const account = this.stored.find((account) => account.id === accountId);
 
     return account || null;

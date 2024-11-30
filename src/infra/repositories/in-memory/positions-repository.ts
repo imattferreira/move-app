@@ -12,7 +12,7 @@ class PositionsRepositoryInMemory implements PositionsRepository {
     this.stored.push(position);
   }
 
-  async findAllByRideId(rideId: string): Promise<Position[]> {
+  async findAllById(rideId: string): Promise<Position[]> {
     return this.stored.filter((position) => position.rideId === rideId);
   }
 }

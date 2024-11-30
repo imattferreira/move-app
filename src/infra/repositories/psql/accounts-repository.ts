@@ -42,7 +42,7 @@ class PsqlAccountsRepository implements AccountsRepository {
     await this.connection.close();
   }
 
-  async findByAccountId(accountId: string): Promise<Account | null> {
+  async findById(accountId: string): Promise<Account | null> {
     const query = 'SELECT * FROM ccca.account WHERE account_id = $1';
     const params = [accountId];
 

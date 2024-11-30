@@ -58,7 +58,7 @@ class PsqlRidesRepository implements RidesRepository {
     await this.connection.close();
   }
 
-  async findByRideId(rideId: string): Promise<Ride | null> {
+  async findById(rideId: string): Promise<Ride | null> {
     const query = sql`SELECT * FROM ccca.ride WHERE ride_id = $1`;
     const params = [rideId];
 
@@ -82,6 +82,21 @@ class PsqlRidesRepository implements RidesRepository {
       Number(ride.to_long),
       new Date(ride.date)
     );
+  }
+
+  async hasActiveRideOfDriver(driverId: string): Promise<boolean> {
+    const query = sql`
+      SELECT EXISTS (
+        SELECT 1 FROM ccca.ride
+        WHERE driver_id = $1 AND status <> 'completed'
+      );
+    `;
+    const params = [driverId];
+
+    const [{ exists }] = await this.connection.query(query, params);
+    await this.connection.close();
+
+    return exists;
   }
 
   async hasActiveRideOfPassenger(passengerId: string): Promise<boolean> {

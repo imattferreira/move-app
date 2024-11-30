@@ -25,7 +25,7 @@ describe('StartRide', () => {
 
     await startRide.execute(input);
 
-    const updatedRide = await ridesRepository.findByRideId(ride.id);
+    const updatedRide = await ridesRepository.findById(ride.id);
 
     expect(updatedRide?.status).toBe('in_progress');
   });

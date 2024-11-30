@@ -30,7 +30,7 @@ describe('RequestRide', () => {
     };
 
     const output = await requestRide.execute(input);
-    const ride = await ridesRepository.findByRideId(output.rideId);
+    const ride = await ridesRepository.findById(output.rideId);
 
     expect(output.rideId).toBeDefined();
     expect(ride?.passengerId).toBe(passenger.id);

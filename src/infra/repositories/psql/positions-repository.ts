@@ -31,7 +31,6 @@ class PsqlPositionsRepository implements PositionsRepository {
     ];
 
     await this.connection.query(query, params);
-    await this.connection.close();
   }
 
   async findAllById(rideId: string): Promise<Position[]> {
@@ -42,7 +41,6 @@ class PsqlPositionsRepository implements PositionsRepository {
     const params = [rideId];
 
     const [positions] = await this.connection.query(query, params);
-    await this.connection.close();
 
     return positions.map(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

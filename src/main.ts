@@ -34,4 +34,20 @@ new AccountsController(httpServer, signup, getAccount);
 new RidesController(httpServer, requestRide, getRide, acceptRide, startRide);
 new PositionsController(httpServer, updatePosition);
 
+async function shutdown() {
+  try {
+    await connection.close();
+    process.exit(0);
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  catch (err: any) {
+    console.log(err);
+    process.exit(1);
+  }
+}
+
+// Listen for termination signals
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
+
 httpServer.listen(3000);

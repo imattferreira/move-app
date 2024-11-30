@@ -55,7 +55,6 @@ class PsqlRidesRepository implements RidesRepository {
     ];
 
     await this.connection.query(query, params);
-    await this.connection.close();
   }
 
   async findById(rideId: string): Promise<Ride | null> {
@@ -63,7 +62,6 @@ class PsqlRidesRepository implements RidesRepository {
     const params = [rideId];
 
     const [ride] = await this.connection.query(query, params);
-    await this.connection.close();
 
     if (!ride) {
       return null;
@@ -94,7 +92,6 @@ class PsqlRidesRepository implements RidesRepository {
     const params = [driverId];
 
     const [{ exists }] = await this.connection.query(query, params);
-    await this.connection.close();
 
     return exists;
   }
@@ -109,7 +106,6 @@ class PsqlRidesRepository implements RidesRepository {
     const params = [passengerId];
 
     const [{ exists }] = await this.connection.query(query, params);
-    await this.connection.close();
 
     return exists;
   }
@@ -126,7 +122,6 @@ class PsqlRidesRepository implements RidesRepository {
     const params = [ride.driverId, ride.status, ride.distance, ride.id];
 
     await this.connection.query(query, params);
-    await this.connection.close();
   }
 }
 

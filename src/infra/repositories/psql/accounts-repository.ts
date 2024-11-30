@@ -39,7 +39,6 @@ class PsqlAccountsRepository implements AccountsRepository {
     ];
 
     await this.connection.query(query, params);
-    await this.connection.close();
   }
 
   async findById(accountId: string): Promise<Account | null> {
@@ -47,7 +46,6 @@ class PsqlAccountsRepository implements AccountsRepository {
     const params = [accountId];
 
     const [account] = await this.connection.query(query, params);
-    await this.connection.close();
 
     if (!account) {
       return null;
@@ -70,7 +68,6 @@ class PsqlAccountsRepository implements AccountsRepository {
     const params = [email];
 
     const [account] = await this.connection.query(query, params);
-    await this.connection.close();
 
     if (!account) {
       return null;

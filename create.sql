@@ -14,7 +14,7 @@ CREATE TABLE ccca.account (
 );
 
 CREATE TABLE ccca.ride (
-  ride_id       UUID,
+  ride_id       UUID    PRIMARY KEY,
   passenger_id  UUID,
   driver_id     UUID,
   status        TEXT,
@@ -28,9 +28,13 @@ CREATE TABLE ccca.ride (
 );
 
 CREATE TABLE ccca.position (
-  position_id UUID,
+  position_id UUID      PRIMARY KEY,
   ride_id     UUID,
   lat         NUMERIC,
   long        NUMERIC,
   date        TIMESTAMP
 );
+
+CREATE INDEX idx_account_email ON ccca.account (email);
+CREATE INDEX idx_ride_passenger_status ON ccca.ride (passenger_id, status);
+CREATE INDEX idx_position_ride_id ON ccca.position (ride_id);

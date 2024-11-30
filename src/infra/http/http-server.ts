@@ -5,7 +5,9 @@ import type { Object } from '~/utils/types';
 
 type HttpMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-type Handler<I extends Object, O> = (data: I) => Promise<O>;
+interface Handler<I extends Object, O> {
+  execute(data: I): Promise<O>;
+}
 
 export default interface HttpServer {
   register<I extends Object, O>(
@@ -28,7 +30,7 @@ export class ExpressAdapter implements HttpServer {
   async register<I extends Object, O>(
     method: HttpMethods,
     endpoint: string,
-    callback: Handler<I, O>
+    handler: Handler<I, O>
   ): Promise<void> {
     const m = method.toLowerCase() as
       | 'get'
@@ -36,8 +38,8 @@ export class ExpressAdapter implements HttpServer {
       | 'put'
       | 'patch'
       | 'delete';
-    const route = endpoint.replace(/\{\}/g, '');
-    const handler = async (req: Request, res: Response) => {
+    const route = endpoint.replace(/{|}/g, '');
+    const callback = async (req: Request, res: Response) => {
       try {
         const data = {
           ...req.params,
@@ -45,7 +47,7 @@ export class ExpressAdapter implements HttpServer {
         };
         const input = camelfy(data) as I;
 
-        const output = await callback(input);
+        const output = await handler.execute(input);
 
         if (!output) {
           return res.send();
@@ -59,7 +61,7 @@ export class ExpressAdapter implements HttpServer {
       }
     };
 
-    this.app[m](route, handler);
+    this.app[m](route, callback);
   }
 
   listen(port: number): void {

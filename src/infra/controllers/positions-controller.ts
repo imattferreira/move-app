@@ -3,7 +3,7 @@ import HttpServer from '~/infra/http/http-server';
 
 class PositionsController {
   constructor(httpServer: HttpServer, updatePosition: UpdatePosition) {
-    httpServer.register('POST', '/positions', updatePosition.execute);
+    httpServer.register('POST', '/positions', updatePosition);
   }
 }
 

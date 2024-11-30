@@ -1,8 +1,8 @@
 import type AccountsRepository from '../repositories/accounts-repository';
 
-interface Input {
+type Input = {
   accountId: string;
-}
+};
 
 type Output = {
   id: string;
@@ -17,17 +17,15 @@ type Output = {
 
 class GetAccount {
   /**
-  * DIP - Dependency Inversion Principle
-  *
-  * If this contract was designed exclusived only for this use-case specifities,
-  * this could also be ISP - Interface Segregation Principle
-  */
-  constructor(private readonly accountsRepository: AccountsRepository) { }
+   * DIP - Dependency Inversion Principle
+   *
+   * If this contract was designed exclusively only for this use-case
+   * specificities, this could also be ISP - Interface Segregation Principle
+   */
+  constructor(private readonly accountsRepository: AccountsRepository) {}
 
   async execute(input: Input): Promise<Output> {
-    const account = await this.accountsRepository.findById(
-      input.accountId
-    );
+    const account = await this.accountsRepository.findById(input.accountId);
 
     if (!account) {
       throw new Error('account not found');

@@ -1,13 +1,16 @@
-import Ride from "~/domain/entities/ride";
-import PositionsRepositoryInMemory from "~/infra/repositories/in-memory/positions-repository";
-import RidesRepositoryInMemory from "~/infra/repositories/in-memory/rides-repository";
-import UpdatePosition from "./update-position";
+import Ride from '~/domain/entities/ride';
+import PositionsRepositoryInMemory from '~/infra/repositories/in-memory/positions-repository';
+import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
+import UpdatePosition from './update-position';
 
 describe('UpdatePosition', () => {
   it('should be able update the position of a ride', async () => {
     const positionsRepository = new PositionsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
-    const updatePosition = new UpdatePosition(positionsRepository, ridesRepository);
+    const updatePosition = new UpdatePosition(
+      positionsRepository,
+      ridesRepository
+    );
 
     const ride = Ride.create(
       Math.random().toString(),
@@ -17,15 +20,15 @@ describe('UpdatePosition', () => {
       1245245
     );
 
-    ride.attachDriver(Math.random().toString())
+    ride.attachDriver(Math.random().toString());
 
     await ridesRepository.save(ride);
 
     const input = {
       rideId: ride.id,
       lat: Math.random() * 100,
-      long: Math.random() * 100,
-    }
+      long: Math.random() * 100
+    };
 
     await updatePosition.execute(input);
 
@@ -41,38 +44,50 @@ describe('UpdatePosition', () => {
   it('should not update the position of a non-existing ride', async () => {
     const positionsRepository = new PositionsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
-    const updatePosition = new UpdatePosition(positionsRepository, ridesRepository);
+    const updatePosition = new UpdatePosition(
+      positionsRepository,
+      ridesRepository
+    );
 
     const input = {
       rideId: Math.random().toString(),
       lat: Math.random() * 100,
-      long: Math.random() * 100,
-    }
+      long: Math.random() * 100
+    };
 
-    await expect(updatePosition.execute(input)).rejects.toThrow('ride not found');
+    await expect(
+      updatePosition.execute(input)
+    ).rejects.toThrow('ride not found');
   });
 
-  it('should not update the position of a ride that aren\'t in progress', async () => {
-    const positionsRepository = new PositionsRepositoryInMemory();
-    const ridesRepository = new RidesRepositoryInMemory();
-    const updatePosition = new UpdatePosition(positionsRepository, ridesRepository);
+  it(
+    'should not update the position of a ride that aren\'t in progress',
+    async () => {
+      const positionsRepository = new PositionsRepositoryInMemory();
+      const ridesRepository = new RidesRepositoryInMemory();
+      const updatePosition = new UpdatePosition(
+        positionsRepository,
+        ridesRepository
+      );
 
-    const ride = Ride.create(
-      Math.random().toString(),
-      12312312,
-      12312312,
-      52423423,
-      1245245
-    );
+      const ride = Ride.create(
+        Math.random().toString(),
+        12312312,
+        12312312,
+        52423423,
+        1245245
+      );
 
-    await ridesRepository.save(ride);
+      await ridesRepository.save(ride);
 
-    const input = {
-      rideId: ride.id,
-      lat: Math.random() * 100,
-      long: Math.random() * 100,
-    }
+      const input = {
+        rideId: ride.id,
+        lat: Math.random() * 100,
+        long: Math.random() * 100
+      };
 
-    await expect(updatePosition.execute(input)).rejects.toThrow('ride is not in progress');
-  });
+      await expect(
+        updatePosition.execute(input)
+      ).rejects.toThrow('ride is not in progress');
+    });
 });

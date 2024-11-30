@@ -1,8 +1,8 @@
-import type RidesRepository from "~/application/repositories/rides-repository";
+import type RidesRepository from '~/application/repositories/rides-repository';
 
-interface Input {
+type Input = {
   rideId: string;
-}
+};
 
 type Output = {
   id: string;
@@ -25,7 +25,7 @@ class GetRide {
     const ride = await this.ridesRepository.findById(input.rideId);
 
     if (!ride) {
-      throw new Error("ride not found");
+      throw new Error('ride not found');
     }
 
     return {
@@ -39,7 +39,7 @@ class GetRide {
       fromLong: ride.fromLong,
       toLat: ride.toLat,
       toLong: ride.toLong,
-      date: ride.date.toUTCString(),
+      date: ride.date.toUTCString()
     };
   }
 }

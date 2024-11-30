@@ -1,5 +1,5 @@
-import PositionsRepository from "~/application/repositories/positions-repository";
-import Position from "~/domain/entities/position";
+import PositionsRepository from '~/application/repositories/positions-repository';
+import Position from '~/domain/entities/position';
 
 class PositionsRepositoryInMemory implements PositionsRepository {
   private stored: Position[];
@@ -13,7 +13,7 @@ class PositionsRepositoryInMemory implements PositionsRepository {
   }
 
   async findAllById(rideId: string): Promise<Position[]> {
-    return this.stored.filter((position) => position.rideId === rideId);
+    return this.stored.filter(position => position.rideId === rideId);
   }
 }
 

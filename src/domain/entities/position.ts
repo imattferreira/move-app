@@ -9,7 +9,7 @@ class Position {
     readonly date: Date
   ) {}
 
-  static create( rideId: string, lat: number, long: number) {
+  static create(rideId: string, lat: number, long: number) {
     const id = crypto.randomUUID();
     const now = new Date();
 

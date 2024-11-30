@@ -1,3 +1,4 @@
+import type { Object } from '~/utils/types';
 import { makeAccountFactory } from './factories/entities';
 import { makeRequest } from './utils';
 
@@ -13,7 +14,7 @@ describe('POST /signup', () => {
     expect(signupRes.status).toBe(201);
     expect(signupRes.data.account_id).toBeDefined();
 
-    const registeredAccountRes = await makeRequest<Record<string, unknown>>(
+    const registeredAccountRes = await makeRequest<Object>(
       `/accounts/${signupRes.data.account_id}`
     );
 

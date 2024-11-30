@@ -1,4 +1,4 @@
-import Account from "~/domain/entities/account";
+import Account from '~/domain/entities/account';
 
 interface AccountsRepository {
   save(account: Account): Promise<void>;

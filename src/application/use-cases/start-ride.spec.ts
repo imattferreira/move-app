@@ -1,6 +1,6 @@
-import Ride from "~/domain/entities/ride";
-import RidesRepositoryInMemory from "~/infra/repositories/in-memory/rides-repository";
-import StartRide from "./start-ride";
+import Ride from '~/domain/entities/ride';
+import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
+import StartRide from './start-ride';
 
 describe('StartRide', () => {
   it('should be able to start a ride', async () => {
@@ -20,7 +20,7 @@ describe('StartRide', () => {
     await ridesRepository.save(ride);
 
     const input = {
-      rideId: ride.id,
+      rideId: ride.id
     };
 
     await startRide.execute(input);
@@ -35,7 +35,7 @@ describe('StartRide', () => {
     const startRide = new StartRide(ridesRepository);
 
     const input = {
-      rideId: Math.random().toString(),
+      rideId: Math.random().toString()
     };
 
     await expect(startRide.execute(input)).rejects.toThrow('ride not found');
@@ -58,11 +58,13 @@ describe('StartRide', () => {
     await ridesRepository.save(ride);
 
     const input = {
-      rideId: Math.random().toString(),
+      rideId: Math.random().toString()
     };
 
     await startRide.execute(input);
 
-    await expect(startRide.execute(input)).rejects.toThrow('ride already started');
+    await expect(
+      startRide.execute(input)
+    ).rejects.toThrow('ride already started');
   });
 });

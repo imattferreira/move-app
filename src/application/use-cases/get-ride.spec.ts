@@ -1,9 +1,9 @@
-import Ride from "~/domain/entities/ride";
-import RidesRepositoryInMemory from "~/infra/repositories/in-memory/rides-repository";
-import GetRide from "./get-ride";
+import Ride from '~/domain/entities/ride';
+import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
+import GetRide from './get-ride';
 
-describe("GetRide", () => {
-  it("should be able to get info about a existing ride", async () => {
+describe('GetRide', () => {
+  it('should be able to get info about a existing ride', async () => {
     const ridesRepository = new RidesRepositoryInMemory();
     const getRide = new GetRide(ridesRepository);
 
@@ -30,12 +30,12 @@ describe("GetRide", () => {
     expect(output.toLong).toBe(ride.toLong);
   });
 
-  it("should not get info about a non-existing ride", async () => {
+  it('should not get info about a non-existing ride', async () => {
     const ridesRepository = new RidesRepositoryInMemory();
     const getRide = new GetRide(ridesRepository);
 
     const rideId = Math.random().toString();
 
-    await expect(getRide.execute({ rideId })).rejects.toThrow("ride not found");
+    await expect(getRide.execute({ rideId })).rejects.toThrow('ride not found');
   });
 });

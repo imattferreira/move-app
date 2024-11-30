@@ -1,7 +1,7 @@
 import type AccountsRepository from '~/application/repositories/accounts-repository';
 import Account from '~/domain/entities/account';
 
-interface Input {
+type Input = {
   name: string;
   email: string;
   cpf: string;
@@ -9,7 +9,7 @@ interface Input {
   isPassenger?: boolean;
   isDriver?: boolean;
   password: string;
-}
+};
 
 type Output = { accountId: string };
 

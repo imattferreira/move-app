@@ -1,8 +1,8 @@
-import RidesRepository from "~/application/repositories/rides-repository";
+import RidesRepository from '~/application/repositories/rides-repository';
 
-interface Input {
+type Input = {
   rideId: string;
-}
+};
 
 class StartRide {
   constructor(private readonly ridesRepository: RidesRepository) {}

@@ -2,17 +2,17 @@ import Ride from '~/domain/entities/ride';
 import type AccountsRepository from '../repositories/accounts-repository';
 import type RidesRepository from '../repositories/rides-repository';
 
-interface Input {
+type Input = {
   passengerId: string;
   fromLat: number;
   fromLong: number;
   toLat: number;
   toLong: number;
-}
+};
 
 type Output = {
   rideId: string;
-}
+};
 
 class RequestRide {
   constructor(
@@ -21,9 +21,7 @@ class RequestRide {
   ) {}
 
   async execute(input: Input): Promise<Output> {
-    const passenger = await this.accountsRepository.findById(
-      input.passengerId
-    );
+    const passenger = await this.accountsRepository.findById(input.passengerId);
 
     if (!passenger) {
       throw new Error('account not found');

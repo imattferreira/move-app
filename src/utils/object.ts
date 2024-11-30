@@ -1,14 +1,14 @@
-const isObj = (data: unknown): data is Record<string, unknown> =>
+import type { Object } from './types';
+
+const isObj = (data: unknown): data is Object =>
   typeof data === 'object' && data !== null && !Array.isArray(data);
 
-export function snakefy<T extends Record<string, unknown>>(
-  obj: T
-): Record<string, unknown> {
-  function iterator<K>(obj: K, tmp: Record<string, unknown>) {
+export function snakefy<T extends Object>(obj: T): Object {
+  function iterator<K>(obj: K, tmp: Object) {
     for (const key in obj) {
       const snakedKey = key.replace(
         /[A-Z]/,
-        (letter) => `_${letter.toLowerCase()}`
+        letter => `_${letter.toLowerCase()}`
       );
 
       if (Array.isArray(obj[key])) {
@@ -34,7 +34,7 @@ export function snakefy<T extends Record<string, unknown>>(
       if (isObj(obj[key])) {
         tmp[snakedKey] = {};
 
-        iterator(obj[key], tmp[snakedKey] as Record<string, unknown>);
+        iterator(obj[key], tmp[snakedKey] as Object);
         continue;
       }
 
@@ -51,14 +51,11 @@ export function snakefy<T extends Record<string, unknown>>(
   return result;
 }
 
-export function camelfy<T extends Record<string, unknown>>(
-  obj: T
-): Record<string, unknown> {
-  function iterator<K>(obj: K, tmp: Record<string, unknown>) {
+export function camelfy<T extends Object>(obj: T): Object {
+  function iterator<K>(obj: K, tmp: Object) {
     for (const key in obj) {
-      const cameldKey = key.replace(
-        /_[a-z]/,
-        (matched) => matched[1].toUpperCase()
+      const cameldKey = key.replace(/_[a-z]/, matched =>
+        matched[1].toUpperCase()
       );
 
       if (Array.isArray(obj[key])) {
@@ -84,11 +81,11 @@ export function camelfy<T extends Record<string, unknown>>(
       if (isObj(obj[key])) {
         tmp[cameldKey] = {};
 
-        iterator(obj[key], tmp[cameldKey] as Record<string, unknown>);
+        iterator(obj[key], tmp[cameldKey] as Object);
         continue;
       }
 
-       tmp[cameldKey] = obj[key];
+      tmp[cameldKey] = obj[key];
     }
 
     return tmp;

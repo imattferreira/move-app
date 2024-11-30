@@ -1,13 +1,18 @@
 // Framework & Adapter (Clean Arch)
 import express, { type Request, type Response, type Express } from 'express';
 import { camelfy, snakefy } from '~/utils/object';
+import type { Object } from '~/utils/types';
 
 type HttpMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-type Handler<T> = (data: T) => void;
+type Handler<I extends Object, O> = (data: I) => Promise<O>;
 
 export default interface HttpServer {
-  register<T>(method: HttpMethods, endpoint: string, callback: Handler<T>): void;
+  register<I extends Object, O>(
+    method: HttpMethods,
+    endpoint: string,
+    callback: Handler<I, O>
+  ): void;
   listen(port: number): void;
 }
 
@@ -20,26 +25,36 @@ export class ExpressAdapter implements HttpServer {
     this.app.use(express.json());
   }
 
-  async register(
+  async register<I extends Object, O>(
     method: HttpMethods,
     endpoint: string,
-    callback: Function
+    callback: Handler<I, O>
   ): Promise<void> {
-    const m = method.toLowerCase() as 'get' | 'post' | 'put' | 'patch' | 'delete';
+    const m = method.toLowerCase() as
+      | 'get'
+      | 'post'
+      | 'put'
+      | 'patch'
+      | 'delete';
     const route = endpoint.replace(/\{\}/g, '');
     const handler = async (req: Request, res: Response) => {
       try {
-        const input = {
+        const data = {
           ...req.params,
           ...req.body
         };
+        const input = camelfy(data) as I;
 
-        const output = callback(camelfy(input));
+        const output = await callback(input);
+
+        if (!output) {
+          return res.send();
+        }
 
         res.json(snakefy(output));
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (err: any) {
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      catch (err: any) {
         res.status(422).json({ message: err.message });
       }
     };

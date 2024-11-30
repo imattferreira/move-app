@@ -1,10 +1,10 @@
-import type AccountsRepository from "~/application/repositories/accounts-repository";
-import type RidesRepository from "~/application/repositories/rides-repository";
+import type AccountsRepository from '~/application/repositories/accounts-repository';
+import type RidesRepository from '~/application/repositories/rides-repository';
 
-interface Input {
+type Input = {
   driverId: string;
   rideId: string;
-}
+};
 
 class AcceptRide {
   constructor(
@@ -33,9 +33,8 @@ class AcceptRide {
       throw new Error('ride already accepted');
     }
 
-    const driverHasActiveRide = await this.ridesRepository.hasActiveRideOfDriver(
-      driver.id
-    );
+    const driverHasActiveRide
+      = await this.ridesRepository.hasActiveRideOfDriver(driver.id);
 
     if (driverHasActiveRide) {
       throw new Error('driver already accepted another ride');

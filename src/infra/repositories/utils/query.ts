@@ -1,4 +1,3 @@
-
 export function sql(expressions: TemplateStringsArray): string {
   let statement = '';
 

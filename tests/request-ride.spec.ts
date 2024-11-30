@@ -4,8 +4,8 @@ import { makeRequest } from './utils';
 describe('POST /rides', () => {
   it('should be able request a new ride', async () => {
     const signupRes = await makeRequest<{ account_id: string }>(
-        '/signup',
-        makeAccountFactory({
+      '/signup',
+      makeAccountFactory({
         is_passenger: true,
         is_driver: false
       })
@@ -40,21 +40,26 @@ describe('POST /rides', () => {
   it(
     'should not request a new ride when passenger already have a ride in progress',
     async () => {
-    const signupRes = await makeRequest<{ account_id: string }>(
-      '/signup',
-      makeAccountFactory({
-        is_passenger: true,
-        is_driver: false
-      })
-    );
+      const signupRes = await makeRequest<{ account_id: string }>(
+        '/signup',
+        makeAccountFactory({
+          is_passenger: true,
+          is_driver: false
+        })
+      );
 
-    const passengerId = signupRes.data.account_id;
-    const input = makeRideFactory({ passenger_id: passengerId });
+      const passengerId = signupRes.data.account_id;
+      const input = makeRideFactory({ passenger_id: passengerId });
 
-    await makeRequest<{ ride_id: string }>('/rides', input);
-    const requestRideRes = await makeRequest<{ message: string }>('/rides', input);
+      await makeRequest<{ ride_id: string }>('/rides', input);
+      const requestRideRes = await makeRequest<{ message: string }>(
+        '/rides',
+        input
+      );
 
-    expect(requestRideRes.status).toBe(422);
-    expect(requestRideRes.data.message).toBe('account already have a ride in progress');
-  });
+      expect(requestRideRes.status).toBe(422);
+      expect(
+        requestRideRes.data.message
+      ).toBe('account already have a ride in progress');
+    });
 });

@@ -5,38 +5,38 @@ const SECOND_DIGIT_FACTOR = 11;
 export default function validateCpf(cpf: string) {
   cpf = cpf.replace(/\D/g, '');
 
-	if (cpf.length !== CPF_VALID_LENGTH) {
+  if (cpf.length !== CPF_VALID_LENGTH) {
     return false;
-	}
+  }
 
-	if (allDigitsTheSame(cpf)) {
-	  return false;
-	}
+  if (allDigitsTheSame(cpf)) {
+    return false;
+  }
 
-	const digit1 = calculateDigit(cpf, FIRST_DIGIT_FACTOR);
-	const digit2 = calculateDigit(cpf, SECOND_DIGIT_FACTOR);
+  const digit1 = calculateDigit(cpf, FIRST_DIGIT_FACTOR);
+  const digit2 = calculateDigit(cpf, SECOND_DIGIT_FACTOR);
 
-	return `${digit1}${digit2}` === extractDigit(cpf);
+  return `${digit1}${digit2}` === extractDigit(cpf);
 }
 
 function allDigitsTheSame(cpf: string) {
-	return cpf.split('').every(digit => digit === cpf[0]);
+  return cpf.split('').every(digit => digit === cpf[0]);
 }
 
 function calculateDigit(cpf: string, factor: number) {
-	let total = 0;
+  let total = 0;
 
-	for (const digit of cpf) {
-		if (factor > 1) {
-		  total += parseInt(digit) * factor--;
-		}
-	}
+  for (const digit of cpf) {
+    if (factor > 1) {
+      total += parseInt(digit) * factor--;
+    }
+  }
 
-	const remainder = total % 11;
+  const remainder = total % 11;
 
-	return (remainder < 2) ? 0 : 11 - remainder;
+  return (remainder < 2) ? 0 : 11 - remainder;
 }
 
 function extractDigit(cpf: string) {
-	return cpf.slice(9);
+  return cpf.slice(9);
 }

@@ -43,7 +43,9 @@ describe('SignUp', () => {
       password: '123456'
     };
 
-    await expect(signup.execute(input)).rejects.toThrow('invalid [carPlate] field');
+    await expect(
+      signup.execute(input)
+    ).rejects.toThrow('invalid [carPlate] field');
   });
 
   it('should not create a user with a already registered email', async () => {
@@ -60,6 +62,8 @@ describe('SignUp', () => {
 
     await signup.execute(input);
 
-    await expect(signup.execute(input)).rejects.toThrow('[email] already registered');
+    await expect(
+      signup.execute(input)
+    ).rejects.toThrow('[email] already registered');
   });
 });

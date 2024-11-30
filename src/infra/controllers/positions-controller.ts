@@ -1,5 +1,5 @@
-import UpdatePosition from "~/application/use-cases/update-position";
-import HttpServer from "~/infra/http/http-server";
+import UpdatePosition from '~/application/use-cases/update-position';
+import HttpServer from '~/infra/http/http-server';
 
 class PositionsController {
   constructor(httpServer: HttpServer, updatePosition: UpdatePosition) {
@@ -7,4 +7,4 @@ class PositionsController {
   }
 }
 
-export default PositionsController
+export default PositionsController;

@@ -49,5 +49,4 @@ describe('validateCpf', () => {
 
     expect(isValid).toBe(false);
   });
-
 });

@@ -1,4 +1,4 @@
-import Position from "~/domain/entities/position";
+import Position from '~/domain/entities/position';
 
 interface PositionsRepository {
   save(position: Position): Promise<void>;

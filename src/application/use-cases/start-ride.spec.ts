@@ -30,7 +30,7 @@ describe('StartRide', () => {
     expect(updatedRide?.status).toBe('in_progress');
   });
 
-  it('should not be able to start a non-existing ride', async () => {
+  it('should not start a non-existing ride', async () => {
     const ridesRepository = new RidesRepositoryInMemory();
     const startRide = new StartRide(ridesRepository);
 
@@ -41,7 +41,7 @@ describe('StartRide', () => {
     await expect(startRide.execute(input)).rejects.toThrow('ride not found');
   });
 
-  it('should not be able to start a already started ride', async () => {
+  it('should not start a already started ride', async () => {
     const ridesRepository = new RidesRepositoryInMemory();
     const startRide = new StartRide(ridesRepository);
 

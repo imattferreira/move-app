@@ -44,7 +44,7 @@ describe('RequestRide', () => {
     expect(ride?.date).toBeInstanceOf(Date);
   });
 
-  it('should not be able request a new ride when passenger not exists', async () => {
+  it('should not request a new ride when passenger not exists', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
     const requestRide = new RequestRide(accountsRepository, ridesRepository);
@@ -104,7 +104,7 @@ describe('RequestRide', () => {
     ).rejects.toThrow('account needs to be of a passenger');
   });
 
-  it('should not be able request a new ride when passenger already have a ride in progress', async () => {
+  it('should not request a new ride when passenger already have a ride in progress', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
     const requestRide = new RequestRide(accountsRepository, ridesRepository);

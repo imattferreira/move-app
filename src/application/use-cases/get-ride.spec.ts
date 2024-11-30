@@ -30,7 +30,7 @@ describe("GetRide", () => {
     expect(output.toLong).toBe(ride.toLong);
   });
 
-  it("should not be able to get info about a non-existing ride", async () => {
+  it("should not get info about a non-existing ride", async () => {
     const ridesRepository = new RidesRepositoryInMemory();
     const getRide = new GetRide(ridesRepository);
 

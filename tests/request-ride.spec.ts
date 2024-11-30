@@ -38,7 +38,7 @@ describe('POST /rides', () => {
   });
 
   it(
-    'should not be able request a new ride when passenger already have a ride in progress',
+    'should not request a new ride when passenger already have a ride in progress',
     async () => {
     const signupRes = await makeRequest<{ account_id: string }>(
       '/signup',

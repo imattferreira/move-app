@@ -71,7 +71,7 @@ describe('AcceptRide', () => {
     ).rejects.toThrow('driver not found');
   });
 
-  it('should not be able a passenger accept a ride', async () => {
+  it('should not a passenger accept a ride', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
     const acceptRide = new AcceptRide(accountsRepository, ridesRepository);
@@ -109,7 +109,7 @@ describe('AcceptRide', () => {
     ).rejects.toThrow('user needs to be a driver to accept a ride');
   });
 
-  it('should not be able a driver accept a ride that already accepted', async () => {
+  it('should not a driver accept a ride that already accepted', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
     const acceptRide = new AcceptRide(accountsRepository, ridesRepository);

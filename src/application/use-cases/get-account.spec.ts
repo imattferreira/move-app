@@ -29,7 +29,7 @@ describe('GetAccount', () => {
     expect(output.password).toBe(account.password);
   });
 
-  it('should not be able to get info about a non-existing accunt', async () => {
+  it('should not get info about a non-existing accunt', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const getAccount = new GetAccount(accountsRepository);
 

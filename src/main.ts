@@ -11,12 +11,16 @@ import RequestRide from './application/use-cases/request-ride';
 import SignUp from './application/use-cases/signup';
 import AcceptRide from './application/use-cases/accept-ride';
 import StartRide from './application/use-cases/start-ride';
+import PositionsController from './infra/controllers/positions-controller';
+import UpdatePosition from './application/use-cases/update-position';
+import PsqlPositionsRepository from './infra/repositories/psql/positions-repository';
 
 const httpServer = new ExpressAdapter();
 const connection = new PgPromiseAdapter();
 
 const accountsRepository = new PsqlAccountsRepository(connection);
 const ridesRepository = new PsqlRidesRepository(connection);
+const positionsRepository = new PsqlPositionsRepository(connection);
 
 const signup = new SignUp(accountsRepository);
 const getAccount = new GetAccount(accountsRepository);
@@ -24,8 +28,10 @@ const requestRide = new RequestRide(accountsRepository, ridesRepository);
 const getRide = new GetRide(ridesRepository);
 const acceptRide = new AcceptRide(accountsRepository, ridesRepository);
 const startRide = new StartRide(ridesRepository);
+const updatePosition = new UpdatePosition(positionsRepository, ridesRepository);
 
 new AccountsController(httpServer, signup, getAccount);
 new RidesController(httpServer, requestRide, getRide, acceptRide, startRide);
+new PositionsController(httpServer, updatePosition);
 
 httpServer.listen(3000);

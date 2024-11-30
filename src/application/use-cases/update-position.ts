@@ -1,3 +1,4 @@
+import Position from "../../domain/entities/position";
 import PositionsRepository from "../repositories/positions-repository";
 import RidesRepository from "../repositories/rides-repository";
 
@@ -14,7 +15,19 @@ class UpdatePosition {
   ) {}
 
   async execute(input: Input): Promise<void> {
-    // TODO
+    const ride = await this.ridesRepository.findByRideId(input.rideId);
+
+    if (!ride) {
+      throw new Error('ride not found');
+    }
+
+    if (ride.status !== 'in_progress') {
+      throw new Error('ride is not in progress');
+    }
+
+    const position = Position.create(input.rideId, input.lat, input.long);
+
+    await this.positionsRepository.save(position);
   }
 }
 

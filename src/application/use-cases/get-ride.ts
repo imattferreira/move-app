@@ -1,4 +1,5 @@
 import type RidesRepository from '~/application/repositories/rides-repository';
+import NotFoundException from '~/application/exceptions/not-found-exception';
 
 type Input = {
   rideId: string;
@@ -25,7 +26,7 @@ class GetRide {
     const ride = await this.ridesRepository.findById(input.rideId);
 
     if (!ride) {
-      throw new Error('ride not found');
+      throw new NotFoundException('ride not found');
     }
 
     return {

@@ -2,6 +2,8 @@ import Ride from '~/domain/entities/ride';
 import PositionsRepositoryInMemory from '~/infra/repositories/in-memory/positions-repository';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 import UpdatePosition from './update-position';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import ConflictException from '~/application/exceptions/conflict-exception';
 
 describe('UpdatePosition', () => {
   it('should be able update the position of a ride', async () => {
@@ -57,8 +59,8 @@ describe('UpdatePosition', () => {
     };
 
     await expect(
-      updatePosition.execute(input)
-    ).rejects.toThrow('ride not found');
+      () => updatePosition.execute(input)
+    ).rejects.toThrow(new NotFoundException('ride not found'));
   });
 
   it(
@@ -88,7 +90,7 @@ describe('UpdatePosition', () => {
       };
 
       await expect(
-        updatePosition.execute(input)
-      ).rejects.toThrow('ride is not in progress');
+        () => updatePosition.execute(input)
+      ).rejects.toThrow(new ConflictException('ride is not in progress'));
     });
 });

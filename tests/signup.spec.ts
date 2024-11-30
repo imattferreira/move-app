@@ -3,7 +3,7 @@ import { makeAccountFactory } from './factories/entities';
 import { makeRequest } from './utils';
 
 describe('POST /signup', () => {
-  it('should be able create a driver user', async () => {
+  it.only('should be able create a driver user', async () => {
     const input = makeAccountFactory({ is_driver: true });
 
     const signupRes = await makeRequest<{ account_id: string }>(

@@ -1,5 +1,8 @@
 import type AccountsRepository from '~/application/repositories/accounts-repository';
 import type RidesRepository from '~/application/repositories/rides-repository';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import ConflictException from '~/application/exceptions/conflict-exception';
+import ForbiddenException from '~/application/exceptions/forbidden-exception';
 
 type Input = {
   driverId: string;
@@ -16,28 +19,30 @@ class AcceptRide {
     const driver = await this.accountsRepository.findById(input.driverId);
 
     if (!driver) {
-      throw new Error('driver not found');
+      throw new NotFoundException('driver not found');
     }
 
     if (!driver.isDriver) {
-      throw new Error('user needs to be a driver to accept a ride');
+      throw new ForbiddenException(
+        'user needs to be a driver to accept a ride'
+      );
     }
 
     const ride = await this.ridesRepository.findById(input.rideId);
 
     if (!ride) {
-      throw new Error('ride not found');
+      throw new NotFoundException('ride not found');
     }
 
     if (ride.status !== 'requested') {
-      throw new Error('ride already accepted');
+      throw new ConflictException('ride already accepted by another driver');
     }
 
     const driverHasActiveRide
       = await this.ridesRepository.hasActiveRideOfDriver(driver.id);
 
     if (driverHasActiveRide) {
-      throw new Error('driver already accepted another ride');
+      throw new ConflictException('driver already have a ride active');
     }
 
     ride.attachDriver(driver.id);

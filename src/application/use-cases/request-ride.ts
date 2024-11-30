@@ -1,6 +1,9 @@
 import Ride from '~/domain/entities/ride';
 import type AccountsRepository from '~/application/repositories/accounts-repository';
 import type RidesRepository from '~/application/repositories/rides-repository';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import ForbiddenException from '~/application/exceptions/forbidden-exception';
+import ConflictException from '~/application/exceptions/conflict-exception';
 
 type Input = {
   passengerId: string;
@@ -24,11 +27,11 @@ class RequestRide {
     const passenger = await this.accountsRepository.findById(input.passengerId);
 
     if (!passenger) {
-      throw new Error('account not found');
+      throw new NotFoundException('account not found');
     }
 
     if (!passenger.isPassenger) {
-      throw new Error('account needs to be of a passenger');
+      throw new ForbiddenException('account needs to be of a passenger');
     }
 
     const hasActiveRide = await this.ridesRepository.hasActiveRideOfPassenger(
@@ -36,7 +39,7 @@ class RequestRide {
     );
 
     if (hasActiveRide) {
-      throw new Error('account already have a ride in progress');
+      throw new ConflictException('account already have a ride in progress');
     }
 
     const ride = Ride.create(

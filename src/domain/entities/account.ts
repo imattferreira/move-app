@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import InvalidException from '~/application/exceptions/invalid-exception';
 import validateCpf from '~/domain/validateCpf';
 
 // Entity
@@ -14,19 +15,19 @@ class Account {
     readonly password: string
   ) {
     if (!name.match(/[a-zA-Z] [a-zA-Z]+/)) {
-      throw new Error('invalid [name] field');
+      throw new InvalidException('invalid [name] field');
     }
 
     if (!email.match(/^(.+)@(.+)$/)) {
-      throw new Error('invalid [email] field');
+      throw new InvalidException('invalid [email] field');
     }
 
     if (!validateCpf(cpf)) {
-      throw new Error('invalid [cpf] field');
+      throw new InvalidException('invalid [cpf] field');
     }
 
     if (isDriver && !carPlate?.match(/[A-Z]{3}[0-9]{4}/)) {
-      throw new Error('invalid [carPlate] field');
+      throw new InvalidException('invalid [carPlate] field');
     }
   }
 

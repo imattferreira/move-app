@@ -1,6 +1,8 @@
 import Ride from '~/domain/entities/ride';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 import StartRide from './start-ride';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import ConflictException from '~/application/exceptions/conflict-exception';
 
 describe('StartRide', () => {
   it('should be able to start a ride', async () => {
@@ -38,7 +40,9 @@ describe('StartRide', () => {
       rideId: Math.random().toString()
     };
 
-    await expect(startRide.execute(input)).rejects.toThrow('ride not found');
+    await expect(
+      () => startRide.execute(input)
+    ).rejects.toThrow(new NotFoundException('ride not found'));
   });
 
   it('should not start a already started ride', async () => {
@@ -64,7 +68,7 @@ describe('StartRide', () => {
     await startRide.execute(input);
 
     await expect(
-      startRide.execute(input)
-    ).rejects.toThrow('ride already started');
+      () => startRide.execute(input)
+    ).rejects.toThrow(new ConflictException('ride already started'));
   });
 });

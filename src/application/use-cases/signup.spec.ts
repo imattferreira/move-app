@@ -1,5 +1,7 @@
 import AccountsRepositoryInMemory from '~/infra/repositories/in-memory/accounts-repository';
 import SignUp from './signup';
+import InvalidException from '~/application/exceptions/invalid-exception';
+import ConflictException from '~/application/exceptions/conflict-exception';
 
 describe('SignUp', () => {
   it('should be able create a driver user', async () => {
@@ -44,8 +46,8 @@ describe('SignUp', () => {
     };
 
     await expect(
-      signup.execute(input)
-    ).rejects.toThrow('invalid [carPlate] field');
+      () => signup.execute(input)
+    ).rejects.toThrow(new InvalidException('invalid [carPlate] field'));
   });
 
   it('should not create a user with a already registered email', async () => {
@@ -63,7 +65,7 @@ describe('SignUp', () => {
     await signup.execute(input);
 
     await expect(
-      signup.execute(input)
-    ).rejects.toThrow('[email] already registered');
+      () => signup.execute(input)
+    ).rejects.toThrow(new ConflictException('[email] already registered'));
   });
 });

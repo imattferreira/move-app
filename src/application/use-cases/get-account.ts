@@ -1,4 +1,5 @@
 import type AccountsRepository from '~/application/repositories/accounts-repository';
+import NotFoundException from '~/application/exceptions/not-found-exception';
 
 type Input = {
   accountId: string;
@@ -28,7 +29,7 @@ class GetAccount {
     const account = await this.accountsRepository.findById(input.accountId);
 
     if (!account) {
-      throw new Error('account not found');
+      throw new NotFoundException('account not found');
     }
 
     return {

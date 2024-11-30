@@ -1,4 +1,6 @@
 import RidesRepository from '~/application/repositories/rides-repository';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import ConflictException from '~/application/exceptions/conflict-exception';
 
 type Input = {
   rideId: string;
@@ -11,11 +13,11 @@ class StartRide {
     const ride = await this.ridesRepository.findById(input.rideId);
 
     if (!ride) {
-      throw new Error('ride not found');
+      throw new NotFoundException('ride not found');
     }
 
     if (ride.status !== 'accepted') {
-      throw new Error('ride already started');
+      throw new ConflictException('ride already started');
     }
 
     ride.start();

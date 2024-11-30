@@ -1,6 +1,7 @@
 import Account from '~/domain/entities/account';
 import AccountsRepositoryInMemory from '~/infra/repositories/in-memory/accounts-repository';
 import GetAccount from './get-account';
+import NotFoundException from '~/application/exceptions/not-found-exception';
 
 describe('GetAccount', () => {
   it('should be able to get info about a existing account', async () => {
@@ -36,7 +37,7 @@ describe('GetAccount', () => {
     const accountId = Math.random().toString();
 
     await expect(
-      getAccount.execute({ accountId })
-    ).rejects.toThrow('account not found');
+      () => getAccount.execute({ accountId })
+    ).rejects.toThrow(new NotFoundException('account not found'));
   });
 });

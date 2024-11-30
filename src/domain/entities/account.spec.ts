@@ -1,3 +1,4 @@
+import InvalidException from '~/application/exceptions/invalid-exception';
 import Account from './account';
 
 describe('Account', () => {
@@ -42,7 +43,7 @@ describe('Account', () => {
       false,
       true,
       '123456'
-    )).toThrow('invalid [carPlate] field');
+    )).toThrow(new InvalidException('invalid [carPlate] field'));
   });
 
   it('should not create a driver user with a invalid name', async () => {
@@ -54,7 +55,7 @@ describe('Account', () => {
       true,
       false,
       '123456'
-    )).toThrow('invalid [name] field');
+    )).toThrow(new InvalidException('invalid [name] field'));
   });
 
   it('should not create a driver user with a invalid email', async () => {
@@ -66,7 +67,7 @@ describe('Account', () => {
       true,
       false,
       '123456'
-    )).toThrow('invalid [email] field');
+    )).toThrow(new InvalidException('invalid [email] field'));
   });
 
   it('should not create a driver user with a invalid CPF', async () => {
@@ -78,6 +79,6 @@ describe('Account', () => {
       true,
       false,
       '123456'
-    )).toThrow('invalid [cpf] field');
+    )).toThrow(new InvalidException('invalid [cpf] field'));
   });
 });

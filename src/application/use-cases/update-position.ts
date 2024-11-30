@@ -1,6 +1,8 @@
 import Position from '~/domain/entities/position';
 import PositionsRepository from '~/application/repositories/positions-repository';
 import RidesRepository from '~/application/repositories/rides-repository';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import ConflictException from '~/application/exceptions/conflict-exception';
 
 type Input = {
   rideId: string;
@@ -18,11 +20,11 @@ class UpdatePosition {
     const ride = await this.ridesRepository.findById(input.rideId);
 
     if (!ride) {
-      throw new Error('ride not found');
+      throw new NotFoundException('ride not found');
     }
 
     if (ride.status !== 'in_progress') {
-      throw new Error('ride is not in progress');
+      throw new ConflictException('ride is not in progress');
     }
 
     const position = Position.create(input.rideId, input.lat, input.long);

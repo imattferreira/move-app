@@ -1,5 +1,6 @@
 import type AccountsRepository from '~/application/repositories/accounts-repository';
 import Account from '~/domain/entities/account';
+import ConflictException from '~/application/exceptions/conflict-exception';
 
 type Input = {
   name: string;
@@ -33,7 +34,7 @@ class SignUp {
     );
 
     if (registeredUser) {
-      throw new Error('[email] already registered');
+      throw new ConflictException('[email] already registered');
     }
 
     await this.accountsRepository.save(account);

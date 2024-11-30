@@ -1,6 +1,7 @@
 import Ride from '~/domain/entities/ride';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 import GetRide from './get-ride';
+import NotFoundException from '~/application/exceptions/not-found-exception';
 
 describe('GetRide', () => {
   it('should be able to get info about a existing ride', async () => {
@@ -36,6 +37,8 @@ describe('GetRide', () => {
 
     const rideId = Math.random().toString();
 
-    await expect(getRide.execute({ rideId })).rejects.toThrow('ride not found');
+    await expect(
+      () => getRide.execute({ rideId })
+    ).rejects.toThrow(new NotFoundException('ride not found'));
   });
 });

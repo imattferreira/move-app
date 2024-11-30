@@ -2,6 +2,9 @@ import Account from '~/domain/entities/account';
 import AccountsRepositoryInMemory from '~/infra/repositories/in-memory/accounts-repository';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 import RequestRide from './request-ride';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import ForbiddenException from '~/application/exceptions/forbidden-exception';
+import ConflictException from '~/application/exceptions/conflict-exception';
 
 describe('RequestRide', () => {
   it('should be able request a new ride', async () => {
@@ -70,8 +73,8 @@ describe('RequestRide', () => {
     };
 
     await expect(
-      requestRide.execute(input)
-    ).rejects.toThrow('account not found');
+      () => requestRide.execute(input)
+    ).rejects.toThrow(new NotFoundException('account not found'));
   });
 
   it(
@@ -102,8 +105,10 @@ describe('RequestRide', () => {
       };
 
       await expect(
-        requestRide.execute(input)
-      ).rejects.toThrow('account needs to be of a passenger');
+        () => requestRide.execute(input)
+      ).rejects.toThrow(
+        new ForbiddenException('account needs to be of a passenger')
+      );
     });
 
   it(
@@ -136,7 +141,9 @@ describe('RequestRide', () => {
       await requestRide.execute(input);
 
       await expect(
-        requestRide.execute(input)
-      ).rejects.toThrow('account already have a ride in progress');
+        () => requestRide.execute(input)
+      ).rejects.toThrow(
+        new ConflictException('account already have a ride in progress')
+      );
     });
 });

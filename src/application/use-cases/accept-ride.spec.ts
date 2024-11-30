@@ -3,6 +3,9 @@ import Ride from '~/domain/entities/ride';
 import AccountsRepositoryInMemory from '~/infra/repositories/in-memory/accounts-repository';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 import AcceptRide from './accept-ride';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import ConflictException from '~/application/exceptions/conflict-exception';
+import ForbiddenException from '~/application/exceptions/forbidden-exception';
 
 describe('AcceptRide', () => {
   it('should be able a driver accept a ride', async () => {
@@ -63,7 +66,9 @@ describe('AcceptRide', () => {
       rideId: ride.id
     };
 
-    await expect(acceptRide.execute(input)).rejects.toThrow('driver not found');
+    await expect(
+      () => acceptRide.execute(input)
+    ).rejects.toThrow(new NotFoundException('driver not found'));
   });
 
   it('should not a passenger accept a ride', async () => {
@@ -96,8 +101,8 @@ describe('AcceptRide', () => {
       rideId: ride.id
     };
 
-    await expect(acceptRide.execute(input)).rejects.toThrow(
-      'user needs to be a driver to accept a ride'
+    await expect(() => acceptRide.execute(input)).rejects.toThrow(
+      new ForbiddenException('user needs to be a driver to accept a ride')
     );
   });
 
@@ -133,8 +138,8 @@ describe('AcceptRide', () => {
 
     await acceptRide.execute(input);
 
-    await expect(acceptRide.execute(input)).rejects.toThrow(
-      'ride already accepted'
+    await expect(() => acceptRide.execute(input)).rejects.toThrow(
+      new ConflictException('ride already accepted by another driver')
     );
   });
 
@@ -176,7 +181,9 @@ describe('AcceptRide', () => {
     });
 
     await expect(
-      acceptRide.execute({ driverId: driver.id, rideId: ride2.id })
-    ).rejects.toThrow('driver already accepted another ride');
+      () => acceptRide.execute({ driverId: driver.id, rideId: ride2.id })
+    ).rejects.toThrow(
+      new ConflictException('driver already have a ride active')
+    );
   });
 });

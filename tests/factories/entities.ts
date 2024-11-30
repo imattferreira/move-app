@@ -6,7 +6,7 @@ type Account = {
   cpf: string;
   is_passenger: boolean;
   is_driver: boolean;
-  car_plate: string;
+  car_plate: string | null;
   password: string;
 };
 
@@ -27,7 +27,7 @@ export function makeAccountFactory(
     cpf: '475.646.550-11',
     is_passenger: false,
     is_driver: false,
-    car_plate: 'ABC1234',
+    car_plate: fieldsToOverride.is_driver ? 'ABC1234' : null,
     password: '123456',
     ...fieldsToOverride
   };

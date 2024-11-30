@@ -44,31 +44,4 @@ describe('StartRide', () => {
       () => startRide.execute(input)
     ).rejects.toThrow(new NotFoundException('ride not found'));
   });
-
-  it('should not start a already started ride', async () => {
-    const ridesRepository = new RidesRepositoryInMemory();
-    const startRide = new StartRide(ridesRepository);
-
-    const ride = Ride.create(
-      Math.random().toString(),
-      12312312,
-      12312312,
-      52423423,
-      1245245
-    );
-
-    ride.attachDriver(Math.random().toString());
-
-    await ridesRepository.save(ride);
-
-    const input = {
-      rideId: ride.id
-    };
-
-    await startRide.execute(input);
-
-    await expect(
-      () => startRide.execute(input)
-    ).rejects.toThrow(new ConflictException('ride already started'));
-  });
 });

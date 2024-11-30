@@ -1,52 +1,85 @@
 import InvalidException from '~/application/exceptions/invalid-exception';
 import Account from './account';
+import ConflictException from '~/application/exceptions/conflict-exception';
 
 describe('Account', () => {
-  it('should be able create a driver user', async () => {
+  it('should be able create a driver account', async () => {
+    const input = {
+      name: 'John Doe',
+      email: 'john@doe.com',
+      cpf: '475.646.550-11',
+      carPlate: 'ABC1234',
+      isPassenger: false,
+      isDriver: true,
+      password: '123456'
+    };
+
     const account = Account.create(
-      'John Doe',
-      'john0@doe.com',
-      '475.646.550-11',
-      'ABC1234',
-      false,
-      true,
-      '123456'
+      input.name,
+      input.email,
+      input.cpf,
+      input.carPlate,
+      input.isPassenger,
+      input.isDriver,
+      input.password
     );
 
     expect(account.id).toBeDefined();
-    expect(account.isDriver).toBe(true);
-    expect(account.isPassenger).toBe(false);
+    expect(account.name).toBe(input.name);
+    expect(account.email).toBe(input.email);
+    expect(account.cpf).toBe(input.cpf);
+    expect(account.carPlate).toBe(input.carPlate);
+    expect(account.isPassenger).toBe(input.isPassenger);
+    expect(account.isDriver).toBe(input.isDriver);
+    expect(account.password).toBe(input.password);
   });
 
-  it('should be able create a passenger user', async () => {
+  it('should be able create a passenger account', () => {
+    const input = {
+      name: 'John Doe',
+      email: 'john@doe.com',
+      cpf: '475.646.550-11',
+      carPlate: null,
+      isPassenger: true,
+      isDriver: false,
+      password: '123456'
+    };
+
     const account = Account.create(
-      'John Doe',
-      'john0@doe.com',
-      '475.646.550-11',
-      null,
-      true,
-      false,
-      '123456'
+      input.name,
+      input.email,
+      input.cpf,
+      input.carPlate,
+      input.isPassenger,
+      input.isDriver,
+      input.password
     );
 
     expect(account.id).toBeDefined();
-    expect(account.isPassenger).toBe(true);
-    expect(account.isDriver).toBe(false);
+    expect(account.name).toBe(input.name);
+    expect(account.email).toBe(input.email);
+    expect(account.cpf).toBe(input.cpf);
+    expect(account.carPlate).toBe(input.carPlate);
+    expect(account.isPassenger).toBe(input.isPassenger);
+    expect(account.isDriver).toBe(input.isDriver);
+    expect(account.password).toBe(input.password);
   });
 
-  it('should not create a driver user with a invalid car plate', async () => {
-    expect(() => Account.create(
-      'John Doe',
-      'john0@doe.com',
-      '475.646.550-11',
-      'ABC',
-      false,
-      true,
-      '123456'
-    )).toThrow(new InvalidException('invalid [carPlate] field'));
-  });
+  it(
+    'should not create a driver account with a invalid car plate',
+    () => {
+      expect(() => Account.create(
+        'John Doe',
+        'john0@doe.com',
+        '475.646.550-11',
+        'ABC',
+        false,
+        true,
+        '123456'
+      )).toThrow(new InvalidException('invalid [carPlate] field'));
+    });
 
-  it('should not create a driver user with a invalid name', async () => {
+  it('should not create a account with a invalid name', () => {
     expect(() => Account.create(
       'JJ',
       'john0@doe.com',
@@ -58,7 +91,7 @@ describe('Account', () => {
     )).toThrow(new InvalidException('invalid [name] field'));
   });
 
-  it('should not create a driver user with a invalid email', async () => {
+  it('should not create a account with a invalid email', () => {
     expect(() => Account.create(
       'John Doe',
       'john',
@@ -70,7 +103,7 @@ describe('Account', () => {
     )).toThrow(new InvalidException('invalid [email] field'));
   });
 
-  it('should not create a driver user with a invalid CPF', async () => {
+  it('should not create a account with a invalid CPF', () => {
     expect(() => Account.create(
       'John Doe',
       'john0@doe.com',
@@ -80,5 +113,29 @@ describe('Account', () => {
       false,
       '123456'
     )).toThrow(new InvalidException('invalid [cpf] field'));
+  });
+
+  it('should not simultaneously create a passenger and driver account', () => {
+    expect(() => Account.create(
+      'John Doe',
+      'john0@doe.com',
+      '475.646.550-11',
+      'ABC1234',
+      true,
+      true,
+      '123456'
+    )).toThrow(new ConflictException('account should be passenger or driver'));
+  });
+
+  it('should not attach a car plate for a passenger account', () => {
+    expect(() => Account.create(
+      'John Doe',
+      'john0@doe.com',
+      '475.646.550-11',
+      'ABC1234',
+      true,
+      false,
+      '123456'
+    )).toThrow(new ConflictException('passenger cannot have a car plate'));
   });
 });

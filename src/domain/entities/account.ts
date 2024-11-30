@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import ConflictException from '~/application/exceptions/conflict-exception';
 import InvalidException from '~/application/exceptions/invalid-exception';
 import validateCpf from '~/domain/validateCpf';
 
@@ -24,6 +25,14 @@ class Account {
 
     if (!validateCpf(cpf)) {
       throw new InvalidException('invalid [cpf] field');
+    }
+
+    if (isPassenger && isDriver) {
+      throw new ConflictException('account should be passenger or driver');
+    }
+
+    if (isPassenger && carPlate) {
+      throw new ConflictException('passenger cannot have a car plate');
     }
 
     if (isDriver && !carPlate?.match(/[A-Z]{3}[0-9]{4}/)) {

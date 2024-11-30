@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import ConflictException from '~/application/exceptions/conflict-exception';
 
 type RideStatus = 'requested' | 'accepted' | 'in_progress' | 'completed';
 
@@ -53,6 +54,10 @@ class Ride {
   }
 
   start(): void {
+    if (this.status !== 'accepted') {
+      throw new ConflictException('ride already started');
+    }
+
     this.status = 'in_progress';
   }
 }

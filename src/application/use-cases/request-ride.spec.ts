@@ -16,7 +16,7 @@ describe('RequestRide', () => {
       'John Doe',
       'john@doe.com',
       '639.219.000-77',
-      'ABC3122',
+      null,
       true,
       false,
       '123123123'
@@ -122,7 +122,7 @@ describe('RequestRide', () => {
         'John Doe',
         'john@doe.com',
         '639.219.000-77',
-        'ABC3122',
+        null,
         true,
         false,
         '123123123'

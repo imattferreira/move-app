@@ -1,4 +1,8 @@
-export type Reasons = 'not_found' | 'conflict' | 'invalid' | 'forbidden';
+export type Reasons =
+  | 'conflict'
+  | 'forbidden'
+  | 'invalid'
+  | 'not_found';
 
 abstract class Exception extends Error {
   constructor(readonly reason: Reasons, readonly message: string) {

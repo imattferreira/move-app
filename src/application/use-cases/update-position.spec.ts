@@ -1,9 +1,9 @@
-import Ride from '~/domain/entities/ride';
+import ConflictException from '~/application/exceptions/conflict-exception';
+import NotFoundException from '~/application/exceptions/not-found-exception';
 import PositionsRepositoryInMemory from '~/infra/repositories/in-memory/positions-repository';
+import Ride from '~/domain/entities/ride';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 import UpdatePosition from './update-position';
-import NotFoundException from '~/application/exceptions/not-found-exception';
-import ConflictException from '~/application/exceptions/conflict-exception';
 
 describe('UpdatePosition', () => {
   it('should be able update the position of a ride', async () => {

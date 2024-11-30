@@ -1,20 +1,20 @@
 // TODO: validate UUID param before query with it in database
 // Composition-Root
-import { PgPromiseAdapter } from './infra/database/database-connection';
-import { ExpressAdapter } from './infra/http/http-server';
+import AcceptRide from './application/use-cases/accept-ride';
 import AccountsController from './infra/controllers/accounts-controller';
-import RidesController from './infra/controllers/rides-controller';
-import PsqlAccountsRepository from './infra/repositories/psql/accounts-repository';
-import PsqlRidesRepository from './infra/repositories/psql/rides-repository';
+import { ExpressAdapter } from './infra/http/http-server';
 import GetAccount from './application/use-cases/get-account';
 import GetRide from './application/use-cases/get-ride';
-import RequestRide from './application/use-cases/request-ride';
-import SignUp from './application/use-cases/signup';
-import AcceptRide from './application/use-cases/accept-ride';
-import StartRide from './application/use-cases/start-ride';
+import { PgPromiseAdapter } from './infra/database/database-connection';
 import PositionsController from './infra/controllers/positions-controller';
-import UpdatePosition from './application/use-cases/update-position';
+import PsqlAccountsRepository from './infra/repositories/psql/accounts-repository';
 import PsqlPositionsRepository from './infra/repositories/psql/positions-repository';
+import PsqlRidesRepository from './infra/repositories/psql/rides-repository';
+import RequestRide from './application/use-cases/request-ride';
+import RidesController from './infra/controllers/rides-controller';
+import SignUp from './application/use-cases/signup';
+import StartRide from './application/use-cases/start-ride';
+import UpdatePosition from './application/use-cases/update-position';
 
 const httpServer = new ExpressAdapter();
 const connection = new PgPromiseAdapter();

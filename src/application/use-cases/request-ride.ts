@@ -1,10 +1,9 @@
-import Ride from '~/domain/entities/ride';
 import type AccountsRepository from '~/application/repositories/accounts-repository';
-import type RidesRepository from '~/application/repositories/rides-repository';
-import NotFoundException from '~/application/exceptions/not-found-exception';
-import ForbiddenException from '~/application/exceptions/forbidden-exception';
 import ConflictException from '~/application/exceptions/conflict-exception';
-
+import ForbiddenException from '~/application/exceptions/forbidden-exception';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import Ride from '~/domain/entities/ride';
+import type RidesRepository from '~/application/repositories/rides-repository';
 type Input = {
   passengerId: string;
   fromLat: number;

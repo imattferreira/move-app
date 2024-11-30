@@ -1,7 +1,7 @@
-import AccountsRepository from '~/application/repositories/accounts-repository';
 import Account from '~/domain/entities/account';
-import { sql } from '~/infra/repositories/utils/query';
+import AccountsRepository from '~/application/repositories/accounts-repository';
 import DatabaseConnection from '~/infra/database/database-connection';
+import { sql } from '~/infra/repositories/utils/query';
 
 class PsqlAccountsRepository implements AccountsRepository {
   constructor(private readonly connection: DatabaseConnection) {}

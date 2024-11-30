@@ -1,7 +1,7 @@
-import Ride from '~/domain/entities/ride';
-import { sql } from '~/infra/repositories/utils/query';
 import DatabaseConnection from '~/infra/database/database-connection';
+import Ride from '~/domain/entities/ride';
 import RidesRepository from '~/application/repositories/rides-repository';
+import { sql } from '~/infra/repositories/utils/query';
 
 /**
 * DAO -> deals directly with database tables (similar with ORMs) and

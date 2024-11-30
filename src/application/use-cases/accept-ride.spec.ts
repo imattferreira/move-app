@@ -1,11 +1,11 @@
-import Account from '~/domain/entities/account';
-import Ride from '~/domain/entities/ride';
-import AccountsRepositoryInMemory from '~/infra/repositories/in-memory/accounts-repository';
-import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 import AcceptRide from './accept-ride';
-import NotFoundException from '~/application/exceptions/not-found-exception';
+import Account from '~/domain/entities/account';
+import AccountsRepositoryInMemory from '~/infra/repositories/in-memory/accounts-repository';
 import ConflictException from '~/application/exceptions/conflict-exception';
 import ForbiddenException from '~/application/exceptions/forbidden-exception';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import Ride from '~/domain/entities/ride';
+import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 
 describe('AcceptRide', () => {
   it('should be able a driver accept a ride', async () => {

@@ -1,7 +1,7 @@
+import NotFoundException from '~/application/exceptions/not-found-exception';
 import Ride from '~/domain/entities/ride';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 import StartRide from './start-ride';
-import NotFoundException from '~/application/exceptions/not-found-exception';
 
 describe('StartRide', () => {
   it('should be able to start a ride', async () => {

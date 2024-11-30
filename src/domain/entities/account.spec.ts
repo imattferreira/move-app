@@ -1,6 +1,6 @@
-import InvalidException from '~/application/exceptions/invalid-exception';
 import Account from './account';
 import ConflictException from '~/application/exceptions/conflict-exception';
+import InvalidException from '~/application/exceptions/invalid-exception';
 
 describe('Account', () => {
   it('should be able create a driver account', async () => {

@@ -6,7 +6,10 @@ import stylistic from '@stylistic/eslint-plugin';
 /** @type {import('eslint').Linter.Config[]} */
 const config = [
   {
-    files: ['**/*.{js,mjs,cjs,ts}', '**/*.spec.{js,mjs,cjs,ts}']
+    files: ['**/*.{js,mjs,cjs,ts}', '**/*.spec.{js,mjs,cjs,ts}'],
+    rules: {
+      'sort-imports': 'error'
+    }
   },
   stylistic.configs['disable-legacy'],
   { languageOptions: { globals: globals.node } },

@@ -1,8 +1,8 @@
+import ConflictException from '~/application/exceptions/conflict-exception';
+import NotFoundException from '~/application/exceptions/not-found-exception';
 import Position from '~/domain/entities/position';
 import PositionsRepository from '~/application/repositories/positions-repository';
 import RidesRepository from '~/application/repositories/rides-repository';
-import NotFoundException from '~/application/exceptions/not-found-exception';
-import ConflictException from '~/application/exceptions/conflict-exception';
 
 type Input = {
   rideId: string;

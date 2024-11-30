@@ -1,5 +1,5 @@
-import HttpServer from '~/infra/http/http-server';
 import GetAccount from '~/application/use-cases/get-account';
+import HttpServer from '~/infra/http/http-server';
 import SignUp from '~/application/use-cases/signup';
 
 // Interface Adapter

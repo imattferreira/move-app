@@ -1,5 +1,5 @@
-import PositionsRepository from '~/application/repositories/positions-repository';
 import Position from '~/domain/entities/position';
+import PositionsRepository from '~/application/repositories/positions-repository';
 
 class PositionsRepositoryInMemory implements PositionsRepository {
   private stored: Position[];

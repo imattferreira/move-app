@@ -1,5 +1,5 @@
-import type AccountsRepository from '~/application/repositories/accounts-repository';
 import Account from '~/domain/entities/account';
+import type AccountsRepository from '~/application/repositories/accounts-repository';
 import ConflictException from '~/application/exceptions/conflict-exception';
 
 type Input = {

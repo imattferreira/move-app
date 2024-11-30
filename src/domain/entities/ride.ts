@@ -1,5 +1,5 @@
-import crypto from 'node:crypto';
 import ConflictException from '~/application/exceptions/conflict-exception';
+import crypto from 'node:crypto';
 
 type RideStatus = 'requested' | 'accepted' | 'in_progress' | 'completed';
 

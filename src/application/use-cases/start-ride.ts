@@ -1,5 +1,5 @@
-import RidesRepository from '~/application/repositories/rides-repository';
 import NotFoundException from '~/application/exceptions/not-found-exception';
+import RidesRepository from '~/application/repositories/rides-repository';
 
 type Input = {
   rideId: string;

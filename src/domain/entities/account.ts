@@ -1,6 +1,6 @@
-import crypto from 'node:crypto';
 import ConflictException from '~/application/exceptions/conflict-exception';
 import InvalidException from '~/application/exceptions/invalid-exception';
+import crypto from 'node:crypto';
 import validateCpf from '~/domain/validateCpf';
 
 // Entity

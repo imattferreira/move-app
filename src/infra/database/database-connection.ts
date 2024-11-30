@@ -1,5 +1,5 @@
-import pgp from 'pg-promise';
 import type { IClient } from 'pg-promise/typescript/pg-subset';
+import pgp from 'pg-promise';
 
 export default interface DatabaseConnection {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

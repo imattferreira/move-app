@@ -1,7 +1,7 @@
 import AccountsRepositoryInMemory from '~/infra/repositories/in-memory/accounts-repository';
-import SignUp from './signup';
-import InvalidException from '~/application/exceptions/invalid-exception';
 import ConflictException from '~/application/exceptions/conflict-exception';
+import InvalidException from '~/application/exceptions/invalid-exception';
+import SignUp from './signup';
 
 describe('SignUp', () => {
   it('should be able create a driver user', async () => {

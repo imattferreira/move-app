@@ -1,10 +1,10 @@
 import Account from '~/domain/entities/account';
 import AccountsRepositoryInMemory from '~/infra/repositories/in-memory/accounts-repository';
-import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
-import RequestRide from './request-ride';
-import NotFoundException from '~/application/exceptions/not-found-exception';
-import ForbiddenException from '~/application/exceptions/forbidden-exception';
 import ConflictException from '~/application/exceptions/conflict-exception';
+import ForbiddenException from '~/application/exceptions/forbidden-exception';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import RequestRide from './request-ride';
+import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 
 describe('RequestRide', () => {
   it('should be able request a new ride', async () => {

@@ -1,15 +1,9 @@
-import pgp from 'pg-promise';
-import Account from '../entities/account';
+import AccountsRepository from '../../../application/repositories/accounts-repository';
+import Account from '../../../domain/entities/account';
 import { sql } from '../utils/query';
-import DatabaseConnection from '../adapters/database-connection';
+import DatabaseConnection from '../../database/database-connection';
 
-export default interface AccountsRepository {
-  save(account: Account): Promise<void>;
-  findByAccountId(accountId: string): Promise<Account | null>;
-  findByEmail(email: string): Promise<Account | null>;
-};
-
-export class PsqlAccountsRepository implements AccountsRepository {
+class PsqlAccountsRepository implements AccountsRepository {
   constructor(private readonly connection: DatabaseConnection) {}
 
   async save(account: Account): Promise<void> {
@@ -95,26 +89,4 @@ export class PsqlAccountsRepository implements AccountsRepository {
   }
 }
 
-export class AccountsRepositoryInMemory implements AccountsRepository {
-  private stored: Account[];
-
-  constructor() {
-    this.stored = [];
-  }
-
-  async save(account: Account): Promise<void> {
-    this.stored.push(account);
-  }
-
-  async findByAccountId(accountId: string): Promise<Account | null> {
-    const account = this.stored.find((account) => account.id === accountId);
-
-    return account || null;
-  }
-
-  async findByEmail(email: string): Promise<Account | null> {
-    const account = this.stored.find((account) => account.email === email);
-
-    return account || null;
-  }
-}
+export default PsqlAccountsRepository;

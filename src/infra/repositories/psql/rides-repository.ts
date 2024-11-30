@@ -1,14 +1,7 @@
-import pgp from 'pg-promise';
-import Ride from '../entities/ride';
+import Ride from '../../../domain/entities/ride';
 import { sql } from '../utils/query';
-import DatabaseConnection from '../adapters/database-connection';
-
-// LSP - Liskov Substitution Principle
-export default interface RidesRepository {
-  save(ride: Ride): Promise<void>;
-  findByRideId(rideId: string): Promise<Ride | null>;
-  hasActiveRideOfPassenger(passengerId: string): Promise<boolean>;
-};
+import DatabaseConnection from '../../database/database-connection';
+import RidesRepository from '../../../application/repositories/rides-repository';
 
 /**
 * DAO -> deals directly with database tables (similar with ORMs) and
@@ -16,7 +9,7 @@ export default interface RidesRepository {
 * Repository Pattern -> intermediary between entities and database and returns
 * the restored entity.
 */
-export class PsqlRidesRepository implements RidesRepository {
+class PsqlRidesRepository implements RidesRepository {
   constructor(private readonly connection: DatabaseConnection) {}
 
   // SRP - Single Responsability Principle
@@ -107,27 +100,4 @@ export class PsqlRidesRepository implements RidesRepository {
   }
 }
 
-export class RidesRepositoryInMemory implements RidesRepository {
-  private stored: Ride[];
-
-  constructor() {
-    this.stored = [];
-  }
-
-  async save(ride: Ride): Promise<void> {
-    this.stored.push(ride);
-  }
-
-  async findByRideId(rideId: string): Promise<Ride | null> {
-    const ride = this.stored.find((ride) => ride.id === rideId);
-
-    return ride || null;
-  }
-
-  async hasActiveRideOfPassenger(passengerId: string): Promise<boolean> {
-    const ride = this.stored
-      .find((ride) => ride.passengerId === passengerId && ride.status !== 'completed');
-
-    return !!ride;
-  }
-}
+export default PsqlRidesRepository;

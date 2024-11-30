@@ -9,7 +9,6 @@ export default interface DatabaseConnection {
 // Adapter Pattern (GoF)
 export class PgPromiseAdapter implements DatabaseConnection {
   private connection: pgp.IDatabase<{}, IClient>;
-  private static __instance: PgPromiseAdapter;
 
   constructor() {
     this.connection = pgp()('postgres://postgres:123456@localhost:5432/app');

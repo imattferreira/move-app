@@ -1,14 +1,14 @@
 // Composition Root
-import { PgPromiseAdapter } from './adapters/database-connection';
-import { ExpressAdapter } from './adapters/http-server';
-import AccountsController from './controllers/accounts-controller';
-import RidesController from './controllers/rides-controller';
-import { PsqlAccountsRepository } from './repositories/accounts-repository';
-import { PsqlRidesRepository } from './repositories/rides-repository';
-import GetAccount from './use-cases/get-account';
-import GetRide from './use-cases/get-ride';
-import RequestRide from './use-cases/request-ride';
-import SignUp from './use-cases/signup';
+import { PgPromiseAdapter } from './infra/database/database-connection';
+import { ExpressAdapter } from './infra/http/http-server';
+import AccountsController from './infra/controllers/accounts-controller';
+import RidesController from './infra/controllers/rides-controller';
+import PsqlAccountsRepository from './infra/repositories/psql/accounts-repository';
+import PsqlRidesRepository from './infra/repositories/psql/rides-repository';
+import GetAccount from './application/use-cases/get-account';
+import GetRide from './application/use-cases/get-ride';
+import RequestRide from './application/use-cases/request-ride';
+import SignUp from './application/use-cases/signup';
 
 
 const httpServer = new ExpressAdapter();

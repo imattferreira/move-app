@@ -1,6 +1,6 @@
-import HttpServer from "../adapters/http-server";
-import GetAccount from "../use-cases/get-account";
-import SignUp from "../use-cases/signup";
+import HttpServer from "../http/http-server";
+import GetAccount from "../../application/use-cases/get-account";
+import SignUp from "../../application/use-cases/signup";
 
 // Interface Adapter
 class AccountsController {

@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import validateCpf from '../utils/validateCpf';
+import validateCpf from '../validateCpf';
 
 // Entity
 class Account {

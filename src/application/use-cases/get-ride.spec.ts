@@ -1,5 +1,5 @@
-import Ride from '../entities/ride';
-import { RidesRepositoryInMemory } from '../repositories/rides-repository';
+import Ride from '../../domain/entities/ride';
+import { RidesRepositoryInMemory } from '../../infra/repositories/rides-repository';
 import GetRide from './get-ride';
 
 describe('GetRide', () => {

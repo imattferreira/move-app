@@ -1,4 +1,4 @@
-import type RidesRepository from '../repositories/rides-repository';
+import type RidesRepository from '../../infra/repositories/rides-repository';
 
 interface Input {
   rideId: string;

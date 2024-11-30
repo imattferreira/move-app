@@ -1,6 +1,6 @@
-import HttpServer from "../adapters/http-server";
-import GetRide from "../use-cases/get-ride";
-import RequestRide from "../use-cases/request-ride";
+import HttpServer from "../http/http-server";
+import GetRide from "../../application/use-cases/get-ride";
+import RequestRide from "../../application/use-cases/request-ride";
 
 class RidesController {
   constructor(

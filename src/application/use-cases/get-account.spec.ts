@@ -1,5 +1,5 @@
-import Account from '../entities/account';
-import { AccountsRepositoryInMemory } from '../repositories/accounts-repository';
+import Account from '../../domain/entities/account';
+import AccountsRepositoryInMemory from '../../infra/repositories/in-memory/accounts-repository';
 import GetAccount from './get-account';
 
 describe('GetAccount', () => {

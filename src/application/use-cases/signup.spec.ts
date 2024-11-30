@@ -1,4 +1,4 @@
-import { AccountsRepositoryInMemory } from '../repositories/accounts-repository';
+import AccountsRepositoryInMemory from '../../infra/repositories/in-memory/accounts-repository';
 import SignUp from './signup';
 
 describe('SignUp', () => {

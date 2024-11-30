@@ -10,6 +10,12 @@ type Account = {
   password: string;
 };
 
+type Position = {
+  ride_id: string;
+  lat: number;
+  long: number;
+};
+
 type Ride = {
   passenger_id: string;
   from_lat: number;
@@ -29,6 +35,17 @@ export function makeAccountFactory(
     is_driver: false,
     car_plate: fieldsToOverride.is_driver ? 'ABC1234' : null,
     password: '123456',
+    ...fieldsToOverride
+  };
+}
+
+export function makePositionFactory(
+  fieldsToOverride: Optional<Position>
+): Position {
+  return {
+    ride_id: Math.random().toString(),
+    lat: -27.496887588317222,
+    long: -48.52223480785141,
     ...fieldsToOverride
   };
 }

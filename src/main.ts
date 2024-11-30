@@ -1,3 +1,4 @@
+// TODO: validate UUID param before query with it in database
 // Composition-Root
 import { PgPromiseAdapter } from './infra/database/database-connection';
 import { ExpressAdapter } from './infra/http/http-server';

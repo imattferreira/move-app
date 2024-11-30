@@ -1,9 +1,10 @@
+import crypto from 'node:crypto';
 import type { Object } from '~/utils/types';
 import { makeAccountFactory } from './factories/entities';
 import { makeRequest } from './utils';
 
-describe('POST /signup', () => {
-  it('should be able create a driver user', async () => {
+describe('GET /accounts/:accountId', () => {
+  it('should be able to get info about a existing account', async () => {
     const input = makeAccountFactory({ is_driver: true });
 
     const signupRes = await makeRequest<{ account_id: string }>(
@@ -20,7 +21,7 @@ describe('POST /signup', () => {
       `/accounts/${signupRes.data?.account_id}`
     );
 
-    expect(registeredAccountRes.data?.name).toBe(input.name);
+    expect(registeredAccountRes.status).toBe(200);
     expect(registeredAccountRes.data?.email).toBe(input.email);
     expect(registeredAccountRes.data?.cpf).toBe(input.cpf);
     expect(registeredAccountRes.data?.is_driver).toBe(true);
@@ -29,30 +30,18 @@ describe('POST /signup', () => {
     expect(registeredAccountRes.data?.password).toBe(input.password);
   });
 
-  it('should not create a driver user with a invalid car plate', async () => {
-    const input = makeAccountFactory({ is_driver: true, car_plate: 'ABC' });
+  it(
+    'should not be able to get info about a non-existing account',
+    async () => {
+      const accountId = crypto.randomUUID();
 
-    const res = await makeRequest<Object>(
-      'POST',
-      '/signup',
-      input
-    );
+      const registeredAccountRes = await makeRequest<Object>(
+        'GET',
+        `/accounts/${accountId}`
+      );
 
-    expect(res.status).toBe(400);
-    expect(res.data?.message).toBe('invalid [carPlate] field');
-  });
-
-  it('should not create a user with a already registered email', async () => {
-    const input = makeAccountFactory({ is_passenger: true });
-
-    await makeRequest('POST', '/signup', input);
-    const res = await makeRequest<Object>(
-      'POST',
-      '/signup',
-      input
-    );
-
-    expect(res.status).toBe(409);
-    expect(res.data?.message).toBe('[email] already registered');
-  });
+      expect(registeredAccountRes.status).toBe(404);
+      expect(registeredAccountRes.data?.message).toBe('account not found');
+    }
+  );
 });

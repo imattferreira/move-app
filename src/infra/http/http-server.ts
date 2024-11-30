@@ -85,7 +85,6 @@ export class ExpressAdapter implements HttpServer {
         return { status: 409, message: exception.getMessage() };
       default:
         return { status: 500, message: 'internal server error' };
-        break;
     }
   }
 }

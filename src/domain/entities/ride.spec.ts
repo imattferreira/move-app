@@ -5,10 +5,10 @@ describe('Ride', () => {
   it('should be able to create a ride', () => {
     const input = {
       passengerId: Math.random().toString(),
-      fromLat: 10,
-      fromLong: 20,
-      toLat: 30,
-      toLong: 40
+      fromLat: -27.584905257808835,
+      fromLong: -48.545022195325124,
+      toLat: -27.496887588317275,
+      toLong: -48.522234807851476
     };
 
     const ride = Ride.create(
@@ -37,10 +37,10 @@ describe('Ride', () => {
 
     const ride = Ride.create(
       Math.random().toString(),
-      10,
-      20,
-      30,
-      40
+      -27.584905257808835,
+      -48.545022195325124,
+      -27.496887588317275,
+      -48.522234807851476
     );
 
     ride.attachDriver(driverId);
@@ -52,10 +52,10 @@ describe('Ride', () => {
   it('should be able to start the ride', () => {
     const ride = Ride.create(
       Math.random().toString(),
-      10,
-      20,
-      30,
-      40
+      -27.584905257808835,
+      -48.545022195325124,
+      -27.496887588317275,
+      -48.522234807851476
     );
 
     ride.attachDriver(Math.random().toString());
@@ -69,10 +69,10 @@ describe('Ride', () => {
 
     const ride = Ride.create(
       Math.random().toString(),
-      10,
-      20,
-      30,
-      40
+      -27.584905257808835,
+      -48.545022195325124,
+      -27.496887588317275,
+      -48.522234807851476
     );
 
     ride.attachDriver(driverId);

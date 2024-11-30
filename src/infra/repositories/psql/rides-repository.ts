@@ -86,7 +86,8 @@ class PsqlRidesRepository implements RidesRepository {
     const query = sql`
       SELECT EXISTS (
         SELECT 1 FROM ccca.ride
-        WHERE driver_id = $1 AND status <> 'completed'
+        WHERE driver_id = $1
+        AND status <> 'completed'
       );
     `;
     const params = [driverId];
@@ -116,8 +117,8 @@ class PsqlRidesRepository implements RidesRepository {
      SET
      driver_id = $1,
      status = $2,
-     distance = $3,
-     WHERE ride_id = $4
+     distance = $3
+     WHERE ride_id = $4;
     `;
     const params = [ride.driverId, ride.status, ride.distance, ride.id];
 

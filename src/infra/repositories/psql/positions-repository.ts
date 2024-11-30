@@ -9,7 +9,7 @@ class PsqlPositionsRepository implements PositionsRepository {
   async save(position: Position): Promise<void> {
     const query = sql`
       INSERT INTO ccca.position (
-        id, 
+        position_id, 
         ride_id, 
         lat, 
         long, 

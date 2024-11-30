@@ -10,10 +10,10 @@ describe('GetRide', () => {
 
     const ride = Ride.create(
       Math.random().toString(),
-      12312312,
-      12312312,
-      52423423,
-      1245245
+      -27.584905257808835,
+      -48.545022195325124,
+      -27.496887588317275,
+      -48.522234807851476
     );
 
     await ridesRepository.save(ride);

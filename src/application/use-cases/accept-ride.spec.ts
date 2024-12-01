@@ -71,6 +71,33 @@ describe('AcceptRide', () => {
     ).rejects.toThrow(new NotFoundException('driver not found'));
   });
 
+  it('should not accept a ride when ride don\'t exists', async () => {
+    const accountsRepository = new AccountsRepositoryInMemory();
+    const ridesRepository = new RidesRepositoryInMemory();
+    const acceptRide = new AcceptRide(accountsRepository, ridesRepository);
+
+    const driver = Account.create(
+      'John Doe',
+      'john@doe.com',
+      '475.646.550-11',
+      'ABC1234',
+      false,
+      true,
+      '1233456'
+    );
+
+    await accountsRepository.save(driver);
+
+    const input = {
+      driverId: driver.id,
+      rideId: Math.random().toString()
+    };
+
+    await expect(
+      () => acceptRide.execute(input)
+    ).rejects.toThrow(new NotFoundException('ride not found'));
+  });
+
   it('should not a passenger accept a ride', async () => {
     const accountsRepository = new AccountsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();

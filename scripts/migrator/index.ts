@@ -1,3 +1,4 @@
+import '../dotenv';
 import applyMigrations from './apply-migrations';
 import composer from './composer';
 import createMigration from './create-migration';
@@ -17,7 +18,7 @@ function main() {
       createMigration(opts);
       break;
     default:
-      console.log('Invalid option!!');
+      console.error('Invalid option!!');
       break;
   }
 }

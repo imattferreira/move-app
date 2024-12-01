@@ -10,7 +10,7 @@
     "migration:apply": "tsx ./scripts/migrator/index.ts --apply",
     "migration:create": "tsx ./scripts/migrator/index.ts --migrate",
     "migration:compose": "tsx ./scripts/migrator/index.ts --compose",
-    "tsx": "tsx watch src/main.ts",
+    "start": "tsx watch src/main.ts",
     "test": "jest",
     "lint": "eslint --fix",
     "test:watch": "jest --watchAll"

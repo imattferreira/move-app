@@ -1,4 +1,5 @@
 import type { IClient } from 'pg-promise/typescript/pg-subset';
+import config from '../config';
 import pgp from 'pg-promise';
 
 export default interface DatabaseConnection {
@@ -12,7 +13,7 @@ export class PgPromiseAdapter implements DatabaseConnection {
   private connection: pgp.IDatabase<object, IClient>;
 
   constructor() {
-    this.connection = pgp()('postgres://postgres:123456@localhost:5432/app');
+    this.connection = pgp()(config.DATABASE_URI);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

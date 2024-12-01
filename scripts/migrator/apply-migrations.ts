@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import pgp from 'pg-promise';
 
-const db = pgp()('postgres://postgres:123456@localhost:5432/app');
+const db = pgp()(process.env.DATABASE_URI as string);
 
 async function createControlTable() {
   const statement = `

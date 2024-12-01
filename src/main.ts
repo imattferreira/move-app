@@ -1,5 +1,6 @@
 // TODO: validate UUID param before query with it in database
 // Composition-Root
+import '../scripts/dotenv';
 import AcceptRide from './application/use-cases/accept-ride';
 import AccountsController from './infra/controllers/accounts-controller';
 import { ExpressAdapter } from './infra/http/http-server';

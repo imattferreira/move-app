@@ -1,0 +1,3 @@
+DROP SCHEMA IF EXISTS ccca cascade;
+
+CREATE SCHEMA ccca;

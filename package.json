@@ -5,14 +5,15 @@
   "license": "MIT",
   "scripts": {
     "docker:clean": "docker compose rm -fsv",
-    "docker:start": "npm migration:compose && docker compose up -d",
+    "docker:start": "npm run migration:compose && docker compose up -d",
     "docker:stop": "docker compose stop",
+    "lint": "eslint --fix",
     "migration:apply": "tsx ./scripts/migrator/index.ts --apply",
-    "migration:create": "tsx ./scripts/migrator/index.ts --migrate",
     "migration:compose": "tsx ./scripts/migrator/index.ts --compose",
+    "migration:create": "tsx ./scripts/migrator/index.ts --migrate",
     "start": "tsx watch src/main.ts",
     "test": "jest",
-    "lint": "eslint --fix",
+    "test:coverage": "jest --coverage",
     "test:watch": "jest --watchAll"
   },
   "dependencies": {

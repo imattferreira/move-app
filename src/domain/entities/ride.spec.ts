@@ -64,6 +64,39 @@ describe('Ride', () => {
     expect(ride.getStatus()).toBe('in_progress');
   });
 
+  it('should be able to finish the ride', () => {
+    const ride = Ride.create(
+      Math.random().toString(),
+      -27.584905257808835,
+      -48.545022195325124,
+      -27.496887588317275,
+      -48.522234807851476
+    );
+
+    ride.accept(Math.random().toString());
+    ride.start();
+    ride.finish();
+
+    expect(ride.getStatus()).toBe('completed');
+  });
+
+  it('should not accept a ride when already active', () => {
+    const driverId = Math.random().toString();
+
+    const ride = Ride.create(
+      Math.random().toString(),
+      -27.584905257808835,
+      -48.545022195325124,
+      -27.496887588317275,
+      -48.522234807851476
+    );
+    ride.accept(driverId);
+
+    expect(
+      () => ride.accept(driverId)
+    ).toThrow(new ConflictException('ride already accepted'));
+  });
+
   it('should not start the ride when already active', () => {
     const driverId = Math.random().toString();
 
@@ -81,5 +114,19 @@ describe('Ride', () => {
     expect(
       () => ride.start()
     ).toThrow(new ConflictException('ride already started'));
+  });
+
+  it('should not finish the ride when is not active', () => {
+    const ride = Ride.create(
+      Math.random().toString(),
+      -27.584905257808835,
+      -48.545022195325124,
+      -27.496887588317275,
+      -48.522234807851476
+    );
+
+    expect(
+      () => ride.finish()
+    ).toThrow(new ConflictException('ride not started yet'));
   });
 });

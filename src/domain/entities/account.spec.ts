@@ -87,4 +87,16 @@ describe('Account', () => {
       '123456789'
     )).toThrow(new ConflictException('passenger cannot have a car plate'));
   });
+
+  it('should not be able no attach a car plate for a driver account', () => {
+    expect(() => Account.create(
+      'John Doe',
+      'john0@doe.com',
+      '475.646.550-11',
+      null,
+      false,
+      true,
+      '123456789'
+    )).toThrow(new ConflictException('driver should have a car plate'));
+  });
 });

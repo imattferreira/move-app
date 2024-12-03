@@ -1,10 +1,16 @@
-import CarPlate from './value-objects/car-plate';
+/**
+* Tatical Modeling (DDD) builds a Domain-Model and your parts are:
+* - Value-Objects
+* - Entities
+* - Domain-Services
+*/
+import CarPlate from '~/domain/value-objects/car-plate';
 import ConflictException from '~/application/exceptions/conflict-exception';
-import Cpf from './value-objects/cpf';
-import Email from './value-objects/email';
-import Identifier from './value-objects/identifier';
-import Name from './value-objects/name';
-import Password from './value-objects/password';
+import Cpf from '~/domain/value-objects/cpf';
+import Email from '~/domain/value-objects/email';
+import Identifier from '~/domain/value-objects/identifier';
+import Name from '~/domain/value-objects/name';
+import Password from '~/domain/value-objects/password';
 
 // Entity
 class Account {

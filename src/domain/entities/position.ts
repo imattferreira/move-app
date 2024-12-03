@@ -1,5 +1,5 @@
-import Coord from './value-objects/coord';
-import Identifier from './value-objects/identifier';
+import Coord from '~/domain/value-objects/coord';
+import Identifier from '~/domain/value-objects/identifier';
 
 class Position {
   private readonly id: Identifier;
@@ -35,12 +35,8 @@ class Position {
     return this.rideId.getValue();
   }
 
-  getLat(): number {
-    return this.coord.getLat();
-  }
-
-  getLong(): number {
-    return this.coord.getLong();
+  getCoord(): Coord {
+    return this.coord;
   }
 
   getDate(): Date {

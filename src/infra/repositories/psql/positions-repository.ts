@@ -25,15 +25,15 @@ class PsqlPositionsRepository implements PositionsRepository {
     const params = [
       position.getId(),
       position.getRideId(),
-      position.getLat(),
-      position.getLong(),
+      position.getCoord().getLat(),
+      position.getCoord().getLong(),
       position.getDate()
     ];
 
     await this.connection.query(query, params);
   }
 
-  async findAllById(rideId: string): Promise<Position[]> {
+  async getAllByRideId(rideId: string): Promise<Position[]> {
     const query = sql`
       SELECT * FROM ccca.position
       WHERE ride_id = $1 ORDER BY date DESC;

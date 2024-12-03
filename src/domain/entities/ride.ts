@@ -1,6 +1,6 @@
 import ConflictException from '~/application/exceptions/conflict-exception';
-import Coord from './value-objects/coord';
-import Identifier from './value-objects/identifier';
+import Coord from '~/domain/value-objects/coord';
+import Identifier from '~/domain/value-objects/identifier';
 
 type RideStatus = 'requested' | 'accepted' | 'in_progress' | 'completed';
 
@@ -11,8 +11,8 @@ class Ride {
   private readonly from: Coord;
   private readonly to: Coord;
   private readonly fare: number;
-  private readonly distance: number;
   private status: RideStatus;
+  private readonly distance: number;
   private date: Date;
 
   constructor(
@@ -35,8 +35,8 @@ class Ride {
     this.to = new Coord(toLat, toLong);
     this.status = status;
     this.fare = fare;
-    this.distance = distance;
     this.date = date;
+    this.distance = distance;
   }
 
   // Static Factory Method Pattern (GoF)

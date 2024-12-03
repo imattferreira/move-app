@@ -35,13 +35,13 @@ describe('UpdatePosition', () => {
 
     await updatePosition.execute(input);
 
-    const positions = await positionsRepository.findAllById(ride.getId());
+    const positions = await positionsRepository.getAllByRideId(ride.getId());
 
     expect(positions).toHaveLength(1);
     expect(positions[0].getId()).toBeDefined();
     expect(positions[0].getRideId()).toBe(input.rideId);
-    expect(positions[0].getLat()).toBe(input.lat);
-    expect(positions[0].getLong()).toBe(input.long);
+    expect(positions[0].getCoord().getLat()).toBe(input.lat);
+    expect(positions[0].getCoord().getLong()).toBe(input.long);
   });
 
   it('should not update the position of a non-existing ride', async () => {
@@ -54,8 +54,8 @@ describe('UpdatePosition', () => {
 
     const input = {
       rideId: Math.random().toString(),
-      lat: Math.random() * 100,
-      long: Math.random() * 100
+      lat: -27.584905257808835,
+      long: -48.545022195325124
     };
 
     await expect(
@@ -85,8 +85,8 @@ describe('UpdatePosition', () => {
 
       const input = {
         rideId: ride.getId(),
-        lat: Math.random() * 100,
-        long: Math.random() * 100
+        lat: -27.584905257808835,
+        long: -48.545022195325124
       };
 
       await expect(

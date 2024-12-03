@@ -16,8 +16,8 @@ describe('Position', () => {
 
     expect(position.getId()).toBeDefined();
     expect(position.getRideId()).toBe(input.rideId);
-    expect(position.getLat()).toBe(input.lat);
-    expect(position.getLong()).toBe(input.long);
+    expect(position.getCoord().getLat()).toBe(input.lat);
+    expect(position.getCoord().getLong()).toBe(input.long);
     expect(position.getDate()).toBeInstanceOf(Date);
   });
 });

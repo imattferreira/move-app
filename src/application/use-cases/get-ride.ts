@@ -1,4 +1,7 @@
+import AccountsRepository from '../repositories/accounts-repository';
+import DistanceCalculator from '~/domain/service/distance-calculator';
 import NotFoundException from '~/application/exceptions/not-found-exception';
+import PositionsRepository from '../repositories/positions-repository';
 import type RidesRepository from '~/application/repositories/rides-repository';
 
 type Input = {
@@ -17,10 +20,15 @@ type Output = {
   toLat: number;
   toLong: number;
   date: string;
+  passengerName: string;
 };
 
 class GetRide {
-  constructor(private readonly ridesRepository: RidesRepository) {}
+  constructor(
+    private readonly accountsRepository: AccountsRepository,
+    private readonly positionsRepository: PositionsRepository,
+    private readonly ridesRepository: RidesRepository
+  ) {}
 
   async execute(input: Input): Promise<Output> {
     const ride = await this.ridesRepository.findById(input.rideId);
@@ -29,13 +37,25 @@ class GetRide {
       throw new NotFoundException('ride not found');
     }
 
+    const passenger = await this.accountsRepository.findById(
+      ride.getPassengerId()
+    );
+    const positions = await this.positionsRepository.getAllByRideId(
+      ride.getId()
+    );
+
+    const distance = DistanceCalculator.calculateDistanceBetweenPositions(
+      positions
+    );
+
     return {
       id: ride.getId(),
+      passengerName: passenger!.getName(),
       passengerId: ride.getPassengerId(),
       driverId: ride.getDriverId(),
       status: ride.getStatus(),
       fare: ride.getFare(),
-      distance: ride.getDistance(),
+      distance,
       fromLat: ride.getFrom().getLat(),
       fromLong: ride.getFrom().getLong(),
       toLat: ride.getTo().getLat(),

@@ -20,14 +20,14 @@ class RidesRepositoryInMemory implements RidesRepository {
 
   async hasActiveRideOfDriver(driverId: string): Promise<boolean> {
     return this.stored.some(ride => (
-      ride.getDriverId() === driverId && ride.status !== 'completed'
+      ride.getDriverId() === driverId && ride.getStatus() !== 'completed'
     ));
   }
 
   async hasActiveRideOfPassenger(passengerId: string): Promise<boolean> {
     return this.stored.some(
       ride => ride.getPassengerId() === passengerId
-        && ride.status !== 'completed'
+        && ride.getStatus() !== 'completed'
     );
   }
 

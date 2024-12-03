@@ -1,19 +1,50 @@
-import crypto from 'node:crypto';
+import Coord from './value-objects/coord';
+import Identifier from './value-objects/identifier';
 
 class Position {
+  private readonly id: Identifier;
+  private readonly rideId: Identifier;
+  private readonly coord: Coord;
+  private readonly date: Date;
+
   constructor(
-    readonly id: string,
-    readonly rideId: string,
-    readonly lat: number,
-    readonly long: number,
-    readonly date: Date
-  ) {}
+    id: string,
+    rideId: string,
+    lat: number,
+    long: number,
+    date: Date
+  ) {
+    this.id = new Identifier(id);
+    this.rideId = new Identifier(rideId);
+    this.coord = new Coord(lat, long);
+    this.date = date;
+  }
 
   static create(rideId: string, lat: number, long: number) {
-    const id = crypto.randomUUID();
+    const id = Identifier.create();
     const now = new Date();
 
-    return new Position(id, rideId, lat, long, now);
+    return new Position(id.getValue(), rideId, lat, long, now);
+  }
+
+  getId(): string {
+    return this.id.getValue();
+  }
+
+  getRideId(): string {
+    return this.rideId.getValue();
+  }
+
+  getLat(): number {
+    return this.coord.getLat();
+  }
+
+  getLong(): number {
+    return this.coord.getLong();
+  }
+
+  getDate(): Date {
+    return this.date;
   }
 }
 

@@ -8,12 +8,14 @@ import Password from './value-objects/password';
 
 // Entity
 class Account {
-  private id: Identifier;
-  private name: Name;
-  private email: Email;
-  private cpf: Cpf;
-  private carPlate: CarPlate;
-  private password: Password;
+  private readonly id: Identifier;
+  private readonly name: Name;
+  private readonly email: Email;
+  private readonly cpf: Cpf;
+  private readonly carPlate: CarPlate;
+  private readonly isPassenger: boolean;
+  private readonly isDriver: boolean;
+  private readonly password: Password;
 
   constructor(
     id: string,
@@ -21,8 +23,8 @@ class Account {
     email: string,
     cpf: string,
     carPlate: string | null = null,
-    readonly isPassenger: boolean,
-    readonly isDriver: boolean,
+    isPassenger: boolean,
+    isDriver: boolean,
     password: string
   ) {
     if (isPassenger && isDriver) {
@@ -41,6 +43,8 @@ class Account {
     this.name = new Name(name);
     this.email = new Email(email);
     this.cpf = new Cpf(cpf);
+    this.isDriver = isDriver;
+    this.isPassenger = isPassenger;
     this.carPlate = new CarPlate(carPlate);
     this.password = new Password(password);
   }
@@ -90,6 +94,14 @@ class Account {
 
   getPassword(): string {
     return this.password.getValue();
+  }
+
+  getIsPassenger(): boolean {
+    return this.isPassenger;
+  }
+
+  getIsDriver(): boolean {
+    return this.isDriver;
   }
 }
 

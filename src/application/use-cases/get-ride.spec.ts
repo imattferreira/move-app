@@ -22,9 +22,9 @@ describe('GetRide', () => {
     expect(output.id).toBe(ride.getId());
     expect(output.passengerId).toBe(ride.getPassengerId());
     expect(output.driverId).toBe(ride.getDriverId());
-    expect(output.status).toBe(ride.status);
-    expect(output.fare).toBe(ride.fare);
-    expect(output.distance).toBe(ride.distance);
+    expect(output.status).toBe(ride.getStatus());
+    expect(output.fare).toBe(ride.getFare());
+    expect(output.distance).toBe(ride.getDistance());
     expect(output.fromLat).toBe(ride.getFrom().getLat());
     expect(output.fromLong).toBe(ride.getFrom().getLong());
     expect(output.toLat).toBe(ride.getTo().getLat());

@@ -22,7 +22,7 @@ class AcceptRide {
       throw new NotFoundException('driver not found');
     }
 
-    if (!driver.isDriver) {
+    if (!driver.getIsDriver()) {
       throw new ForbiddenException(
         'user needs to be a driver to accept a ride'
       );
@@ -34,7 +34,7 @@ class AcceptRide {
       throw new NotFoundException('ride not found');
     }
 
-    if (ride.status !== 'requested') {
+    if (ride.getStatus() !== 'requested') {
       throw new ConflictException('ride already accepted by another driver');
     }
 
@@ -45,7 +45,7 @@ class AcceptRide {
       throw new ConflictException('driver already have a ride active');
     }
 
-    ride.attachDriver(driver.getId());
+    ride.accept(driver.getId());
 
     await this.ridesRepository.update(ride);
   }

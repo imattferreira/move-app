@@ -43,7 +43,7 @@ describe('AcceptRide', () => {
     const updatedRide = await ridesRepository.findById(ride.getId());
 
     expect(updatedRide?.getDriverId()).toBe(driver.getId());
-    expect(updatedRide?.status).toBe('accepted');
+    expect(updatedRide?.getStatus()).toBe('accepted');
   });
 
   it('should not accept a ride when driver don\'t exists', async () => {

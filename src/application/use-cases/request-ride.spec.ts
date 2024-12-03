@@ -37,14 +37,14 @@ describe('RequestRide', () => {
 
     expect(output.rideId).toBeDefined();
     expect(ride?.getPassengerId()).toBe(passenger.getId());
-    expect(ride?.status).toBe('requested');
-    expect(ride?.fare).toBe(0);
-    expect(ride?.distance).toBe(0);
+    expect(ride?.getStatus()).toBe('requested');
+    expect(ride?.getFare()).toBe(0);
+    expect(ride?.getDistance()).toBe(0);
     expect(ride?.getFrom().getLat()).toBe(input.fromLat);
     expect(ride?.getFrom().getLong()).toBe(input.fromLong);
     expect(ride?.getTo().getLat()).toBe(input.toLat);
     expect(ride?.getTo().getLong()).toBe(input.toLong);
-    expect(ride?.date).toBeInstanceOf(Date);
+    expect(ride?.getDate()).toBeInstanceOf(Date);
   });
 
   it('should not request a new ride when passenger not exists', async () => {

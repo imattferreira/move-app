@@ -22,7 +22,7 @@ describe('UpdatePosition', () => {
       -48.522234807851476
     );
 
-    ride.attachDriver(Math.random().toString());
+    ride.accept(Math.random().toString());
     ride.start();
 
     await ridesRepository.save(ride);
@@ -38,10 +38,10 @@ describe('UpdatePosition', () => {
     const positions = await positionsRepository.findAllById(ride.getId());
 
     expect(positions).toHaveLength(1);
-    expect(positions[0].id).toBeDefined();
-    expect(positions[0].rideId).toBe(input.rideId);
-    expect(positions[0].lat).toBe(input.lat);
-    expect(positions[0].long).toBe(input.long);
+    expect(positions[0].getId()).toBeDefined();
+    expect(positions[0].getRideId()).toBe(input.rideId);
+    expect(positions[0].getLat()).toBe(input.lat);
+    expect(positions[0].getLong()).toBe(input.long);
   });
 
   it('should not update the position of a non-existing ride', async () => {

@@ -33,14 +33,14 @@ class GetRide {
       id: ride.getId(),
       passengerId: ride.getPassengerId(),
       driverId: ride.getDriverId(),
-      status: ride.status,
-      fare: ride.fare,
-      distance: ride.distance,
+      status: ride.getStatus(),
+      fare: ride.getFare(),
+      distance: ride.getDistance(),
       fromLat: ride.getFrom().getLat(),
       fromLong: ride.getFrom().getLong(),
       toLat: ride.getTo().getLat(),
       toLong: ride.getTo().getLong(),
-      date: ride.date.toUTCString()
+      date: ride.getDate().toUTCString()
     };
   }
 }

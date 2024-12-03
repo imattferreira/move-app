@@ -44,14 +44,14 @@ class PsqlRidesRepository implements RidesRepository {
       ride.getId(),
       ride.getPassengerId(),
       ride.getDriverId(),
-      ride.status,
-      ride.fare,
-      ride.distance,
+      ride.getStatus(),
+      ride.getFare(),
+      ride.getDistance(),
       ride.getFrom().getLat(),
       ride.getFrom().getLong(),
       ride.getTo().getLat(),
       ride.getTo().getLong(),
-      ride.date
+      ride.getDate()
     ];
 
     await this.connection.query(query, params);
@@ -122,8 +122,7 @@ class PsqlRidesRepository implements RidesRepository {
     `;
     const params = [
       ride.getDriverId(),
-      ride.status,
-      ride.distance,
+      ride.getStatus(),
       ride.getId()
     ];
 

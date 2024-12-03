@@ -16,7 +16,7 @@ describe('StartRide', () => {
       -48.522234807851476
     );
 
-    ride.attachDriver(Math.random().toString());
+    ride.accept(Math.random().toString());
 
     await ridesRepository.save(ride);
 
@@ -28,7 +28,7 @@ describe('StartRide', () => {
 
     const updatedRide = await ridesRepository.findById(ride.getId());
 
-    expect(updatedRide?.status).toBe('in_progress');
+    expect(updatedRide?.getStatus()).toBe('in_progress');
   });
 
   it('should not start a non-existing ride', async () => {

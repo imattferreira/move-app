@@ -39,8 +39,8 @@ class GetAccount {
       email: account.getEmail(),
       cpf: account.getCpf(),
       carPlate: account.getCarPlate(),
-      isPassenger: account.isPassenger,
-      isDriver: account.isDriver,
+      isPassenger: account.getIsPassenger(),
+      isDriver: account.getIsDriver(),
       password: account.getPassword()
     };
   }

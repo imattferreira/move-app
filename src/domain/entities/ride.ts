@@ -5,30 +5,38 @@ import Identifier from './value-objects/identifier';
 type RideStatus = 'requested' | 'accepted' | 'in_progress' | 'completed';
 
 class Ride {
-  private id: Identifier;
-  private passengerId: Identifier;
+  private readonly id: Identifier;
+  private readonly passengerId: Identifier;
   private driverId: Identifier | null;
-  private from: Coord;
-  private to: Coord;
+  private readonly from: Coord;
+  private readonly to: Coord;
+  private readonly fare: number;
+  private readonly distance: number;
+  private status: RideStatus;
+  private date: Date;
 
   constructor(
     id: string,
     passengerId: string,
     driverId: string | null,
-    public status: RideStatus,
-    readonly fare: number,
-    readonly distance: number,
+    status: RideStatus,
+    fare: number,
+    distance: number,
     fromLat: number,
     fromLong: number,
     toLat: number,
     toLong: number,
-    readonly date: Date
+    date: Date
   ) {
     this.id = new Identifier(id);
     this.driverId = driverId ? new Identifier(driverId) : null;
     this.passengerId = new Identifier(passengerId);
     this.from = new Coord(fromLat, fromLong);
     this.to = new Coord(toLat, toLong);
+    this.status = status;
+    this.fare = fare;
+    this.distance = distance;
+    this.date = date;
   }
 
   // Static Factory Method Pattern (GoF)
@@ -61,7 +69,11 @@ class Ride {
     );
   }
 
-  attachDriver(driverId: string): void {
+  accept(driverId: string): void {
+    if (this.status !== 'requested') {
+      throw new ConflictException('ride already accepted');
+    }
+
     this.driverId = new Identifier(driverId);
     this.status = 'accepted';
   }
@@ -92,6 +104,22 @@ class Ride {
 
   getPassengerId(): string {
     return this.passengerId.getValue();
+  }
+
+  getStatus(): string {
+    return this.status;
+  }
+
+  getFare(): number {
+    return this.fare;
+  }
+
+  getDistance(): number {
+    return this.distance;
+  }
+
+  getDate(): Date {
+    return this.date;
   }
 }
 

@@ -14,10 +14,10 @@ describe('Position', () => {
       input.long
     );
 
-    expect(position.id).toBeDefined();
-    expect(position.rideId).toBe(input.rideId);
-    expect(position.lat).toBe(input.lat);
-    expect(position.long).toBe(input.long);
-    expect(position.date).toBeInstanceOf(Date);
+    expect(position.getId()).toBeDefined();
+    expect(position.getRideId()).toBe(input.rideId);
+    expect(position.getLat()).toBe(input.lat);
+    expect(position.getLong()).toBe(input.long);
+    expect(position.getDate()).toBeInstanceOf(Date);
   });
 });

@@ -26,8 +26,8 @@ describe('SignUp', () => {
     expect(account?.getName()).toBe(input.name);
     expect(account?.getEmail()).toBe(input.email);
     expect(account?.getCpf()).toBe(input.cpf);
-    expect(account?.isDriver).toBe(true);
-    expect(account?.isPassenger).toBe(false);
+    expect(account?.getIsDriver()).toBe(true);
+    expect(account?.getIsPassenger()).toBe(false);
     expect(account?.getCarPlate()).toBe(input.carPlate);
     expect(account?.getPassword()).toBe(input.password);
   });

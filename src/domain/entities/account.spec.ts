@@ -29,8 +29,8 @@ describe('Account', () => {
     expect(account.getEmail()).toBe(input.email);
     expect(account.getCpf()).toBe(input.cpf);
     expect(account.getCarPlate()).toBe(input.carPlate);
-    expect(account.isPassenger).toBe(input.isPassenger);
-    expect(account.isDriver).toBe(input.isDriver);
+    expect(account.getIsPassenger()).toBe(input.isPassenger);
+    expect(account.getIsDriver()).toBe(input.isDriver);
     expect(account.getPassword()).toBe(input.password);
   });
 
@@ -60,8 +60,8 @@ describe('Account', () => {
     expect(account.getEmail()).toBe(input.email);
     expect(account.getCpf()).toBe(input.cpf);
     expect(account.getCarPlate()).toBe(input.carPlate);
-    expect(account.isPassenger).toBe(input.isPassenger);
-    expect(account.isDriver).toBe(input.isDriver);
+    expect(account.getIsPassenger()).toBe(input.isPassenger);
+    expect(account.getIsDriver()).toBe(input.isDriver);
     expect(account.getPassword()).toBe(input.password);
   });
 

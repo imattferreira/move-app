@@ -19,17 +19,17 @@ describe('Ride', () => {
       input.toLong
     );
 
-    expect(ride.id).toBeDefined();
-    expect(ride.passengerId).toBe(input.passengerId);
-    expect(ride.driverId).toBeNull();
-    expect(ride.status).toBe('requested');
-    expect(ride.fare).toBe(0);
-    expect(ride.distance).toBe(0);
-    expect(ride.fromLat).toBe(input.fromLat);
-    expect(ride.fromLong).toBe(input.fromLong);
-    expect(ride.toLat).toBe(input.toLat);
-    expect(ride.toLong).toBe(input.toLong);
-    expect(ride.date).toBeInstanceOf(Date);
+    expect(ride.getId()).toBeDefined();
+    expect(ride.getPassengerId()).toBe(input.passengerId);
+    expect(ride.getDriverId()).toBeNull();
+    expect(ride.getStatus()).toBe('requested');
+    expect(ride.getFare()).toBe(0);
+    expect(ride.getDistance()).toBe(0);
+    expect(ride.getFrom().getLat()).toBe(input.fromLat);
+    expect(ride.getFrom().getLong()).toBe(input.fromLong);
+    expect(ride.getTo().getLat()).toBe(input.toLat);
+    expect(ride.getTo().getLong()).toBe(input.toLong);
+    expect(ride.getDate()).toBeInstanceOf(Date);
   });
 
   it('should be able to attach a driver to the ride', () => {
@@ -43,10 +43,10 @@ describe('Ride', () => {
       -48.522234807851476
     );
 
-    ride.attachDriver(driverId);
+    ride.accept(driverId);
 
-    expect(ride.driverId).toBe(driverId);
-    expect(ride.status).toBe('accepted');
+    expect(ride.getDriverId()).toBe(driverId);
+    expect(ride.getStatus()).toBe('accepted');
   });
 
   it('should be able to start the ride', () => {
@@ -58,10 +58,10 @@ describe('Ride', () => {
       -48.522234807851476
     );
 
-    ride.attachDriver(Math.random().toString());
+    ride.accept(Math.random().toString());
     ride.start();
 
-    expect(ride.status).toBe('in_progress');
+    expect(ride.getStatus()).toBe('in_progress');
   });
 
   it('should not start the ride when already active', () => {
@@ -75,7 +75,7 @@ describe('Ride', () => {
       -48.522234807851476
     );
 
-    ride.attachDriver(driverId);
+    ride.accept(driverId);
     ride.start();
 
     expect(

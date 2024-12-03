@@ -9,25 +9,25 @@ class PsqlPositionsRepository implements PositionsRepository {
   async save(position: Position): Promise<void> {
     const query = sql`
       INSERT INTO ccca.position (
-        position_id, 
-        ride_id, 
-        lat, 
-        long, 
+        position_id,
+        ride_id,
+        lat,
+        long,
         date
       ) VALUES (
-        $1, 
-        $2, 
-        $3, 
-        $4, 
+        $1,
+        $2,
+        $3,
+        $4,
         $5
         );
     `;
     const params = [
-      position.id,
-      position.rideId,
-      position.lat,
-      position.long,
-      position.date
+      position.getId(),
+      position.getRideId(),
+      position.getLat(),
+      position.getLong(),
+      position.getDate()
     ];
 
     await this.connection.query(query, params);
@@ -35,7 +35,7 @@ class PsqlPositionsRepository implements PositionsRepository {
 
   async findAllById(rideId: string): Promise<Position[]> {
     const query = sql`
-      SELECT * FROM ccca.position 
+      SELECT * FROM ccca.position
       WHERE ride_id = $1 ORDER BY date DESC;
     `;
     const params = [rideId];

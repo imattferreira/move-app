@@ -29,7 +29,7 @@ class RequestRide {
       throw new NotFoundException('account not found');
     }
 
-    if (!passenger.isPassenger) {
+    if (!passenger.getIsPassenger()) {
       throw new ForbiddenException('account needs to be of a passenger');
     }
 

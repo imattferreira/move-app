@@ -33,8 +33,8 @@ class PsqlAccountsRepository implements AccountsRepository {
       account.getEmail(),
       account.getCpf(),
       account.getCarPlate(),
-      account.isPassenger,
-      account.isDriver,
+      account.getIsPassenger(),
+      account.getIsDriver(),
       account.getPassword()
     ];
 

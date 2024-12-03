@@ -23,7 +23,7 @@ class UpdatePosition {
       throw new NotFoundException('ride not found');
     }
 
-    if (ride.status !== 'in_progress') {
+    if (ride.getStatus() !== 'in_progress') {
       throw new ConflictException('ride is not in progress');
     }
 

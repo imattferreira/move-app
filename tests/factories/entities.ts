@@ -34,7 +34,7 @@ export function makeAccountFactory(
     is_passenger: false,
     is_driver: false,
     car_plate: fieldsToOverride.is_driver ? 'ABC1234' : null,
-    password: '123456',
+    password: '123456789',
     ...fieldsToOverride
   };
 }

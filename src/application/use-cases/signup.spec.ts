@@ -14,7 +14,7 @@ describe('SignUp', () => {
       cpf: '475.646.550-11',
       isDriver: true,
       carPlate: 'ABC1234',
-      password: '123456'
+      password: '123456789'
     };
 
     const output = await signup.execute(input);
@@ -42,7 +42,7 @@ describe('SignUp', () => {
       cpf: '475.646.550-11',
       isDriver: true,
       carPlate: 'ABC',
-      password: '123456'
+      password: '123456789'
     };
 
     await expect(
@@ -59,7 +59,7 @@ describe('SignUp', () => {
       email: 'john6@doe.com',
       cpf: '475.646.550-11',
       isPassenger: true,
-      password: '123456'
+      password: '123456789'
     };
 
     await signup.execute(input);

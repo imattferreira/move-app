@@ -27,7 +27,11 @@ const positionsRepository = new PsqlPositionsRepository(connection);
 const signup = new SignUp(accountsRepository);
 const getAccount = new GetAccount(accountsRepository);
 const requestRide = new RequestRide(accountsRepository, ridesRepository);
-const getRide = new GetRide(ridesRepository);
+const getRide = new GetRide(
+  accountsRepository,
+  positionsRepository,
+  ridesRepository
+);
 const acceptRide = new AcceptRide(accountsRepository, ridesRepository);
 const startRide = new StartRide(ridesRepository);
 const updatePosition = new UpdatePosition(positionsRepository, ridesRepository);
@@ -38,11 +42,11 @@ new PositionsController(httpServer, updatePosition);
 
 const signals = ['SIGINT', 'SIGTERM', 'SIGKILL'];
 
-signals.forEach((signal) => {
-  process.on(signal, async () => {
-    await connection.close();
-    process.exit(0);
-  });
-});
+// signals.forEach((signal) => {
+//   process.on(signal, async () => {
+//     await connection.close();
+//     process.exit(0);
+//   });
+// });
 
 httpServer.listen(3000);

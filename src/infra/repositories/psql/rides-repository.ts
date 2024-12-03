@@ -116,9 +116,8 @@ class PsqlRidesRepository implements RidesRepository {
      UPDATE ccca.ride
      SET
      driver_id = $1,
-     status = $2,
-     distance = $3
-     WHERE ride_id = $4;
+     status = $2
+     WHERE ride_id = $3;
     `;
     const params = [
       ride.getDriverId(),

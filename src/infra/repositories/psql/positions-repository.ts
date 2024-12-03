@@ -40,7 +40,7 @@ class PsqlPositionsRepository implements PositionsRepository {
     `;
     const params = [rideId];
 
-    const [positions] = await this.connection.query(query, params);
+    const positions = await this.connection.query(query, params);
 
     return positions.map(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

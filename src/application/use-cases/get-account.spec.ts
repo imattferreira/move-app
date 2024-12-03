@@ -19,15 +19,15 @@ describe('GetAccount', () => {
     );
 
     await accountsRepository.save(account);
-    const output = await getAccount.execute({ accountId: account.id });
+    const output = await getAccount.execute({ accountId: account.getId() });
 
-    expect(output.name).toBe(account.name);
-    expect(output.email).toBe(account.email);
-    expect(output.cpf).toBe(account.cpf);
+    expect(output.name).toBe(account.getName());
+    expect(output.email).toBe(account.getEmail());
+    expect(output.cpf).toBe(account.getCpf());
     expect(output.isPassenger).toBe(true);
     expect(output.isDriver).toBe(false);
-    expect(output.carPlate).toBe(account.carPlate);
-    expect(output.password).toBe(account.password);
+    expect(output.carPlate).toBe(account.getCarPlate());
+    expect(output.password).toBe(account.getPassword());
   });
 
   it('should not get info about a non-existing accunt', async () => {

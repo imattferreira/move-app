@@ -5,6 +5,7 @@ type Input = {
   accountId: string;
 };
 
+// Data-Transfer Object (DTO)
 type Output = {
   id: string;
   name: string;
@@ -33,14 +34,14 @@ class GetAccount {
     }
 
     return {
-      id: account.id,
-      name: account.name,
-      email: account.email,
-      cpf: account.cpf,
-      carPlate: account.carPlate,
+      id: account.getId(),
+      name: account.getName(),
+      email: account.getEmail(),
+      cpf: account.getCpf(),
+      carPlate: account.getCarPlate(),
       isPassenger: account.isPassenger,
       isDriver: account.isDriver,
-      password: account.password
+      password: account.getPassword()
     };
   }
 }

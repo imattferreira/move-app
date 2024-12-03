@@ -23,13 +23,13 @@ describe('SignUp', () => {
 
     const account = await accountsRepository.findById(output.accountId);
 
-    expect(account?.name).toBe(input.name);
-    expect(account?.email).toBe(input.email);
-    expect(account?.cpf).toBe(input.cpf);
+    expect(account?.getName()).toBe(input.name);
+    expect(account?.getEmail()).toBe(input.email);
+    expect(account?.getCpf()).toBe(input.cpf);
     expect(account?.isDriver).toBe(true);
     expect(account?.isPassenger).toBe(false);
-    expect(account?.carPlate).toBe(input.carPlate);
-    expect(account?.password).toBe(input.password);
+    expect(account?.getCarPlate()).toBe(input.carPlate);
+    expect(account?.getPassword()).toBe(input.password);
   });
 
   it('should not create a driver user with a invalid car plate', async () => {

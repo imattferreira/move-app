@@ -13,13 +13,13 @@ class AccountsRepositoryInMemory implements AccountsRepository {
   }
 
   async findById(accountId: string): Promise<Account | null> {
-    const account = this.stored.find(account => account.id === accountId);
+    const account = this.stored.find(account => account.getId() === accountId);
 
     return account || null;
   }
 
   async findByEmail(email: string): Promise<Account | null> {
-    const account = this.stored.find(account => account.email === email);
+    const account = this.stored.find(account => account.getEmail() === email);
 
     return account || null;
   }

@@ -1,7 +1,7 @@
-import crypto from 'node:crypto';
 import { makeAccountFactory, makePositionFactory, makeRideFactory } from './factories/entities';
-import { makeRequest } from './utils';
 import type { Object } from '~/utils/types';
+import crypto from 'node:crypto';
+import { makeRequest } from './utils';
 
 describe('POST /positions', () => {
   it('should be able to update the position of a ride', async () => {

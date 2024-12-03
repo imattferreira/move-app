@@ -1,6 +1,6 @@
-import crypto from 'node:crypto';
-import type { Object } from '~/utils/types';
 import { makeAccountFactory, makeRideFactory } from './factories/entities';
+import type { Object } from '~/utils/types';
+import crypto from 'node:crypto';
 import { makeRequest } from './utils';
 
 describe('POST /rides/:rideId/:driverId', () => {

@@ -24,14 +24,14 @@ describe('Account', () => {
       input.password
     );
 
-    expect(account.id).toBeDefined();
-    expect(account.name).toBe(input.name);
-    expect(account.email).toBe(input.email);
-    expect(account.cpf).toBe(input.cpf);
-    expect(account.carPlate).toBe(input.carPlate);
+    expect(account.getId()).toBeDefined();
+    expect(account.getName()).toBe(input.name);
+    expect(account.getEmail()).toBe(input.email);
+    expect(account.getCpf()).toBe(input.cpf);
+    expect(account.getCarPlate()).toBe(input.carPlate);
     expect(account.isPassenger).toBe(input.isPassenger);
     expect(account.isDriver).toBe(input.isDriver);
-    expect(account.password).toBe(input.password);
+    expect(account.getPassword()).toBe(input.password);
   });
 
   it('should be able create a passenger account', () => {
@@ -55,14 +55,14 @@ describe('Account', () => {
       input.password
     );
 
-    expect(account.id).toBeDefined();
-    expect(account.name).toBe(input.name);
-    expect(account.email).toBe(input.email);
-    expect(account.cpf).toBe(input.cpf);
-    expect(account.carPlate).toBe(input.carPlate);
+    expect(account.getId()).toBeDefined();
+    expect(account.getName()).toBe(input.name);
+    expect(account.getEmail()).toBe(input.email);
+    expect(account.getCpf()).toBe(input.cpf);
+    expect(account.getCarPlate()).toBe(input.carPlate);
     expect(account.isPassenger).toBe(input.isPassenger);
     expect(account.isDriver).toBe(input.isDriver);
-    expect(account.password).toBe(input.password);
+    expect(account.getPassword()).toBe(input.password);
   });
 
   it(
@@ -84,7 +84,7 @@ describe('Account', () => {
       'JJ',
       'john0@doe.com',
       '475.646.550-11',
-      'ABC1234',
+      null,
       true,
       false,
       '123456'
@@ -96,7 +96,7 @@ describe('Account', () => {
       'John Doe',
       'john',
       '475.646.550-11',
-      'ABC1234',
+      null,
       true,
       false,
       '123456'
@@ -108,7 +108,7 @@ describe('Account', () => {
       'John Doe',
       'john0@doe.com',
       '1111111',
-      'ABC1234',
+      null,
       true,
       false,
       '123456'

@@ -39,7 +39,7 @@ class SignUp {
 
     await this.accountsRepository.save(account);
 
-    return { accountId: account.id };
+    return { accountId: account.getId() };
   }
 }
 

@@ -13,25 +13,26 @@ class RidesRepositoryInMemory implements RidesRepository {
   }
 
   async findById(rideId: string): Promise<Ride | null> {
-    const ride = this.stored.find(ride => ride.id === rideId);
+    const ride = this.stored.find(ride => ride.getId() === rideId);
 
     return ride || null;
   }
 
   async hasActiveRideOfDriver(driverId: string): Promise<boolean> {
     return this.stored.some(ride => (
-      ride.driverId === driverId && ride.status !== 'completed'
+      ride.getDriverId() === driverId && ride.status !== 'completed'
     ));
   }
 
   async hasActiveRideOfPassenger(passengerId: string): Promise<boolean> {
     return this.stored.some(
-      ride => ride.passengerId === passengerId && ride.status !== 'completed'
+      ride => ride.getPassengerId() === passengerId
+        && ride.status !== 'completed'
     );
   }
 
   async update(ride: Ride): Promise<void> {
-    const rideIndex = this.stored.findIndex(r => r.id === ride.id);
+    const rideIndex = this.stored.findIndex(r => r.getId() === ride.getId());
 
     this.stored[rideIndex] = ride;
   }

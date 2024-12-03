@@ -28,14 +28,14 @@ class PsqlAccountsRepository implements AccountsRepository {
     $8
   );`;
     const params = [
-      account.id,
-      account.name,
-      account.email,
-      account.cpf,
-      account.carPlate,
+      account.getId(),
+      account.getName(),
+      account.getEmail(),
+      account.getCpf(),
+      account.getCarPlate(),
       account.isPassenger,
       account.isDriver,
-      account.password
+      account.getPassword()
     ];
 
     await this.connection.query(query, params);

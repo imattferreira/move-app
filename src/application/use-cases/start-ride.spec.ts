@@ -21,12 +21,12 @@ describe('StartRide', () => {
     await ridesRepository.save(ride);
 
     const input = {
-      rideId: ride.id
+      rideId: ride.getId()
     };
 
     await startRide.execute(input);
 
-    const updatedRide = await ridesRepository.findById(ride.id);
+    const updatedRide = await ridesRepository.findById(ride.getId());
 
     expect(updatedRide?.status).toBe('in_progress');
   });

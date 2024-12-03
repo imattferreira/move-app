@@ -25,7 +25,7 @@ describe('RequestRide', () => {
     await accountsRepository.save(passenger);
 
     const input = {
-      passengerId: passenger.id,
+      passengerId: passenger.getId(),
       fromLat: -27.584905257808835,
       fromLong: -48.545022195325124,
       toLat: -27.496887588317275,
@@ -36,14 +36,14 @@ describe('RequestRide', () => {
     const ride = await ridesRepository.findById(output.rideId);
 
     expect(output.rideId).toBeDefined();
-    expect(ride?.passengerId).toBe(passenger.id);
+    expect(ride?.getPassengerId()).toBe(passenger.getId());
     expect(ride?.status).toBe('requested');
     expect(ride?.fare).toBe(0);
     expect(ride?.distance).toBe(0);
-    expect(ride?.fromLat).toBe(input.fromLat);
-    expect(ride?.fromLong).toBe(input.fromLong);
-    expect(ride?.toLat).toBe(input.toLat);
-    expect(ride?.toLong).toBe(input.toLong);
+    expect(ride?.getFrom().getLat()).toBe(input.fromLat);
+    expect(ride?.getFrom().getLong()).toBe(input.fromLong);
+    expect(ride?.getTo().getLat()).toBe(input.toLat);
+    expect(ride?.getTo().getLong()).toBe(input.toLong);
     expect(ride?.date).toBeInstanceOf(Date);
   });
 
@@ -97,7 +97,7 @@ describe('RequestRide', () => {
       await accountsRepository.save(passenger);
 
       const input = {
-        passengerId: passenger.id,
+        passengerId: passenger.getId(),
         fromLat: 0,
         fromLong: 0,
         toLat: 0,
@@ -131,7 +131,7 @@ describe('RequestRide', () => {
       await accountsRepository.save(passenger);
 
       const input = {
-        passengerId: passenger.id,
+        passengerId: passenger.getId(),
         fromLat: -27.584905257808835,
         fromLong: -48.545022195325124,
         toLat: -27.496887588317275,

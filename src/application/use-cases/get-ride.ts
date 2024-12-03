@@ -30,16 +30,16 @@ class GetRide {
     }
 
     return {
-      id: ride.id,
-      passengerId: ride.passengerId,
-      driverId: ride.driverId,
+      id: ride.getId(),
+      passengerId: ride.getPassengerId(),
+      driverId: ride.getDriverId(),
       status: ride.status,
       fare: ride.fare,
       distance: ride.distance,
-      fromLat: ride.fromLat,
-      fromLong: ride.fromLong,
-      toLat: ride.toLat,
-      toLong: ride.toLong,
+      fromLat: ride.getFrom().getLat(),
+      fromLong: ride.getFrom().getLong(),
+      toLat: ride.getTo().getLat(),
+      toLong: ride.getTo().getLong(),
       date: ride.date.toUTCString()
     };
   }

@@ -34,7 +34,7 @@ class RequestRide {
     }
 
     const hasActiveRide = await this.ridesRepository.hasActiveRideOfPassenger(
-      passenger.id
+      passenger.getId()
     );
 
     if (hasActiveRide) {
@@ -51,7 +51,7 @@ class RequestRide {
 
     await this.ridesRepository.save(ride);
 
-    return { rideId: ride.id };
+    return { rideId: ride.getId() };
   }
 }
 

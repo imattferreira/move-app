@@ -17,18 +17,18 @@ describe('GetRide', () => {
     );
 
     await ridesRepository.save(ride);
-    const output = await getRide.execute({ rideId: ride.id });
+    const output = await getRide.execute({ rideId: ride.getId() });
 
-    expect(output.id).toBe(ride.id);
-    expect(output.passengerId).toBe(ride.passengerId);
-    expect(output.driverId).toBe(ride.driverId);
+    expect(output.id).toBe(ride.getId());
+    expect(output.passengerId).toBe(ride.getPassengerId());
+    expect(output.driverId).toBe(ride.getDriverId());
     expect(output.status).toBe(ride.status);
     expect(output.fare).toBe(ride.fare);
     expect(output.distance).toBe(ride.distance);
-    expect(output.fromLat).toBe(ride.fromLat);
-    expect(output.fromLong).toBe(ride.fromLong);
-    expect(output.toLat).toBe(ride.toLat);
-    expect(output.toLong).toBe(ride.toLong);
+    expect(output.fromLat).toBe(ride.getFrom().getLat());
+    expect(output.fromLong).toBe(ride.getFrom().getLong());
+    expect(output.toLat).toBe(ride.getTo().getLat());
+    expect(output.toLong).toBe(ride.getTo().getLong());
   });
 
   it('should not get info about a non-existing ride', async () => {

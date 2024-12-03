@@ -41,16 +41,16 @@ class PsqlRidesRepository implements RidesRepository {
         $11
       );`;
     const params = [
-      ride.id,
-      ride.passengerId,
-      ride.driverId,
+      ride.getId(),
+      ride.getPassengerId(),
+      ride.getDriverId(),
       ride.status,
       ride.fare,
       ride.distance,
-      ride.fromLat,
-      ride.fromLong,
-      ride.toLat,
-      ride.toLong,
+      ride.getFrom().getLat(),
+      ride.getFrom().getLong(),
+      ride.getTo().getLat(),
+      ride.getTo().getLong(),
       ride.date
     ];
 
@@ -72,12 +72,12 @@ class PsqlRidesRepository implements RidesRepository {
       ride.passenger_id,
       ride.driver_id,
       ride.status,
-      Number(ride.fare),
-      Number(ride.distance),
-      Number(ride.from_lat),
-      Number(ride.from_long),
-      Number(ride.to_lat),
-      Number(ride.to_long),
+      parseFloat(ride.fare),
+      parseFloat(ride.distance),
+      parseFloat(ride.from_lat),
+      parseFloat(ride.from_long),
+      parseFloat(ride.to_lat),
+      parseFloat(ride.to_long),
       new Date(ride.date)
     );
   }
@@ -120,7 +120,12 @@ class PsqlRidesRepository implements RidesRepository {
      distance = $3
      WHERE ride_id = $4;
     `;
-    const params = [ride.driverId, ride.status, ride.distance, ride.id];
+    const params = [
+      ride.getDriverId(),
+      ride.status,
+      ride.distance,
+      ride.getId()
+    ];
 
     await this.connection.query(query, params);
   }

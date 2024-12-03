@@ -39,13 +39,13 @@ class AcceptRide {
     }
 
     const driverHasActiveRide
-      = await this.ridesRepository.hasActiveRideOfDriver(driver.id);
+      = await this.ridesRepository.hasActiveRideOfDriver(driver.getId());
 
     if (driverHasActiveRide) {
       throw new ConflictException('driver already have a ride active');
     }
 
-    ride.attachDriver(driver.id);
+    ride.attachDriver(driver.getId());
 
     await this.ridesRepository.update(ride);
   }

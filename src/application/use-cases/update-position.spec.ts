@@ -28,14 +28,14 @@ describe('UpdatePosition', () => {
     await ridesRepository.save(ride);
 
     const input = {
-      rideId: ride.id,
+      rideId: ride.getId(),
       lat: Math.random() * 100,
       long: Math.random() * 100
     };
 
     await updatePosition.execute(input);
 
-    const positions = await positionsRepository.findAllById(ride.id);
+    const positions = await positionsRepository.findAllById(ride.getId());
 
     expect(positions).toHaveLength(1);
     expect(positions[0].id).toBeDefined();
@@ -84,7 +84,7 @@ describe('UpdatePosition', () => {
       await ridesRepository.save(ride);
 
       const input = {
-        rideId: ride.id,
+        rideId: ride.getId(),
         lat: Math.random() * 100,
         long: Math.random() * 100
       };

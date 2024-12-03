@@ -34,15 +34,15 @@ describe('AcceptRide', () => {
     await ridesRepository.save(ride);
 
     const input = {
-      driverId: driver.id,
-      rideId: ride.id
+      driverId: driver.getId(),
+      rideId: ride.getId()
     };
 
     await acceptRide.execute(input);
 
-    const updatedRide = await ridesRepository.findById(ride.id);
+    const updatedRide = await ridesRepository.findById(ride.getId());
 
-    expect(updatedRide?.driverId).toBe(driver.id);
+    expect(updatedRide?.getDriverId()).toBe(driver.getId());
     expect(updatedRide?.status).toBe('accepted');
   });
 
@@ -63,7 +63,7 @@ describe('AcceptRide', () => {
 
     const input = {
       driverId: Math.random().toString(),
-      rideId: ride.id
+      rideId: ride.getId()
     };
 
     await expect(
@@ -89,7 +89,7 @@ describe('AcceptRide', () => {
     await accountsRepository.save(driver);
 
     const input = {
-      driverId: driver.id,
+      driverId: driver.getId(),
       rideId: Math.random().toString()
     };
 
@@ -124,8 +124,8 @@ describe('AcceptRide', () => {
     await ridesRepository.save(ride);
 
     const input = {
-      driverId: driver.id,
-      rideId: ride.id
+      driverId: driver.getId(),
+      rideId: ride.getId()
     };
 
     await expect(() => acceptRide.execute(input)).rejects.toThrow(
@@ -159,8 +159,8 @@ describe('AcceptRide', () => {
     await ridesRepository.save(ride);
 
     const input = {
-      driverId: driver.id,
-      rideId: ride.id
+      driverId: driver.getId(),
+      rideId: ride.getId()
     };
 
     await acceptRide.execute(input);
@@ -203,12 +203,15 @@ describe('AcceptRide', () => {
     await ridesRepository.save(ride1);
     await ridesRepository.save(ride2);
     await acceptRide.execute({
-      driverId: driver.id,
-      rideId: ride1.id
+      driverId: driver.getId(),
+      rideId: ride1.getId()
     });
 
     await expect(
-      () => acceptRide.execute({ driverId: driver.id, rideId: ride2.id })
+      () => acceptRide.execute({
+        driverId: driver.getId(),
+        rideId: ride2.getId()
+      })
     ).rejects.toThrow(
       new ConflictException('driver already have a ride active')
     );

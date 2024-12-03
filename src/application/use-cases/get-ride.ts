@@ -1,7 +1,7 @@
-import AccountsRepository from '../repositories/accounts-repository';
+import AccountsRepository from '~/application/repositories/accounts-repository';
 import DistanceCalculator from '~/domain/service/distance-calculator';
 import NotFoundException from '~/application/exceptions/not-found-exception';
-import PositionsRepository from '../repositories/positions-repository';
+import PositionsRepository from '~/application/repositories/positions-repository';
 import type RidesRepository from '~/application/repositories/rides-repository';
 
 type Input = {

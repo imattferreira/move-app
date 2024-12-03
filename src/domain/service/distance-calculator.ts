@@ -1,5 +1,5 @@
 import Coord from '~/domain/value-objects/coord';
-import Position from '../entities/position';
+import Position from '~/domain/entities/position';
 
 // Domain-Service
 class DistanceCalculator {

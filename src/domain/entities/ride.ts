@@ -10,9 +10,9 @@ class Ride {
   private driverId: Identifier | null;
   private readonly from: Coord;
   private readonly to: Coord;
-  private readonly fare: number;
+  private fare: number;
   private status: RideStatus;
-  private readonly distance: number;
+  private distance: number;
   private date: Date;
 
   constructor(
@@ -86,6 +86,14 @@ class Ride {
     this.status = 'in_progress';
   }
 
+  finish(): void {
+    if (this.status !== 'in_progress') {
+      throw new ConflictException('ride not started yet');
+    }
+
+    this.status = 'completed';
+  }
+
   getId(): string {
     return this.id.getValue();
   }
@@ -114,8 +122,16 @@ class Ride {
     return this.fare;
   }
 
+  setFare(fare: number): void {
+    this.fare = fare;
+  }
+
   getDistance(): number {
     return this.distance;
+  }
+
+  setDistance(distance: number): void {
+    this.distance = distance;
   }
 
   getDate(): Date {

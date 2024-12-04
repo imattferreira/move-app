@@ -58,7 +58,6 @@ export class ExpressAdapter implements HttpServer {
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       catch (err: any) {
-        console.log(err);
         const { status, message } = this.parseException(err);
 
         res.status(status).json({ message });

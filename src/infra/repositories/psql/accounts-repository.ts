@@ -84,6 +84,13 @@ class PsqlAccountsRepository implements AccountsRepository {
       account.password
     );
   }
+
+  async delete(accountId: string): Promise<void> {
+    const query = sql`DELETE FROM ccca.account WHERE account_id = $1;`;
+    const params = [accountId];
+
+    await this.connection.query(query, params);
+  }
 }
 
 export default PsqlAccountsRepository;

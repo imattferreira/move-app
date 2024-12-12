@@ -1,0 +1,35 @@
+post:
+  tags:
+    - Transaction
+  summary: Process and charges the payment of a ride
+  description: "This operation process the payment of a ride"
+  operationId: processPayment
+  deprecated: false
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/RidePayment.yaml"
+  responses:
+    "200":
+      description: Successfully processed
+    "400":
+      description: Invalid field
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "invalid [amount] field"
+    "404":
+      description: Ride not found
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "ride not found"

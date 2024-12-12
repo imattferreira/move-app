@@ -1,28 +1,16 @@
-import Account from '~/domain/entities/account';
-import AccountsRepository from '~/application/repositories/accounts-repository';
+import Transaction from '~/domain/entities/transaction';
+import TransactionsRepository from '~/application/repositories/transactions-repository';
 
-class AccountsRepositoryInMemory implements AccountsRepository {
-  private stored: Account[];
+class TransactionsRepositoryInMemory implements TransactionsRepository {
+  private stored: Transaction[];
 
   constructor() {
     this.stored = [];
   }
 
-  async save(account: Account): Promise<void> {
-    this.stored.push(account);
-  }
-
-  async findById(accountId: string): Promise<Account | null> {
-    const account = this.stored.find(account => account.getId() === accountId);
-
-    return account || null;
-  }
-
-  async findByEmail(email: string): Promise<Account | null> {
-    const account = this.stored.find(account => account.getEmail() === email);
-
-    return account || null;
+  async save(transaction: Transaction): Promise<void> {
+    this.stored.push(transaction);
   }
 }
 
-export default AccountsRepositoryInMemory;
+export default TransactionsRepositoryInMemory;

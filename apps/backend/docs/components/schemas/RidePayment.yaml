@@ -1,0 +1,12 @@
+type: object
+required:
+  - ride_id
+  - amount
+properties:
+  ride_id:
+    description: "Ride identifier"
+    $ref: "./Identifier.yaml"
+  amount:
+    description: "Amount to be charged"
+    type: number
+    example: 120.21

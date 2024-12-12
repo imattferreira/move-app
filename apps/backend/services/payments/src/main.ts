@@ -1,19 +1,23 @@
-// TODO: validate UUID param before query with it in database
-// Composition-Root
 import '../../../scripts/dotenv';
 import { ExpressAdapter } from './infra/http/http-server';
+import { FetchHttpClientAdapter } from './infra/http/http-client';
+import HttpRidesGateway from './infra/gateways/http-rides-gateway';
+import PaymentsController from './infra/controllers/payments-controller';
 import { PgPromiseAdapter } from './infra/database/database-connection';
 import ProcessPayment from './application/use-cases/process-payment';
 import PsqlTransactionsRepository from './infra/repositories/psql/transactions-repository';
 
 const httpServer = new ExpressAdapter();
 const connection = new PgPromiseAdapter();
+const httpClient = new FetchHttpClientAdapter();
 
 const transactionsRepository = new PsqlTransactionsRepository(connection);
 
-const processPayment = new ProcessPayment(transactionsRepository);
+const ridesGateway = new HttpRidesGateway(httpClient);
 
-// new AccountsController(httpServer, signup, getAccount);
+const processPayment = new ProcessPayment(transactionsRepository, ridesGateway);
+
+new PaymentsController(httpServer, processPayment);
 
 // const signals = ['SIGINT', 'SIGTERM', 'SIGKILL'];
 

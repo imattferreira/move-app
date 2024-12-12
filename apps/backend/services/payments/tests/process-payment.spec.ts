@@ -1,3 +1,3 @@
-describe('PATCH /rides/:rideId/finish', () => {
-  it.todo('should be able finish a ride');
+describe('PATCH /payments/rides', () => {
+  it.todo('should be able charge a ride');
 });

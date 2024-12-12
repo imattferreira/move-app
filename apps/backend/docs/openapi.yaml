@@ -27,6 +27,8 @@ tags:
     description: "Actions on rides"
   - name: Position
     description: "Actions on positions of a ride"
+  - name: Transaction
+    description: "Actions on transactions"
 servers:
   - url: https://api.moveapp.com
 paths:
@@ -44,6 +46,8 @@ paths:
     $ref: "paths/rides/{ride_id}/{driver_id}.yaml"
   "/v1/rides/{ride_id}/finish":
     $ref: "paths/rides/{ride_id}/finish.yaml"
+  "/v1/payments/rides":
+    $ref: "paths/payments/rides.yaml"
 # TODO: Bearer token
 # components:
 #   securitySchemes:

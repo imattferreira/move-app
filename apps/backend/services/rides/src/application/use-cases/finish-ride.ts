@@ -1,5 +1,6 @@
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import PositionsRepository from '~/application/repositories/positions-repository';
+import QueueMediator from '../mediators/queue-mediator';
 import RidesRepository from '~/application/repositories/rides-repository';
 
 type Input = {
@@ -9,7 +10,8 @@ type Input = {
 class FinishRide {
   constructor(
     private readonly positionsRepository: PositionsRepository,
-    private readonly ridesRepository: RidesRepository
+    private readonly ridesRepository: RidesRepository,
+    private readonly queueMediator: QueueMediator
   ) {}
 
   async execute(input: Input): Promise<void> {
@@ -26,6 +28,11 @@ class FinishRide {
     ride.finish(positions);
 
     await this.ridesRepository.update(ride);
+    // TODO: test it
+    this.queueMediator.notify(
+      'process-ride-payment',
+      { rideId: ride.getId(), amount: ride.getFare() }
+    );
   }
 }
 

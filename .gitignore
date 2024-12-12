@@ -1,6 +1,1 @@
-coverage
-node_modules
-migrations/composed.sql
-.DS_store
-dist
-dist-docs
+.DS_Store

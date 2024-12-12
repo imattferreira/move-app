@@ -1,0 +1,62 @@
+post:
+  tags:
+    - Ride
+  summary: Request a ride
+  description: "This operation allows a passenger to request a ride"
+  operationId: requestRide
+  deprecated: false
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/Ride.yaml"
+  responses:
+    "200":
+      description: Successfully requested ride
+      content:
+        application/json:
+          schema:
+            properties:
+              ride_id:
+                description: "Ride identifier"
+                $ref: "../../components/schemas/Identifier.yaml"
+      "400":
+        description: Invalid field
+        content:
+          application/json:
+            schema:
+              properties:
+                message:
+                  type: string
+                  description: "error message"
+                  example: "invalid [lat] field"
+    "403":
+      description: Invalid requested account
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "account needs to be of a passenger"
+    "404":
+      description: Passenger not found
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "account not found"
+    "409":
+      description: User already have a active ride
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "account already have a ride in progress"

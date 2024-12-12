@@ -1,0 +1,17 @@
+type: object
+required:
+  - ride_id
+  - lat
+  - long
+properties:
+  ride_id:
+    description: "Ride identifier"
+    $ref: "../../components/schemas/Identifier.yaml"
+  lat:
+    description: "Current Latitude"
+    type: number
+    example: -22.3027467
+  long:
+    description: "Current Longitude"
+    type: number
+    example: -49.0716105

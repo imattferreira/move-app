@@ -1,0 +1,11 @@
+description: "Example of a account profile of a passenger"
+allOf:
+  - $ref: "./Account.yaml"
+  - type: object
+    properties:
+      is_passenger:
+        type: boolean
+        description: "Set account as a passenger"
+        default: false
+    required:
+      - is_passenger

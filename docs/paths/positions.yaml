@@ -1,0 +1,45 @@
+post:
+  tags:
+    - Position
+  summary: Register a new position
+  description: "This operation registers a new position to ride"
+  operationId: registerPosition
+  deprecated: false
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas/Position.yaml"
+  responses:
+    "200":
+      description: Successfully registered
+    "404":
+      description: Ride not found
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "ride not found"
+    "400":
+      description: Invalid field
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "invalid [lat] field"
+    "409":
+      description: Ride is not started yet
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "ride is not in progress"

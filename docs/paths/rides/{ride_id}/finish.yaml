@@ -1,0 +1,28 @@
+patch:
+  tags:
+    - Ride
+  summary: Mark ride as finished
+  description: "This operation finishes a ride"
+  operationId: finishRide
+  deprecated: false
+  parameters:
+    - name: ride_id
+      in: path
+      description: "Identifier of ride"
+      $ref: "../../../components/schemas/Identifier.yaml"
+      required: true
+
+  responses:
+    "200":
+      description: Ride finished
+
+    "404":
+      description: Ride not found
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "ride not found"

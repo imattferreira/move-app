@@ -1,0 +1,23 @@
+type: object
+required:
+  - passenger_id
+  - from_lat
+  - from_long
+  - to_lat
+  - to_long
+properties:
+  passenger_id:
+    description: "Passenger identifier"
+    $ref: "./Identifier.yaml"
+  from_lat:
+    description: "Latitude start point"
+    $ref: "./Latitude.yaml"
+  from_long:
+    description: "Longitude start point"
+    $ref: "./Longitude.yaml"
+  to_lat:
+    description: "Latitude end point"
+    $ref: "./Latitude.yaml"
+  to_long:
+    description: "Longitude end point"
+    $ref: "./Longitude.yaml"

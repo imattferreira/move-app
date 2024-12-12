@@ -1,0 +1,16 @@
+description: "Example of a account profile of a driver"
+allOf:
+  - $ref: "./Account.yaml"
+  - type: object
+    properties:
+      car_plate:
+        type: string
+        description: "Set plate of driver car"
+        example: "ABC1234"
+      is_driver:
+        type: boolean
+        description: "Set account as a driver"
+        default: false
+    required:
+      - car_plate
+      - is_driver

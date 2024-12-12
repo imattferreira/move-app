@@ -1,0 +1,55 @@
+post:
+  tags:
+    - Ride
+  summary: Accept a ride
+  description: "This operation allows a driver to accept a ride"
+  operationId: acceptRide
+  deprecated: false
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - ride_id
+            - driver_id
+          properties:
+            ride_id:
+              description: "Ride identifier"
+              $ref: "../../../components/schemas/Identifier.yaml"
+            driver_id:
+              description: "Driver identifier"
+              $ref: "../../../components/schemas/Identifier.yaml"
+  responses:
+    "200":
+      description: Successfully requested ride
+    "403":
+      description: User is not a driver
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "account needs to be of a driver to accept a ride"
+    "404":
+      description: Driver **or** Ride not found
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "driver not found"
+    "409":
+      description: Driver already have an active ride **or** ride already accepted by another driver
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "ride already accepted by another driver"

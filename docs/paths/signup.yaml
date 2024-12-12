@@ -1,0 +1,48 @@
+post:
+  tags:
+    - Account
+  summary: Create a new account
+  description: "This operation creates a new account profile"
+  operationId: createAccount
+  deprecated: false
+  requestBody:
+    content:
+      application/json:
+        schema:
+          discriminator:
+            mapping:
+              driver: "../components/schemas/Driver.yaml"
+              passenger: "../components/schemas/Passenger.yaml"
+          anyOf:
+            - $ref: "../components/schemas/Driver.yaml"
+            - $ref: "../components/schemas/Passenger.yaml"
+  responses:
+    "200":
+      description: Successfully created an account
+      content:
+        application/json:
+          schema:
+            properties:
+              account_id:
+                description: "Acccount identifier"
+                $ref: "../components/schemas/Identifier.yaml"
+    "400":
+      description: Invalid field
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "invalid [password] field"
+    "409":
+      description: Duplicated account
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "[email] already registered"

@@ -1,0 +1,109 @@
+get:
+  tags:
+    - Ride
+  summary: Get informations of a ride
+  description: "This operation get infos of a ride"
+  operationId: getRideInfo
+  deprecated: false
+  parameters:
+    - name: ride_id
+      in: path
+      description: "Identifier of ride"
+      $ref: "../../../components/schemas/Identifier.yaml"
+      required: true
+
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            required:
+              - id
+              - passenger_id
+              - passenger_name
+              - status
+              - from_lat
+              - from_long
+              - to_lat
+              - to_long
+              - date
+            properties:
+              id:
+                description: "Ride identifier"
+                $ref: "../../../components/schemas/Identifier.yaml"
+              passenger_id:
+                description: "Passenger identifier"
+                $ref: "../../../components/schemas/Identifier.yaml"
+              driver_id:
+                description: "Driver identifier"
+                $ref: "../../../components/schemas/Identifier.yaml"
+              passenger_name:
+                type: string
+                description: "Passenger's name"
+                example: "John Doe"
+              status:
+                type: string
+                description: "Status of ride"
+                enum:
+                  - requested
+                  - accepted
+                  - in_progress
+                  - completed
+                example: "in_progress"
+              from_lat:
+                description: "Latitude start point"
+                $ref: "../../../components/schemas/Latitude.yaml"
+              from_long:
+                description: "Longitude start point"
+                $ref: "../../../components/schemas/Longitude.yaml"
+              to_lat:
+                description: "Latitude end point"
+                type: number
+                $ref: "../../../components/schemas/Latitude.yaml"
+              to_long:
+                description: "Longitude end point"
+                $ref: "../../../components/schemas/Longitude.yaml"
+              date:
+                description: "DateTime when ride was requested"
+                $ref: "../../../components/schemas/DateTime.yaml"
+
+    "404":
+      description: Ride not found
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "ride not found"
+
+patch:
+  tags:
+    - Ride
+  summary: Mark ride as started
+  description: "This operation starts a ride"
+  operationId: startRide
+  deprecated: false
+  parameters:
+    - name: ride_id
+      in: path
+      description: "Identifier of ride"
+      $ref: "../../../components/schemas/Identifier.yaml"
+      required: true
+
+  responses:
+    "200":
+      description: Ride started
+
+    "404":
+      description: Ride not found
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "ride not found"

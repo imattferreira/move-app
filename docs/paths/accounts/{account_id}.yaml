@@ -1,0 +1,65 @@
+get:
+  tags:
+    - Account
+  summary: Get informations of a account
+  description: "This operation get infos of a account profile"
+  operationId: getAccountInfo
+  deprecated: false
+  parameters:
+    - name: account_id
+      in: path
+      description: "Identifier of account"
+      $ref: "../../components/schemas/Identifier.yaml"
+      required: true
+
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            required:
+              - id
+              - name
+              - email
+              - cpf
+              - is_passenger
+              - is_driver
+            properties:
+              id:
+                description: "Acccount identifier"
+                $ref: "../../components/schemas/Identifier.yaml"
+              name:
+                type: string
+                description: "User's name"
+                example: "John Doe"
+              email:
+                type: string
+                description: "User's email address"
+                example: "john_doe@email.com"
+              cpf:
+                type: string
+                description: "User's CPF"
+                example: "123.456.788-12"
+              car_plate:
+                type: string
+                description: "Plate of driver car"
+                example: "ABC1234"
+              is_passenger:
+                type: boolean
+                description: "Check if account is from a passenger"
+                example: true
+              is_driver:
+                type: boolean
+                description: "Check if account is from a driver"
+                example: false
+    "404":
+      description: Account not found
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                description: "error message"
+                example: "account not found"

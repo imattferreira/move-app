@@ -1,5 +1,5 @@
 {
-  "name": "move-app",
+  "name": "@move-app/docs",
   "version": "1.0.0",
   "main": "src/main.js",
   "license": "MIT",
@@ -12,30 +12,18 @@
     "migration:apply": "tsx ./scripts/migrator/index.ts --apply",
     "migration:compose": "tsx ./scripts/migrator/index.ts --compose",
     "migration:create": "tsx ./scripts/migrator/index.ts --migrate",
-    "start": "tsx watch src/main.ts",
-    "start:docs": "redocly preview-docs -p 4000 --config ./docs/redocly.yml",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watchAll"
+    "start:docs": "redocly preview-docs -p 4000 --config ./docs/redocly.yml"
   },
   "dependencies": {
-    "@redocly/cli": "^1.25.7",
-    "express": "^4.18.2",
-    "pg-promise": "^11.5.4"
+    "@redocly/cli": "^1.25.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",
-    "@faker-js/faker": "^9.3.0",
     "@stylistic/eslint-plugin": "^2.11.0",
-    "@types/express": "^4.17.17",
-    "@types/jest": "^29.5.4",
     "@types/node": "^22.10.1",
     "eslint": "^9.16.0",
     "globals": "^15.12.0",
-    "jest": "^29.6.4",
     "redoc": "^2.2.0",
-    "ts-jest": "^29.1.1",
-    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.16.0"

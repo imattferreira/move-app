@@ -20,9 +20,9 @@ class Position {
     this.date = date;
   }
 
-  static create(rideId: string, lat: number, long: number) {
+  static create(rideId: string, lat: number, long: number, date?: Date) {
     const id = Identifier.create();
-    const now = new Date();
+    const now = date || new Date();
 
     return new Position(id.getValue(), rideId, lat, long, now);
   }

@@ -44,9 +44,10 @@ class GetRide {
       ride.getId()
     );
 
-    const distance = DistanceCalculator.calculateDistanceBetweenPositions(
-      positions
-    );
+    // TODO: create test about it
+    const distance = ride.getStatus() === 'completed'
+      ? ride.getDistance()
+      : DistanceCalculator.calculateDistanceBetweenPositions(positions);
 
     return {
       id: ride.getId(),

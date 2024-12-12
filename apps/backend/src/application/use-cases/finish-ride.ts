@@ -1,5 +1,3 @@
-import DistanceCalculator from '~/domain/service/distance-calculator';
-import FareCalculator from '~/domain/service/fare-calculator';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import PositionsRepository from '~/application/repositories/positions-repository';
 import RidesRepository from '~/application/repositories/rides-repository';
@@ -25,14 +23,7 @@ class FinishRide {
       ride.getId()
     );
 
-    const distance = DistanceCalculator.calculateDistanceBetweenPositions(
-      positions
-    );
-    const fare = FareCalculator.calculate(distance);
-
-    ride.setDistance(distance);
-    ride.setFare(fare);
-    ride.finish();
+    ride.finish(positions);
 
     await this.ridesRepository.update(ride);
   }

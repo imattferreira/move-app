@@ -1,6 +1,9 @@
 import ConflictException from '~/application/exceptions/conflict-exception';
 import Coord from '~/domain/value-objects/coord';
+import DistanceCalculator from '../service/distance-calculator';
+import { FareCalculatorFactory } from '../service/fare-calculator';
 import Identifier from '~/domain/value-objects/identifier';
+import Position from './position';
 
 type RideStatus = 'requested' | 'accepted' | 'in_progress' | 'completed';
 
@@ -86,9 +89,26 @@ class Ride {
     this.status = 'in_progress';
   }
 
-  finish(): void {
+  // TODO: test it
+  finish(positions: Position[]): void {
     if (this.status !== 'in_progress') {
       throw new ConflictException('ride not started yet');
+    }
+
+    for (const [index, position] of positions.entries()) {
+      const next = positions[index + 1];
+
+      if (!next) {
+        break;
+      }
+
+      const distance = DistanceCalculator.calculateDistanceBetweenPositions(
+        [position, next]
+      );
+      const fareCalculator = FareCalculatorFactory.create(position.getDate());
+
+      this.distance += distance;
+      this.fare += fareCalculator.calculate(distance);
     }
 
     this.status = 'completed';
@@ -122,16 +142,8 @@ class Ride {
     return this.fare;
   }
 
-  setFare(fare: number): void {
-    this.fare = fare;
-  }
-
   getDistance(): number {
     return this.distance;
-  }
-
-  setDistance(distance: number): void {
-    this.distance = distance;
   }
 
   getDate(): Date {

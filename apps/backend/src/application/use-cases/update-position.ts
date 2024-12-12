@@ -8,6 +8,8 @@ type Input = {
   rideId: string;
   lat: number;
   long: number;
+  // TODO: test it
+  date?: Date;
 };
 
 class UpdatePosition {
@@ -27,7 +29,12 @@ class UpdatePosition {
       throw new ConflictException('ride is not in progress');
     }
 
-    const position = Position.create(input.rideId, input.lat, input.long);
+    const position = Position.create(
+      input.rideId,
+      input.lat,
+      input.long,
+      input.date
+    );
 
     await this.positionsRepository.save(position);
   }

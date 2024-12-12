@@ -1,4 +1,5 @@
 import ConflictException from '~/application/exceptions/conflict-exception';
+import Position from './position';
 import Ride from './ride';
 
 describe('Ride', () => {
@@ -72,12 +73,26 @@ describe('Ride', () => {
       -27.496887588317275,
       -48.522234807851476
     );
+    const positions = [
+      Position.create(
+        Math.random().toString(),
+        -27.584905257808835,
+        -48.545022195325124
+      ),
+      Position.create(
+        Math.random().toString(),
+        -27.496887588317275,
+        -48.522234807851476
+      )
+    ];
 
     ride.accept(Math.random().toString());
     ride.start();
-    ride.finish();
+    ride.finish(positions);
 
     expect(ride.getStatus()).toBe('completed');
+    expect(ride.getDistance()).toBe(10);
+    expect(ride.getFare()).toBe(21);
   });
 
   it('should not accept a ride when already active', () => {
@@ -126,7 +141,7 @@ describe('Ride', () => {
     );
 
     expect(
-      () => ride.finish()
+      () => ride.finish([])
     ).toThrow(new ConflictException('ride not started yet'));
   });
 });

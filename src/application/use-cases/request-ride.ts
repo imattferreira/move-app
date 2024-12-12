@@ -4,6 +4,7 @@ import ForbiddenException from '~/application/exceptions/forbidden-exception';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import Ride from '~/domain/entities/ride';
 import type RidesRepository from '~/application/repositories/rides-repository';
+
 type Input = {
   passengerId: string;
   fromLat: number;

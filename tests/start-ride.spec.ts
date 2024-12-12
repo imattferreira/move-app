@@ -10,12 +10,12 @@ describe('PATCH /rides/:rideId', () => {
 
     const passengerSignupRes = await makeRequest<{ account_id: string }>(
       'POST',
-      '/signup',
+      '/v1/signup',
       passenger
     );
     const driverSignupRes = await makeRequest<{ account_id: string }>(
       'POST',
-      '/signup',
+      '/v1/signup',
       driver
     );
 
@@ -26,7 +26,7 @@ describe('PATCH /rides/:rideId', () => {
 
     const requestRideRes = await makeRequest<{ ride_id: string }>(
       'POST',
-      '/rides',
+      '/v1/rides',
       ride
     );
 
@@ -34,16 +34,16 @@ describe('PATCH /rides/:rideId', () => {
 
     await makeRequest(
       'POST',
-      `/rides/${rideId}/${driverId}`
+      `/v1/rides/${rideId}/${driverId}`
     );
     const startRideRes = await makeRequest(
       'PATCH',
-      `/rides/${rideId}`
+      `/v1/rides/${rideId}`
     );
 
     expect(startRideRes.status).toBe(200);
 
-    const getRideRes = await makeRequest<Object>('GET', `/rides/${rideId}`);
+    const getRideRes = await makeRequest<Object>('GET', `/v1/rides/${rideId}`);
 
     expect(getRideRes.data?.status).toBe('in_progress');
   });
@@ -51,7 +51,10 @@ describe('PATCH /rides/:rideId', () => {
   it('should not be able to start a non-existing ride', async () => {
     const rideId = crypto.randomUUID();
 
-    const startRideRes = await makeRequest<Object>('PATCH', `/rides/${rideId}`);
+    const startRideRes = await makeRequest<Object>(
+      'PATCH',
+      `/v1/rides/${rideId}`
+    );
 
     expect(startRideRes.status).toBe(404);
     expect(startRideRes.data?.message).toBe('ride not found');

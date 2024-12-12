@@ -24,7 +24,7 @@ class AcceptRide {
 
     if (!driver.getIsDriver()) {
       throw new ForbiddenException(
-        'user needs to be a driver to accept a ride'
+        'account needs to be of a driver to accept a ride'
       );
     }
 
@@ -42,7 +42,7 @@ class AcceptRide {
       = await this.ridesRepository.hasActiveRideOfDriver(driver.getId());
 
     if (driverHasActiveRide) {
-      throw new ConflictException('driver already have a ride active');
+      throw new ConflictException('driver already have an active ride');
     }
 
     ride.accept(driver.getId());

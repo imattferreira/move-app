@@ -46,7 +46,7 @@ class Faker {
   }
 
   static date(): string {
-    return faker.date.anytime().toUTCString();
+    return faker.date.anytime().toISOString();
   }
 
   static email(): string {

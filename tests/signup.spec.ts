@@ -8,7 +8,7 @@ describe('POST /signup', () => {
 
     const signupRes = await makeRequest<{ account_id: string }>(
       'POST',
-      '/signup',
+      '/v1/signup',
       input
     );
 
@@ -17,7 +17,7 @@ describe('POST /signup', () => {
 
     const registeredAccountRes = await makeRequest<Object>(
       'GET',
-      `/accounts/${signupRes.data?.account_id}`
+      `/v1/accounts/${signupRes.data?.account_id}`
     );
 
     expect(registeredAccountRes.data?.name).toBe(input.name);
@@ -26,7 +26,6 @@ describe('POST /signup', () => {
     expect(registeredAccountRes.data?.is_driver).toBe(true);
     expect(registeredAccountRes.data?.is_passenger).toBe(false);
     expect(registeredAccountRes.data?.car_plate).toBe(input.car_plate);
-    expect(registeredAccountRes.data?.password).toBe(input.password);
   });
 
   it('should not create a driver user with a invalid car plate', async () => {
@@ -34,7 +33,7 @@ describe('POST /signup', () => {
 
     const res = await makeRequest<Object>(
       'POST',
-      '/signup',
+      '/v1/signup',
       input
     );
 
@@ -45,10 +44,10 @@ describe('POST /signup', () => {
   it('should not create a user with a already registered email', async () => {
     const input = makeAccountFactory({ is_passenger: true });
 
-    await makeRequest('POST', '/signup', input);
+    await makeRequest('POST', '/v1/signup', input);
     const res = await makeRequest<Object>(
       'POST',
-      '/signup',
+      '/v1/signup',
       input
     );
 

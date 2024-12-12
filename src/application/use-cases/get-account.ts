@@ -14,7 +14,6 @@ type Output = {
   carPlate: string | null;
   isPassenger: boolean;
   isDriver: boolean;
-  password: string;
 };
 
 class GetAccount {
@@ -40,8 +39,7 @@ class GetAccount {
       cpf: account.getCpf(),
       carPlate: account.getCarPlate(),
       isPassenger: account.getIsPassenger(),
-      isDriver: account.getIsDriver(),
-      password: account.getPassword()
+      isDriver: account.getIsDriver()
     };
   }
 }

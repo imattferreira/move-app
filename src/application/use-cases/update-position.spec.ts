@@ -29,8 +29,8 @@ describe('UpdatePosition', () => {
 
     const input = {
       rideId: ride.getId(),
-      lat: Math.random() * 100,
-      long: Math.random() * 100
+      lat: -27.584905257808835,
+      long: -48.545022195325124
     };
 
     await updatePosition.execute(input);

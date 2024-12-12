@@ -9,7 +9,7 @@ describe('GET /rides/:rideId', () => {
 
     const passengerSignupRes = await makeRequest<{ account_id: string }>(
       'POST',
-      '/signup',
+      '/v1/signup',
       passenger
     );
 
@@ -19,13 +19,13 @@ describe('GET /rides/:rideId', () => {
 
     const requestRideRes = await makeRequest<{ ride_id: string }>(
       'POST',
-      '/rides',
+      '/v1/rides',
       ride
     );
 
     const rideId = requestRideRes.data?.ride_id;
 
-    const getRideRes = await makeRequest<Object>('GET', `/rides/${rideId}`);
+    const getRideRes = await makeRequest<Object>('GET', `/v1/rides/${rideId}`);
 
     expect(getRideRes.status).toBe(200);
     expect(getRideRes.data?.id).toBe(rideId);
@@ -43,7 +43,7 @@ describe('GET /rides/:rideId', () => {
   it('should not be able to get info about non-existing a ride', async () => {
     const rideId = crypto.randomUUID();
 
-    const getRideRes = await makeRequest<Object>('GET', `/rides/${rideId}`);
+    const getRideRes = await makeRequest<Object>('GET', `/v1/rides/${rideId}`);
 
     expect(getRideRes.status).toBe(404);
     expect(getRideRes.data?.message).toBe('ride not found');

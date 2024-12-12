@@ -10,12 +10,12 @@ describe('POST /positions', () => {
 
     const passengerSignupRes = await makeRequest<{ account_id: string }>(
       'POST',
-      '/signup',
+      '/v1/signup',
       passenger
     );
     const driverSignupRes = await makeRequest<{ account_id: string }>(
       'POST',
-      '/signup',
+      '/v1/signup',
       driver
     );
 
@@ -26,18 +26,22 @@ describe('POST /positions', () => {
 
     const requestRideRes = await makeRequest<{ ride_id: string }>(
       'POST',
-      '/rides',
+      '/v1/rides',
       ride
     );
 
     const rideId = requestRideRes.data?.ride_id;
 
-    await makeRequest('POST', `/rides/${rideId}/${driverId}`);
-    await makeRequest('PATCH', `/rides/${rideId}`);
+    await makeRequest('POST', `/v1/rides/${rideId}/${driverId}`);
+    await makeRequest('PATCH', `/v1/rides/${rideId}`);
 
     const position = makePositionFactory({ ride_id: rideId });
 
-    const updatePositionRes = await makeRequest('POST', '/positions', position);
+    const updatePositionRes = await makeRequest(
+      'POST',
+      '/v1/positions',
+      position
+    );
 
     expect(updatePositionRes.status).toBe(200);
 
@@ -53,7 +57,7 @@ describe('POST /positions', () => {
 
       const updatePositionRes = await makeRequest<Object>(
         'POST',
-        '/positions',
+        '/v1/positions',
         position
       );
 

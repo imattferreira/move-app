@@ -14,11 +14,11 @@ class RidesController {
     startRide: StartRide,
     finishRide: FinishRide
   ) {
-    httpServer.register('POST', '/rides', requestRide);
-    httpServer.register('GET', '/rides/:{rideId}', getRide);
-    httpServer.register('POST', '/rides/:{rideId}/:{driverId}', acceptRide);
-    httpServer.register('PATCH', '/rides/:{rideId}', startRide);
-    httpServer.register('PATCH', '/rides/:{rideId}/finish', finishRide);
+    httpServer.register('POST', '/v1/rides', requestRide);
+    httpServer.register('GET', '/v1/rides/:{rideId}', getRide);
+    httpServer.register('POST', '/v1/rides/:{rideId}/:{driverId}', acceptRide);
+    httpServer.register('PATCH', '/v1/rides/:{rideId}', startRide);
+    httpServer.register('PATCH', '/v1/rides/:{rideId}/finish', finishRide);
   }
 }
 

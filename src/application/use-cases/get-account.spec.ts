@@ -27,7 +27,6 @@ describe('GetAccount', () => {
     expect(output.isPassenger).toBe(true);
     expect(output.isDriver).toBe(false);
     expect(output.carPlate).toBe(account.getCarPlate());
-    expect(output.password).toBe(account.getPassword());
   });
 
   it('should not get info about a non-existing accunt', async () => {

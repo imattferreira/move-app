@@ -9,8 +9,8 @@ class AccountsController {
     signup: SignUp,
     getAccount: GetAccount
   ) {
-    httpServer.register('POST', '/signup', signup);
-    httpServer.register('GET', '/accounts/:{accountId}', getAccount);
+    httpServer.register('POST', '/v1/signup', signup);
+    httpServer.register('GET', '/v1/accounts/:{accountId}', getAccount);
   }
 }
 

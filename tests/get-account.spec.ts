@@ -9,7 +9,7 @@ describe('GET /accounts/:accountId', () => {
 
     const signupRes = await makeRequest<{ account_id: string }>(
       'POST',
-      '/signup',
+      '/v1/signup',
       input
     );
 
@@ -18,7 +18,7 @@ describe('GET /accounts/:accountId', () => {
 
     const registeredAccountRes = await makeRequest<Object>(
       'GET',
-      `/accounts/${signupRes.data?.account_id}`
+      `/v1/accounts/${signupRes.data?.account_id}`
     );
 
     expect(registeredAccountRes.status).toBe(200);
@@ -27,7 +27,6 @@ describe('GET /accounts/:accountId', () => {
     expect(registeredAccountRes.data?.is_driver).toBe(true);
     expect(registeredAccountRes.data?.is_passenger).toBe(false);
     expect(registeredAccountRes.data?.car_plate).toBe(input.car_plate);
-    expect(registeredAccountRes.data?.password).toBe(input.password);
   });
 
   it(
@@ -37,7 +36,7 @@ describe('GET /accounts/:accountId', () => {
 
       const registeredAccountRes = await makeRequest<Object>(
         'GET',
-        `/accounts/${accountId}`
+        `/v1/accounts/${accountId}`
       );
 
       expect(registeredAccountRes.status).toBe(404);

@@ -60,7 +60,7 @@ class GetRide {
       fromLong: ride.getFrom().getLong(),
       toLat: ride.getTo().getLat(),
       toLong: ride.getTo().getLong(),
-      date: ride.getDate().toUTCString()
+      date: ride.getDate().toISOString()
     };
   }
 }

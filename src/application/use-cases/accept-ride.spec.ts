@@ -129,7 +129,7 @@ describe('AcceptRide', () => {
     };
 
     await expect(() => acceptRide.execute(input)).rejects.toThrow(
-      new ForbiddenException('user needs to be a driver to accept a ride')
+      new ForbiddenException('account needs to be of a driver to accept a ride')
     );
   });
 
@@ -213,7 +213,7 @@ describe('AcceptRide', () => {
         rideId: ride2.getId()
       })
     ).rejects.toThrow(
-      new ConflictException('driver already have a ride active')
+      new ConflictException('driver already have an active ride')
     );
   });
 });

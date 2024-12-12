@@ -6,7 +6,7 @@ describe('POST /rides', () => {
   it('should be able request a new ride', async () => {
     const signupRes = await makeRequest<{ account_id: string }>(
       'POST',
-      '/signup',
+      '/v1/signup',
       makeAccountFactory({
         is_passenger: true,
         is_driver: false
@@ -18,7 +18,7 @@ describe('POST /rides', () => {
 
     const requestRideRes = await makeRequest<{ ride_id: string }>(
       'POST',
-      '/rides',
+      '/v1/rides',
       input
     );
 
@@ -29,7 +29,7 @@ describe('POST /rides', () => {
 
     const registeredRideRes = await makeRequest<Record<string, unknown>>(
       'GET',
-      `/rides/${rideId}`
+      `/v1/rides/${rideId}`
     );
 
     expect(registeredRideRes.data?.id).toBe(rideId);
@@ -49,7 +49,7 @@ describe('POST /rides', () => {
     async () => {
       const signupRes = await makeRequest<{ account_id: string }>(
         'POST',
-        '/signup',
+        '/v1/signup',
         makeAccountFactory({
           is_passenger: true,
           is_driver: false
@@ -59,10 +59,10 @@ describe('POST /rides', () => {
       const passengerId = signupRes.data?.account_id;
       const input = makeRideFactory({ passenger_id: passengerId });
 
-      await makeRequest<{ ride_id: string }>('POST', '/rides', input);
+      await makeRequest<{ ride_id: string }>('POST', '/v1/rides', input);
       const requestRideRes = await makeRequest<Object>(
         'POST',
-        '/rides',
+        '/v1/rides',
         input
       );
 

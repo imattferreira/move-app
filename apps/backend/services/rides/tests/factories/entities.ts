@@ -1,4 +1,5 @@
 import { type Optional } from '~/utils/types';
+import crypto from 'node:crypto';
 
 type Account = {
   name: string;
@@ -43,7 +44,7 @@ export function makePositionFactory(
   fieldsToOverride: Optional<Position>
 ): Position {
   return {
-    ride_id: Math.random().toString(),
+    ride_id: crypto.randomUUID(),
     lat: -27.496887588317222,
     long: -48.52223480785141,
     ...fieldsToOverride
@@ -52,7 +53,7 @@ export function makePositionFactory(
 
 export function makeRideFactory(fieldsToOverride: Optional<Ride>): Ride {
   return {
-    passenger_id: Math.random().toString(),
+    passenger_id: crypto.randomUUID(),
     from_lat: -27.584905257808835,
     from_long: -48.545022195325124,
     to_lat: -27.496887588317275,

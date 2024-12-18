@@ -1,5 +1,6 @@
 import Coord from '~/domain/value-objects/coord';
 import DistanceCalculator from './distance-calculator';
+import Identifier from '~/domain/value-objects/identifier';
 import Position from '~/domain/entities/position';
 
 describe('DistanceCalculator', () => {
@@ -15,12 +16,12 @@ describe('DistanceCalculator', () => {
   it('should be able to calculate the distance between two positions', () => {
     const positions = [
       Position.create(
-        Math.random().toString(),
+        Identifier.create().getValue(),
         -27.584905257808835,
         -48.545022195325124
       ),
       Position.create(
-        Math.random().toString(),
+        Identifier.create().getValue(),
         -27.496887588317275,
         -48.522234807851476
       )

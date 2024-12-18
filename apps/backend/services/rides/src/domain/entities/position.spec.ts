@@ -1,9 +1,10 @@
+import Identifier from '~/domain/value-objects/identifier';
 import Position from './position';
 
 describe('Position', () => {
   it('should be able to create a position', () => {
     const input = {
-      rideId: Math.random().toString(),
+      rideId: Identifier.create().getValue(),
       lat: 10,
       long: 20
     };

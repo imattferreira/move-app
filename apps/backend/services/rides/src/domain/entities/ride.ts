@@ -135,7 +135,7 @@ class Ride {
     return this.passengerId.getValue();
   }
 
-  getStatus(): string {
+  getStatus(): RideStatus {
     return this.status;
   }
 

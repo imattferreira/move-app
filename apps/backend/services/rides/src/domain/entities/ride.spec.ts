@@ -1,11 +1,12 @@
 import ConflictException from '~/application/exceptions/conflict-exception';
+import Identifier from '~/domain/value-objects/identifier';
 import Position from './position';
 import Ride from './ride';
 
 describe('Ride', () => {
   it('should be able to create a ride', () => {
     const input = {
-      passengerId: Math.random().toString(),
+      passengerId: Identifier.create().getValue(),
       fromLat: -27.584905257808835,
       fromLong: -48.545022195325124,
       toLat: -27.496887588317275,
@@ -34,10 +35,10 @@ describe('Ride', () => {
   });
 
   it('should be able to attach a driver to the ride', () => {
-    const driverId = Math.random().toString();
+    const driverId = Identifier.create().getValue();
 
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
@@ -52,14 +53,14 @@ describe('Ride', () => {
 
   it('should be able to start the ride', () => {
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
       -48.522234807851476
     );
 
-    ride.accept(Math.random().toString());
+    ride.accept(Identifier.create().getValue());
     ride.start();
 
     expect(ride.getStatus()).toBe('in_progress');
@@ -67,7 +68,7 @@ describe('Ride', () => {
 
   it('should be able to finish the ride', () => {
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
@@ -75,18 +76,18 @@ describe('Ride', () => {
     );
     const positions = [
       Position.create(
-        Math.random().toString(),
+        Identifier.create().getValue(),
         -27.584905257808835,
         -48.545022195325124
       ),
       Position.create(
-        Math.random().toString(),
+        Identifier.create().getValue(),
         -27.496887588317275,
         -48.522234807851476
       )
     ];
 
-    ride.accept(Math.random().toString());
+    ride.accept(Identifier.create().getValue());
     ride.start();
     ride.finish(positions);
 
@@ -96,10 +97,10 @@ describe('Ride', () => {
   });
 
   it('should not accept a ride when already active', () => {
-    const driverId = Math.random().toString();
+    const driverId = Identifier.create().getValue();
 
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
@@ -113,10 +114,10 @@ describe('Ride', () => {
   });
 
   it('should not start the ride when already active', () => {
-    const driverId = Math.random().toString();
+    const driverId = Identifier.create().getValue();
 
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
@@ -133,7 +134,7 @@ describe('Ride', () => {
 
   it('should not finish the ride when is not active', () => {
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,

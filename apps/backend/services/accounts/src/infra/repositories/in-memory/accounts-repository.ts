@@ -2,11 +2,9 @@ import Account from '~/domain/entities/account';
 import AccountsRepository from '~/application/repositories/accounts-repository';
 
 class AccountsRepositoryInMemory implements AccountsRepository {
-  key: number;
   private stored: Account[];
 
   constructor() {
-    this.key = Math.random();
     this.stored = [];
   }
 

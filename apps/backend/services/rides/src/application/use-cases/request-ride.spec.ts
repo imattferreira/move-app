@@ -3,6 +3,7 @@ import { FetchHttpClientAdapter } from '~/infra/http/http-client';
 import ForbiddenException from '~/application/exceptions/forbidden-exception';
 import HttpAccountsGateway from '~/infra/gateways/http-accounts-gateway';
 import NotFoundException from '~/application/exceptions/not-found-exception';
+import Registry from '~/infra/registry/registry';
 import RequestRide from './request-ride';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 
@@ -11,7 +12,12 @@ describe('RequestRide', () => {
     const httpClient = new FetchHttpClientAdapter();
     const accountsGateway = new HttpAccountsGateway(httpClient);
     const ridesRepository = new RidesRepositoryInMemory();
-    const requestRide = new RequestRide(accountsGateway, ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('AccountsGateway', accountsGateway);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const requestRide = new RequestRide();
 
     const passenger = {
       name: 'John Doe',
@@ -53,7 +59,12 @@ describe('RequestRide', () => {
     const httpClient = new FetchHttpClientAdapter();
     const accountsGateway = new HttpAccountsGateway(httpClient);
     const ridesRepository = new RidesRepositoryInMemory();
-    const requestRide = new RequestRide(accountsGateway, ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('AccountsGateway', accountsGateway);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const requestRide = new RequestRide();
 
     const input = {
       passengerId: Math.random().toString(),
@@ -74,7 +85,12 @@ describe('RequestRide', () => {
       const httpClient = new FetchHttpClientAdapter();
       const accountsGateway = new HttpAccountsGateway(httpClient);
       const ridesRepository = new RidesRepositoryInMemory();
-      const requestRide = new RequestRide(accountsGateway, ridesRepository);
+      const registry = Registry.getInstance();
+
+      registry.provide('AccountsGateway', accountsGateway);
+      registry.provide('RidesRepository', ridesRepository);
+
+      const requestRide = new RequestRide();
 
       const driver = {
         name: 'John Doe',
@@ -109,7 +125,12 @@ describe('RequestRide', () => {
       const httpClient = new FetchHttpClientAdapter();
       const accountsGateway = new HttpAccountsGateway(httpClient);
       const ridesRepository = new RidesRepositoryInMemory();
-      const requestRide = new RequestRide(accountsGateway, ridesRepository);
+      const registry = Registry.getInstance();
+
+      registry.provide('AccountsGateway', accountsGateway);
+      registry.provide('RidesRepository', ridesRepository);
+
+      const requestRide = new RequestRide();
 
       const passenger = {
         name: 'John Doe',

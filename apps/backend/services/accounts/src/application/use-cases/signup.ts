@@ -1,6 +1,7 @@
 import Account from '~/domain/entities/account';
 import type AccountsRepository from '~/application/repositories/accounts-repository';
 import ConflictException from '~/application/exceptions/conflict-exception';
+import { inject } from '~/infra/registry';
 
 type Input = {
   name: string;
@@ -16,7 +17,8 @@ type Output = { accountId: string };
 
 // Use-Case
 class SignUp {
-  constructor(private readonly accountsRepository: AccountsRepository) {}
+  @inject('AccountsRepository')
+  private readonly accountsRepository!: AccountsRepository;
 
   async execute(input: Input): Promise<Output> {
     const account = Account.create(

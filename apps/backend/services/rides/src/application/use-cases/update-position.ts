@@ -3,6 +3,7 @@ import NotFoundException from '~/application/exceptions/not-found-exception';
 import Position from '~/domain/entities/position';
 import PositionsRepository from '~/application/repositories/positions-repository';
 import RidesRepository from '~/application/repositories/rides-repository';
+import { inject } from '~/infra/registry';
 
 type Input = {
   rideId: string;
@@ -13,10 +14,11 @@ type Input = {
 };
 
 class UpdatePosition {
-  constructor(
-    private readonly positionsRepository: PositionsRepository,
-    private readonly ridesRepository: RidesRepository
-  ) {}
+  @inject('PositionsRepository')
+  private readonly positionsRepository!: PositionsRepository;
+
+  @inject('RidesRepository')
+  private readonly ridesRepository!: RidesRepository;
 
   async execute(input: Input): Promise<void> {
     const ride = await this.ridesRepository.findById(input.rideId);

@@ -3,6 +3,7 @@ import ConflictException from '~/application/exceptions/conflict-exception';
 import ForbiddenException from '~/application/exceptions/forbidden-exception';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import type RidesRepository from '~/application/repositories/rides-repository';
+import { inject } from '~/infra/registry';
 
 type Input = {
   driverId: string;
@@ -10,10 +11,11 @@ type Input = {
 };
 
 class AcceptRide {
-  constructor(
-    private readonly accountsGateway: AccountsGateway,
-    private readonly ridesRepository: RidesRepository
-  ) {}
+  @inject('AccountsGateway')
+  private readonly accountsGateway!: AccountsGateway;
+
+  @inject('RidesRepository')
+  private readonly ridesRepository!: RidesRepository;
 
   async execute(input: Input): Promise<void> {
     const driver = await this.accountsGateway.getById(input.driverId);

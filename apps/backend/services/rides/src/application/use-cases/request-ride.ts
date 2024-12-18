@@ -1,9 +1,10 @@
-import type AccountsGateway from '../gateways/accounts-gateway';
+import type AccountsGateway from '~/application/gateways/accounts-gateway';
 import ConflictException from '~/application/exceptions/conflict-exception';
 import ForbiddenException from '~/application/exceptions/forbidden-exception';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import Ride from '~/domain/entities/ride';
 import type RidesRepository from '~/application/repositories/rides-repository';
+import { inject } from '~/infra/registry';
 
 type Input = {
   passengerId: string;
@@ -18,10 +19,11 @@ type Output = {
 };
 
 class RequestRide {
-  constructor(
-    private readonly accountsGateway: AccountsGateway,
-    private readonly ridesRepository: RidesRepository
-  ) {}
+  @inject('AccountsGateway')
+  private readonly accountsGateway!: AccountsGateway;
+
+  @inject('RidesRepository')
+  private readonly ridesRepository!: RidesRepository;
 
   async execute(input: Input): Promise<Output> {
     const passenger = await this.accountsGateway.getById(input.passengerId);

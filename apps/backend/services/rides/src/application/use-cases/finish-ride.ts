@@ -1,18 +1,22 @@
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import PositionsRepository from '~/application/repositories/positions-repository';
-import QueueMediator from '../mediators/queue-mediator';
+import QueueMediator from '~/application/mediators/queue-mediator';
 import RidesRepository from '~/application/repositories/rides-repository';
+import { inject } from '~/infra/registry';
 
 type Input = {
   rideId: string;
 };
 
 class FinishRide {
-  constructor(
-    private readonly positionsRepository: PositionsRepository,
-    private readonly ridesRepository: RidesRepository,
-    private readonly queueMediator: QueueMediator
-  ) {}
+  @inject('Mediator')
+  private readonly mediator!: QueueMediator;
+
+  @inject('PositionsRepository')
+  private readonly positionsRepository!: PositionsRepository;
+
+  @inject('RidesRepository')
+  private readonly ridesRepository!: RidesRepository;
 
   async execute(input: Input): Promise<void> {
     const ride = await this.ridesRepository.findById(input.rideId);
@@ -29,10 +33,7 @@ class FinishRide {
 
     await this.ridesRepository.update(ride);
     // TODO: test it
-    this.queueMediator.notify(
-      'process-ride-payment',
-      { rideId: ride.getId(), amount: ride.getFare() }
-    );
+    this.mediator.notify('ride-finished', { rideId: ride.getId() });
   }
 }
 

@@ -1,7 +1,7 @@
 import ConflictException from '~/application/exceptions/conflict-exception';
 import Coord from '~/domain/value-objects/coord';
-import DistanceCalculator from '../service/distance-calculator';
-import { FareCalculatorFactory } from '../service/fare-calculator';
+import DistanceCalculator from '~/domain/service/distance-calculator';
+import { FareCalculatorFactory } from '~/domain/service/fare-calculator';
 import Identifier from '~/domain/value-objects/identifier';
 import Position from './position';
 
@@ -102,9 +102,10 @@ class Ride {
         break;
       }
 
-      const distance = DistanceCalculator.calculateDistanceBetweenPositions(
-        [position, next]
-      );
+      const distance = DistanceCalculator.calculateDistanceBetweenPositions([
+        position,
+        next
+      ]);
       const fareCalculator = FareCalculatorFactory.create(position.getDate());
 
       this.distance += distance;

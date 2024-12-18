@@ -1,6 +1,7 @@
 import ConflictException from '~/application/exceptions/conflict-exception';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import PositionsRepositoryInMemory from '~/infra/repositories/in-memory/positions-repository';
+import Registry from '~/infra/registry/registry';
 import Ride from '~/domain/entities/ride';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 import UpdatePosition from './update-position';
@@ -9,10 +10,12 @@ describe('UpdatePosition', () => {
   it('should be able update the position of a ride', async () => {
     const positionsRepository = new PositionsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
-    const updatePosition = new UpdatePosition(
-      positionsRepository,
-      ridesRepository
-    );
+    const registry = Registry.getInstance();
+
+    registry.provide('PositionsRepository', positionsRepository);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const updatePosition = new UpdatePosition();
 
     const ride = Ride.create(
       Math.random().toString(),
@@ -47,10 +50,12 @@ describe('UpdatePosition', () => {
   it('should not update the position of a non-existing ride', async () => {
     const positionsRepository = new PositionsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
-    const updatePosition = new UpdatePosition(
-      positionsRepository,
-      ridesRepository
-    );
+    const registry = Registry.getInstance();
+
+    registry.provide('PositionsRepository', positionsRepository);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const updatePosition = new UpdatePosition();
 
     const input = {
       rideId: Math.random().toString(),
@@ -68,10 +73,12 @@ describe('UpdatePosition', () => {
     async () => {
       const positionsRepository = new PositionsRepositoryInMemory();
       const ridesRepository = new RidesRepositoryInMemory();
-      const updatePosition = new UpdatePosition(
-        positionsRepository,
-        ridesRepository
-      );
+      const registry = Registry.getInstance();
+
+      registry.provide('PositionsRepository', positionsRepository);
+      registry.provide('RidesRepository', ridesRepository);
+
+      const updatePosition = new UpdatePosition();
 
       const ride = Ride.create(
         Math.random().toString(),

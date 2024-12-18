@@ -4,6 +4,7 @@ import { FetchHttpClientAdapter } from '~/infra/http/http-client';
 import ForbiddenException from '~/application/exceptions/forbidden-exception';
 import HttpAccountsGateway from '~/infra/gateways/http-accounts-gateway';
 import NotFoundException from '~/application/exceptions/not-found-exception';
+import Registry from '~/infra/registry/registry';
 import Ride from '~/domain/entities/ride';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 
@@ -12,7 +13,12 @@ describe('AcceptRide', () => {
     const httpClient = new FetchHttpClientAdapter();
     const accountsGateway = new HttpAccountsGateway(httpClient);
     const ridesRepository = new RidesRepositoryInMemory();
-    const acceptRide = new AcceptRide(accountsGateway, ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('AccountsGateway', accountsGateway);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const acceptRide = new AcceptRide();
 
     const driver = {
       name: 'John Doe',
@@ -53,7 +59,12 @@ describe('AcceptRide', () => {
     const httpClient = new FetchHttpClientAdapter();
     const accountsGateway = new HttpAccountsGateway(httpClient);
     const ridesRepository = new RidesRepositoryInMemory();
-    const acceptRide = new AcceptRide(accountsGateway, ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('AccountsGateway', accountsGateway);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const acceptRide = new AcceptRide();
 
     const ride = Ride.create(
       Math.random().toString(),
@@ -79,7 +90,12 @@ describe('AcceptRide', () => {
     const httpClient = new FetchHttpClientAdapter();
     const accountsGateway = new HttpAccountsGateway(httpClient);
     const ridesRepository = new RidesRepositoryInMemory();
-    const acceptRide = new AcceptRide(accountsGateway, ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('AccountsGateway', accountsGateway);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const acceptRide = new AcceptRide();
 
     const driver = {
       name: 'John Doe',
@@ -106,7 +122,12 @@ describe('AcceptRide', () => {
     const httpClient = new FetchHttpClientAdapter();
     const accountsGateway = new HttpAccountsGateway(httpClient);
     const ridesRepository = new RidesRepositoryInMemory();
-    const acceptRide = new AcceptRide(accountsGateway, ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('AccountsGateway', accountsGateway);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const acceptRide = new AcceptRide();
 
     const driver = {
       name: 'John Doe',
@@ -142,7 +163,12 @@ describe('AcceptRide', () => {
     const httpClient = new FetchHttpClientAdapter();
     const accountsGateway = new HttpAccountsGateway(httpClient);
     const ridesRepository = new RidesRepositoryInMemory();
-    const acceptRide = new AcceptRide(accountsGateway, ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('AccountsGateway', accountsGateway);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const acceptRide = new AcceptRide();
 
     const driver = {
       name: 'John Doe',
@@ -180,7 +206,12 @@ describe('AcceptRide', () => {
     const httpClient = new FetchHttpClientAdapter();
     const accountsGateway = new HttpAccountsGateway(httpClient);
     const ridesRepository = new RidesRepositoryInMemory();
-    const acceptRide = new AcceptRide(accountsGateway, ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('AccountsGateway', accountsGateway);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const acceptRide = new AcceptRide();
 
     const driver = {
       name: 'John Doe',

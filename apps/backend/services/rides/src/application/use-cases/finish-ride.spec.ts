@@ -3,6 +3,7 @@ import FinishRide from './finish-ride';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import Position from '~/domain/entities/position';
 import PositionsRepositoryInMemory from '~/infra/repositories/in-memory/positions-repository';
+import Registry from '~/infra/registry/registry';
 import Ride from '~/domain/entities/ride';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 
@@ -10,7 +11,13 @@ describe('FinishRide', () => {
   it('should be able finish a ride', async () => {
     const positionsRepository = new PositionsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
-    const finishRide = new FinishRide(positionsRepository, ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('PositionsRepository', positionsRepository);
+    registry.provide('RidesRepository', ridesRepository);
+    registry.provide('Mediator', {});
+
+    const finishRide = new FinishRide();
 
     const ride = Ride.create(
       Math.random().toString(),
@@ -45,7 +52,13 @@ describe('FinishRide', () => {
   it('should not finish a non-existing ride', async () => {
     const positionsRepository = new PositionsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
-    const finishRide = new FinishRide(positionsRepository, ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('PositionsRepository', positionsRepository);
+    registry.provide('RidesRepository', ridesRepository);
+    registry.provide('Mediator', {});
+
+    const finishRide = new FinishRide();
 
     await expect(
       () => finishRide.execute({ rideId: Math.random().toString() })
@@ -55,7 +68,13 @@ describe('FinishRide', () => {
   it('should not finish a non started ride', async () => {
     const positionsRepository = new PositionsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
-    const finishRide = new FinishRide(positionsRepository, ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('PositionsRepository', positionsRepository);
+    registry.provide('RidesRepository', ridesRepository);
+    registry.provide('Mediator', {});
+
+    const finishRide = new FinishRide();
 
     const ride = Ride.create(
       Math.random().toString(),

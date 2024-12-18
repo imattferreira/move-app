@@ -1,6 +1,6 @@
-import Coord from '../value-objects/coord';
+import Coord from '~/domain/value-objects/coord';
 import DistanceCalculator from './distance-calculator';
-import Position from '../entities/position';
+import Position from '~/domain/entities/position';
 
 describe('DistanceCalculator', () => {
   it('should be able to calculate the distance between two coordinates', () => {
@@ -26,9 +26,8 @@ describe('DistanceCalculator', () => {
       )
     ];
 
-    const output = DistanceCalculator.calculateDistanceBetweenPositions(
-      positions
-    );
+    const output
+      = DistanceCalculator.calculateDistanceBetweenPositions(positions);
 
     expect(output).toBe(10);
   });

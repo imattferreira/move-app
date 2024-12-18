@@ -1,4 +1,5 @@
 import NotFoundException from '~/application/exceptions/not-found-exception';
+import Registry from '~/infra/registry/registry';
 import Ride from '~/domain/entities/ride';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 import StartRide from './start-ride';
@@ -6,7 +7,11 @@ import StartRide from './start-ride';
 describe('StartRide', () => {
   it('should be able to start a ride', async () => {
     const ridesRepository = new RidesRepositoryInMemory();
-    const startRide = new StartRide(ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('RidesRepository', ridesRepository);
+
+    const startRide = new StartRide();
 
     const ride = Ride.create(
       Math.random().toString(),
@@ -33,7 +38,11 @@ describe('StartRide', () => {
 
   it('should not start a non-existing ride', async () => {
     const ridesRepository = new RidesRepositoryInMemory();
-    const startRide = new StartRide(ridesRepository);
+    const registry = Registry.getInstance();
+
+    registry.provide('RidesRepository', ridesRepository);
+
+    const startRide = new StartRide();
 
     const input = {
       rideId: Math.random().toString()

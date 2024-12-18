@@ -3,6 +3,7 @@ import GetRide from './get-ride';
 import HttpAccountsGateway from '~/infra/gateways/http-accounts-gateway';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import PositionsRepositoryInMemory from '~/infra/repositories/in-memory/positions-repository';
+import Registry from '~/infra/registry/registry';
 import Ride from '~/domain/entities/ride';
 import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
 
@@ -12,11 +13,13 @@ describe('GetRide', () => {
     const accountsGateway = new HttpAccountsGateway(httpClient);
     const positionsRepository = new PositionsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
-    const getRide = new GetRide(
-      accountsGateway,
-      positionsRepository,
-      ridesRepository
-    );
+    const registry = Registry.getInstance();
+
+    registry.provide('AccountsGateway', accountsGateway);
+    registry.provide('PositionsRepository', positionsRepository);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const getRide = new GetRide();
 
     const passenger = {
       name: 'John Doe',
@@ -57,11 +60,13 @@ describe('GetRide', () => {
     const accountsGateway = new HttpAccountsGateway(httpClient);
     const positionsRepository = new PositionsRepositoryInMemory();
     const ridesRepository = new RidesRepositoryInMemory();
-    const getRide = new GetRide(
-      accountsGateway,
-      positionsRepository,
-      ridesRepository
-    );
+    const registry = Registry.getInstance();
+
+    registry.provide('AccountsGateway', accountsGateway);
+    registry.provide('PositionsRepository', positionsRepository);
+    registry.provide('RidesRepository', ridesRepository);
+
+    const getRide = new GetRide();
 
     const rideId = Math.random().toString();
 

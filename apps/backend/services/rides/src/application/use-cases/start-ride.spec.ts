@@ -1,27 +1,26 @@
+import '~/main';
+import Identifier from '~/domain/value-objects/identifier';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import Registry from '~/infra/registry/registry';
 import Ride from '~/domain/entities/ride';
-import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
+import type RidesRepository from '~/application/repositories/rides-repository';
 import StartRide from './start-ride';
 
 describe('StartRide', () => {
   it('should be able to start a ride', async () => {
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('RidesRepository', ridesRepository);
-
+    const ridesRepository = registry.inject<RidesRepository>('RidesRepository');
     const startRide = new StartRide();
 
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
       -48.522234807851476
     );
 
-    ride.accept(Math.random().toString());
+    ride.accept(Identifier.create().getValue());
 
     await ridesRepository.save(ride);
 
@@ -37,15 +36,10 @@ describe('StartRide', () => {
   });
 
   it('should not start a non-existing ride', async () => {
-    const ridesRepository = new RidesRepositoryInMemory();
-    const registry = Registry.getInstance();
-
-    registry.provide('RidesRepository', ridesRepository);
-
     const startRide = new StartRide();
 
     const input = {
-      rideId: Math.random().toString()
+      rideId: Identifier.create().getValue()
     };
 
     await expect(

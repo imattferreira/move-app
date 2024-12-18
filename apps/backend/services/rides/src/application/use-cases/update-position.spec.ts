@@ -1,31 +1,31 @@
+import '~/main';
 import ConflictException from '~/application/exceptions/conflict-exception';
+import Identifier from '~/domain/value-objects/identifier';
 import NotFoundException from '~/application/exceptions/not-found-exception';
-import PositionsRepositoryInMemory from '~/infra/repositories/in-memory/positions-repository';
+import type PositionsRepository from '~/application/repositories/positions-repository';
 import Registry from '~/infra/registry/registry';
 import Ride from '~/domain/entities/ride';
-import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
+import type RidesRepository from '~/application/repositories/rides-repository';
 import UpdatePosition from './update-position';
 
 describe('UpdatePosition', () => {
   it('should be able update the position of a ride', async () => {
-    const positionsRepository = new PositionsRepositoryInMemory();
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('PositionsRepository', positionsRepository);
-    registry.provide('RidesRepository', ridesRepository);
-
+    const ridesRepository = registry.inject<RidesRepository>('RidesRepository');
+    const positionsRepository = registry.inject<PositionsRepository>(
+      'PositionsRepository'
+    );
     const updatePosition = new UpdatePosition();
 
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
       -48.522234807851476
     );
 
-    ride.accept(Math.random().toString());
+    ride.accept(Identifier.create().getValue());
     ride.start();
 
     await ridesRepository.save(ride);
@@ -48,17 +48,10 @@ describe('UpdatePosition', () => {
   });
 
   it('should not update the position of a non-existing ride', async () => {
-    const positionsRepository = new PositionsRepositoryInMemory();
-    const ridesRepository = new RidesRepositoryInMemory();
-    const registry = Registry.getInstance();
-
-    registry.provide('PositionsRepository', positionsRepository);
-    registry.provide('RidesRepository', ridesRepository);
-
     const updatePosition = new UpdatePosition();
 
     const input = {
-      rideId: Math.random().toString(),
+      rideId: Identifier.create().getValue(),
       lat: -27.584905257808835,
       long: -48.545022195325124
     };
@@ -71,17 +64,14 @@ describe('UpdatePosition', () => {
   it(
     'should not update the position of a ride that aren\'t in progress',
     async () => {
-      const positionsRepository = new PositionsRepositoryInMemory();
-      const ridesRepository = new RidesRepositoryInMemory();
       const registry = Registry.getInstance();
-
-      registry.provide('PositionsRepository', positionsRepository);
-      registry.provide('RidesRepository', ridesRepository);
-
+      const ridesRepository = registry.inject<RidesRepository>(
+        'RidesRepository'
+      );
       const updatePosition = new UpdatePosition();
 
       const ride = Ride.create(
-        Math.random().toString(),
+        Identifier.create().getValue(),
         -27.584905257808835,
         -48.545022195325124,
         -27.496887588317275,

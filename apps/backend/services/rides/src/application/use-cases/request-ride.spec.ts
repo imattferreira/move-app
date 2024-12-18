@@ -1,22 +1,18 @@
+import '~/main';
+import type AccountsGateway from '~/application/gateways/accounts-gateway';
 import ConflictException from '~/application/exceptions/conflict-exception';
-import { FetchHttpClientAdapter } from '~/infra/http/http-client';
 import ForbiddenException from '~/application/exceptions/forbidden-exception';
-import HttpAccountsGateway from '~/infra/gateways/http-accounts-gateway';
+import Identifier from '~/domain/value-objects/identifier';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import Registry from '~/infra/registry/registry';
 import RequestRide from './request-ride';
-import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
+import type RidesRepository from '~/application/repositories/rides-repository';
 
 describe('RequestRide', () => {
   it('should be able request a new ride', async () => {
-    const httpClient = new FetchHttpClientAdapter();
-    const accountsGateway = new HttpAccountsGateway(httpClient);
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('AccountsGateway', accountsGateway);
-    registry.provide('RidesRepository', ridesRepository);
-
+    const ridesRepository = registry.inject<RidesRepository>('RidesRepository');
+    const accountsGateway = registry.inject<AccountsGateway>('AccountsGateway');
     const requestRide = new RequestRide();
 
     const passenger = {
@@ -56,18 +52,10 @@ describe('RequestRide', () => {
   });
 
   it('should not request a new ride when passenger not exists', async () => {
-    const httpClient = new FetchHttpClientAdapter();
-    const accountsGateway = new HttpAccountsGateway(httpClient);
-    const ridesRepository = new RidesRepositoryInMemory();
-    const registry = Registry.getInstance();
-
-    registry.provide('AccountsGateway', accountsGateway);
-    registry.provide('RidesRepository', ridesRepository);
-
     const requestRide = new RequestRide();
 
     const input = {
-      passengerId: Math.random().toString(),
+      passengerId: Identifier.create().getValue(),
       fromLat: -27.584905257808835,
       fromLong: -48.545022195325124,
       toLat: -27.496887588317275,
@@ -82,14 +70,10 @@ describe('RequestRide', () => {
   it(
     'should not able request a new ride when passenger is a driver',
     async () => {
-      const httpClient = new FetchHttpClientAdapter();
-      const accountsGateway = new HttpAccountsGateway(httpClient);
-      const ridesRepository = new RidesRepositoryInMemory();
       const registry = Registry.getInstance();
-
-      registry.provide('AccountsGateway', accountsGateway);
-      registry.provide('RidesRepository', ridesRepository);
-
+      const accountsGateway = registry.inject<AccountsGateway>(
+        'AccountsGateway'
+      );
       const requestRide = new RequestRide();
 
       const driver = {
@@ -122,14 +106,10 @@ describe('RequestRide', () => {
   it(
     'should not request a new ride when passenger already have a ride in progress',
     async () => {
-      const httpClient = new FetchHttpClientAdapter();
-      const accountsGateway = new HttpAccountsGateway(httpClient);
-      const ridesRepository = new RidesRepositoryInMemory();
       const registry = Registry.getInstance();
-
-      registry.provide('AccountsGateway', accountsGateway);
-      registry.provide('RidesRepository', ridesRepository);
-
+      const accountsGateway = registry.inject<AccountsGateway>(
+        'AccountsGateway'
+      );
       const requestRide = new RequestRide();
 
       const passenger = {

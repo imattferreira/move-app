@@ -1,4 +1,5 @@
 type: object
+description: "Example of a generic account profile"
 required:
   - name
   - email

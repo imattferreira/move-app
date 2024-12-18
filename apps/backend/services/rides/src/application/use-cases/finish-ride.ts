@@ -1,6 +1,6 @@
+import Mediator from '~/application/mediators';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import PositionsRepository from '~/application/repositories/positions-repository';
-import QueueMediator from '~/application/mediators/queue-mediator';
 import RidesRepository from '~/application/repositories/rides-repository';
 import { inject } from '~/infra/registry';
 
@@ -10,7 +10,7 @@ type Input = {
 
 class FinishRide {
   @inject('Mediator')
-  private readonly mediator!: QueueMediator;
+  private readonly mediator!: Mediator;
 
   @inject('PositionsRepository')
   private readonly positionsRepository!: PositionsRepository;

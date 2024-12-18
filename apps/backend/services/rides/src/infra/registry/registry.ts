@@ -18,8 +18,18 @@ class Registry {
     this.dependencies[name] = instance;
   }
 
-  inject<T>(name: string): T | null {
-    return this.dependencies[name] as T || null;
+  inject<T>(name: string): T {
+    const dep = this.dependencies[name] as T;
+
+    if (!dep) {
+      throw new Error(`dependency ${name} was not registered`);
+    }
+
+    return dep;
+  }
+
+  cleanup() {
+    this.dependencies = {};
   }
 }
 

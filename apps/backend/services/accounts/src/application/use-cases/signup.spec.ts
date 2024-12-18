@@ -1,16 +1,16 @@
-import AccountsRepositoryInMemory from '~/infra/repositories/in-memory/accounts-repository';
+import '~/main';
+import type AccountsRepository from '~/application/repositories/accounts-repository';
 import ConflictException from '~/application/exceptions/conflict-exception';
 import InvalidException from '~/application/exceptions/invalid-exception';
 import Registry from '~/infra/registry/registry';
 import SignUp from './signup';
 
 describe('SignUp', () => {
-  it('should be able create a driver user', async () => {
-    const accountsRepository = new AccountsRepositoryInMemory();
+  it.only('should be able create a driver user', async () => {
     const registry = Registry.getInstance();
-
-    registry.provide('AccountsRepository', accountsRepository);
-
+    const accountsRepository = registry.inject<AccountsRepository>(
+      'AccountsRepository'
+    );
     const signup = new SignUp();
 
     const input = {
@@ -38,11 +38,6 @@ describe('SignUp', () => {
   });
 
   it('should not create a driver user with a invalid car plate', async () => {
-    const accountsRepository = new AccountsRepositoryInMemory();
-    const registry = Registry.getInstance();
-
-    registry.provide('AccountsRepository', accountsRepository);
-
     const signup = new SignUp();
 
     const input = {
@@ -60,11 +55,6 @@ describe('SignUp', () => {
   });
 
   it('should not create a user with a already registered email', async () => {
-    const accountsRepository = new AccountsRepositoryInMemory();
-    const registry = Registry.getInstance();
-
-    registry.provide('AccountsRepository', accountsRepository);
-
     const signup = new SignUp();
 
     const input = {

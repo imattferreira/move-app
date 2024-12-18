@@ -2,29 +2,41 @@
 // Composition-Root
 import '../../../scripts/dotenv';
 import AccountsController from './infra/controllers/accounts-controller';
+import AccountsRepositoryInMemory from './infra/repositories/in-memory/accounts-repository';
 import { ExpressHttpServerAdapter } from './infra/http/http-server';
 import GetAccount from './application/use-cases/get-account';
 import { PgPromiseAdapter } from './infra/database/database-connection';
 import PsqlAccountsRepository from './infra/repositories/psql/accounts-repository';
+import Registry from './infra/registry/registry';
 import SignUp from './application/use-cases/signup';
 
-const httpServer = new ExpressHttpServerAdapter();
-const connection = new PgPromiseAdapter();
+const registry = Registry.getInstance();
 
-const accountsRepository = new PsqlAccountsRepository(connection);
+registry.provide('SignUp', new SignUp());
+registry.provide('GetAccount', new GetAccount());
 
-const signup = new SignUp(accountsRepository);
-const getAccount = new GetAccount(accountsRepository);
+if (['development', 'production'].includes(process.env.NODE_ENV || '')) {
+  const httpServer = new ExpressHttpServerAdapter();
 
-new AccountsController(httpServer, signup, getAccount);
+  registry.provide('DatabaseConnection', new PgPromiseAdapter());
+  registry.provide('AccountsRepository', new PsqlAccountsRepository());
+  registry.provide('HttpServer', httpServer);
 
-// const signals = ['SIGINT', 'SIGTERM', 'SIGKILL'];
+  new AccountsController();
 
-// signals.forEach((signal) => {
-//   process.on(signal, async () => {
-//     await connection.close();
-//     process.exit(0);
-//   });
-// });
+  // const signals = ['SIGINT', 'SIGTERM', 'SIGKILL'];
 
-httpServer.listen(3000);
+  // signals.forEach((signal) => {
+  //   process.on(signal, async () => {
+  //     console.log({ signal });
+  //     // await connection.close();
+  //     httpServer.close();
+  //     process.exit(0);
+  //   });
+  // });
+  httpServer.listen(3000);
+}
+
+if (process.env.NODE_ENV === 'testing') {
+  registry.provide('AccountsRepository', new AccountsRepositoryInMemory());
+}

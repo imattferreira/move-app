@@ -1,6 +1,7 @@
 import DatabaseConnection from '~/infra/database/database-connection';
 import Ride from '~/domain/entities/ride';
 import RidesRepository from '~/application/repositories/rides-repository';
+import { inject } from '~/infra/registry';
 import { sql } from '~/infra/repositories/utils/query';
 
 /**
@@ -10,7 +11,8 @@ import { sql } from '~/infra/repositories/utils/query';
 * the restored entity.
 */
 class PsqlRidesRepository implements RidesRepository {
-  constructor(private readonly connection: DatabaseConnection) {}
+  @inject('DatabaseConnection')
+  private readonly connection!: DatabaseConnection;
 
   // SRP - Single Responsability Principle
   async save(ride: Ride): Promise<void> {

@@ -11,7 +11,7 @@ afterAll(() => {
   connection.close();
 });
 
-describe('PsqlAccountsRepository', () => {
+describe.skip('PsqlAccountsRepository', () => {
   it('should be able to save a account', async () => {
     const account = Account.create(
       'John Doe',

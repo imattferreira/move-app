@@ -5,9 +5,11 @@ AccountsGateway, {
   SignUpOutput
 } from '~/application/gateways/accounts-gateway';
 import HttpClient from '~/infra/http/http-client';
+import { inject } from '~/infra/registry';
 
 class HttpAccountsGateway implements AccountsGateway {
-  constructor(private readonly client: HttpClient) {}
+  @inject('HttpClient')
+  private readonly client!: HttpClient;
 
   signup(data: SignUpInput): Promise<SignUpOutput> {
     return this.client.post(

@@ -1,5 +1,3 @@
-import PaymentsGateway from '~/application/gateways/payments-gateway';
-
 type Callback = <T>(data: T) => void;
 
 type Handler = {
@@ -7,10 +5,10 @@ type Handler = {
   callback: Callback;
 };
 
-class QueueMediator {
+class Mediator {
   private handlers: Handler[];
 
-  constructor(private readonly paymentsGateway: PaymentsGateway) {
+  constructor() {
     this.handlers = [];
   }
 
@@ -30,4 +28,4 @@ class QueueMediator {
   }
 }
 
-export default QueueMediator;
+export default Mediator;

@@ -1,23 +1,19 @@
+import '~/main';
 import AcceptRide from './accept-ride';
+import type AccountsGateway from '~/application/gateways/accounts-gateway';
 import ConflictException from '~/application/exceptions/conflict-exception';
-import { FetchHttpClientAdapter } from '~/infra/http/http-client';
 import ForbiddenException from '~/application/exceptions/forbidden-exception';
-import HttpAccountsGateway from '~/infra/gateways/http-accounts-gateway';
+import Identifier from '~/domain/value-objects/identifier';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import Registry from '~/infra/registry/registry';
 import Ride from '~/domain/entities/ride';
-import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
+import type RidesRepository from '~/application/repositories/rides-repository';
 
 describe('AcceptRide', () => {
   it('should be able a driver accept a ride', async () => {
-    const httpClient = new FetchHttpClientAdapter();
-    const accountsGateway = new HttpAccountsGateway(httpClient);
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('AccountsGateway', accountsGateway);
-    registry.provide('RidesRepository', ridesRepository);
-
+    const accountsGateway = registry.inject<AccountsGateway>('AccountsGateway');
+    const ridesRepository = registry.inject<RidesRepository>('RidesRepository');
     const acceptRide = new AcceptRide();
 
     const driver = {
@@ -30,7 +26,7 @@ describe('AcceptRide', () => {
       password: '1233456789'
     };
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
@@ -56,18 +52,12 @@ describe('AcceptRide', () => {
   });
 
   it('should not accept a ride when driver don\'t exists', async () => {
-    const httpClient = new FetchHttpClientAdapter();
-    const accountsGateway = new HttpAccountsGateway(httpClient);
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('AccountsGateway', accountsGateway);
-    registry.provide('RidesRepository', ridesRepository);
-
+    const ridesRepository = registry.inject<RidesRepository>('RidesRepository');
     const acceptRide = new AcceptRide();
 
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
@@ -77,7 +67,7 @@ describe('AcceptRide', () => {
     await ridesRepository.save(ride);
 
     const input = {
-      driverId: Math.random().toString(),
+      driverId: Identifier.create().getValue(),
       rideId: ride.getId()
     };
 
@@ -87,14 +77,8 @@ describe('AcceptRide', () => {
   });
 
   it('should not accept a ride when ride don\'t exists', async () => {
-    const httpClient = new FetchHttpClientAdapter();
-    const accountsGateway = new HttpAccountsGateway(httpClient);
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('AccountsGateway', accountsGateway);
-    registry.provide('RidesRepository', ridesRepository);
-
+    const accountsGateway = registry.inject<AccountsGateway>('AccountsGateway');
     const acceptRide = new AcceptRide();
 
     const driver = {
@@ -110,7 +94,7 @@ describe('AcceptRide', () => {
 
     const input = {
       driverId: signupOutput.accountId,
-      rideId: Math.random().toString()
+      rideId: Identifier.create().getValue()
     };
 
     await expect(
@@ -119,14 +103,9 @@ describe('AcceptRide', () => {
   });
 
   it('should not a passenger accept a ride', async () => {
-    const httpClient = new FetchHttpClientAdapter();
-    const accountsGateway = new HttpAccountsGateway(httpClient);
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('AccountsGateway', accountsGateway);
-    registry.provide('RidesRepository', ridesRepository);
-
+    const accountsGateway = registry.inject<AccountsGateway>('AccountsGateway');
+    const ridesRepository = registry.inject<RidesRepository>('RidesRepository');
     const acceptRide = new AcceptRide();
 
     const driver = {
@@ -139,7 +118,7 @@ describe('AcceptRide', () => {
       password: '1233456789'
     };
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
@@ -160,14 +139,9 @@ describe('AcceptRide', () => {
   });
 
   it('should not a driver accept a ride that already accepted', async () => {
-    const httpClient = new FetchHttpClientAdapter();
-    const accountsGateway = new HttpAccountsGateway(httpClient);
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('AccountsGateway', accountsGateway);
-    registry.provide('RidesRepository', ridesRepository);
-
+    const accountsGateway = registry.inject<AccountsGateway>('AccountsGateway');
+    const ridesRepository = registry.inject<RidesRepository>('RidesRepository');
     const acceptRide = new AcceptRide();
 
     const driver = {
@@ -180,7 +154,7 @@ describe('AcceptRide', () => {
       password: '1233456789'
     };
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
@@ -203,14 +177,9 @@ describe('AcceptRide', () => {
   });
 
   it('should not a driver accept more than 1 ride per time', async () => {
-    const httpClient = new FetchHttpClientAdapter();
-    const accountsGateway = new HttpAccountsGateway(httpClient);
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('AccountsGateway', accountsGateway);
-    registry.provide('RidesRepository', ridesRepository);
-
+    const accountsGateway = registry.inject<AccountsGateway>('AccountsGateway');
+    const ridesRepository = registry.inject<RidesRepository>('RidesRepository');
     const acceptRide = new AcceptRide();
 
     const driver = {
@@ -223,14 +192,14 @@ describe('AcceptRide', () => {
       password: '1233456789'
     };
     const ride1 = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
       -48.522234807851476
     );
     const ride2 = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,

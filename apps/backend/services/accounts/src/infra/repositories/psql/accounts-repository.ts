@@ -1,10 +1,12 @@
 import Account from '~/domain/entities/account';
 import AccountsRepository from '~/application/repositories/accounts-repository';
 import DatabaseConnection from '~/infra/database/database-connection';
+import { inject } from '~/infra/registry';
 import { sql } from '~/infra/repositories/utils/query';
 
 class PsqlAccountsRepository implements AccountsRepository {
-  constructor(private readonly connection: DatabaseConnection) {}
+  @inject('DatabaseConnection')
+  private readonly connection!: DatabaseConnection;
 
   async save(account: Account): Promise<void> {
     const query = sql`

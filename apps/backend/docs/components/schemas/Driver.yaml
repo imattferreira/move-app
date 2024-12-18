@@ -10,6 +10,7 @@ allOf:
       is_driver:
         type: boolean
         description: "Set account as a driver"
+        example: true
         default: false
     required:
       - car_plate

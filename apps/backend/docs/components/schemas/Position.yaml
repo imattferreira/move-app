@@ -1,3 +1,4 @@
+description: "Example of a position of a ride"
 type: object
 required:
   - ride_id

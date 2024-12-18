@@ -4,10 +4,10 @@
   "main": "src/main.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsx watch src/main.ts",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watchAll"
+    "start": "NODE_ENV=development tsx watch src/main.ts",
+    "test": "NODE_ENV=testing jest",
+    "test:coverage": "NODE_ENV=testing jest --coverage",
+    "test:watch": "NODE_ENV=testing jest --watchAll"
   },
   "dependencies": {
     "express": "^4.18.2",

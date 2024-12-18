@@ -1,24 +1,17 @@
-import { FetchHttpClientAdapter } from '~/infra/http/http-client';
+import '~/main';
+import AccountsGateway from '~/application/gateways/accounts-gateway';
 import GetRide from './get-ride';
-import HttpAccountsGateway from '~/infra/gateways/http-accounts-gateway';
+import Identifier from '~/domain/value-objects/identifier';
 import NotFoundException from '~/application/exceptions/not-found-exception';
-import PositionsRepositoryInMemory from '~/infra/repositories/in-memory/positions-repository';
 import Registry from '~/infra/registry/registry';
 import Ride from '~/domain/entities/ride';
-import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
+import RidesRepository from '~/application/repositories/rides-repository';
 
 describe('GetRide', () => {
   it('should be able to get info about a existing ride', async () => {
-    const httpClient = new FetchHttpClientAdapter();
-    const accountsGateway = new HttpAccountsGateway(httpClient);
-    const positionsRepository = new PositionsRepositoryInMemory();
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('AccountsGateway', accountsGateway);
-    registry.provide('PositionsRepository', positionsRepository);
-    registry.provide('RidesRepository', ridesRepository);
-
+    const ridesRepository = registry.inject<RidesRepository>('RidesRepository');
+    const accountsGateway = registry.inject<AccountsGateway>('AccountsGateway');
     const getRide = new GetRide();
 
     const passenger = {
@@ -56,19 +49,9 @@ describe('GetRide', () => {
   });
 
   it('should not get info about a non-existing ride', async () => {
-    const httpClient = new FetchHttpClientAdapter();
-    const accountsGateway = new HttpAccountsGateway(httpClient);
-    const positionsRepository = new PositionsRepositoryInMemory();
-    const ridesRepository = new RidesRepositoryInMemory();
-    const registry = Registry.getInstance();
-
-    registry.provide('AccountsGateway', accountsGateway);
-    registry.provide('PositionsRepository', positionsRepository);
-    registry.provide('RidesRepository', ridesRepository);
-
     const getRide = new GetRide();
 
-    const rideId = Math.random().toString();
+    const rideId = Identifier.create().getValue();
 
     await expect(
       () => getRide.execute({ rideId })

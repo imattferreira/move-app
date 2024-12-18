@@ -1,2 +1,3 @@
+description: "Example of a identifier of a entity following the UUID v4 spec"
 type: string
 example: "24dfa97f-16b9-44d4-a92f-303602f3edc1"

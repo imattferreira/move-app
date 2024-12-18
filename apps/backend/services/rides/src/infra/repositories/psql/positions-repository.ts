@@ -1,10 +1,12 @@
 import DatabaseConnection from '~/infra/database/database-connection';
 import Position from '~/domain/entities/position';
 import PositionsRepository from '~/application/repositories/positions-repository';
+import { inject } from '~/infra/registry';
 import { sql } from '~/infra/repositories/utils/query';
 
 class PsqlPositionsRepository implements PositionsRepository {
-  constructor(private readonly connection: DatabaseConnection) {}
+  @inject('DatabaseConnection')
+  private readonly connection!: DatabaseConnection;
 
   async save(position: Position): Promise<void> {
     const query = sql`

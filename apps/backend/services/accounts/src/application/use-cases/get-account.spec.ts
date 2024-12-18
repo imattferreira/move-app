@@ -1,16 +1,17 @@
+import '~/main';
 import Account from '~/domain/entities/account';
-import AccountsRepositoryInMemory from '~/infra/repositories/in-memory/accounts-repository';
+import AccountsRepository from '~/application/repositories/accounts-repository';
 import GetAccount from './get-account';
+import Identifier from '~/domain/value-objects/identifier';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import Registry from '~/infra/registry/registry';
 
 describe('GetAccount', () => {
   it('should be able to get info about a existing account', async () => {
-    const accountsRepository = new AccountsRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('AccountsRepository', accountsRepository);
-
+    const accountsRepository = registry.inject<AccountsRepository>(
+      'AccountsRepository'
+    );
     const getAccount = new GetAccount();
 
     const account = Account.create(
@@ -35,14 +36,8 @@ describe('GetAccount', () => {
   });
 
   it('should not get info about a non-existing accunt', async () => {
-    const accountsRepository = new AccountsRepositoryInMemory();
-    const registry = Registry.getInstance();
-
-    registry.provide('AccountsRepository', accountsRepository);
-
     const getAccount = new GetAccount();
-
-    const accountId = Math.random().toString();
+    const accountId = Identifier.create().getValue();
 
     await expect(
       () => getAccount.execute({ accountId })

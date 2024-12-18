@@ -1,3 +1,4 @@
+description: "Example of a ride"
 type: object
 required:
   - passenger_id

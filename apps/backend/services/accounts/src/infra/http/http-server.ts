@@ -3,6 +3,7 @@ import { camelfy, snakefy } from '~/utils/object';
 import express, { type Express, type Request, type Response } from 'express';
 import Exception from '~/application/exceptions/exception';
 import type { Object } from '~/utils/types';
+import type { Server } from 'http';
 
 type HttpMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -17,15 +18,21 @@ export default interface HttpServer {
     callback: Handler<I, O>
   ): void;
   listen(port: number): void;
+  close(): void;
 }
 
 export class ExpressHttpServerAdapter implements HttpServer {
   private app: Express;
+  private server?: Server;
 
   constructor() {
     this.app = express();
 
     this.app.use(express.json());
+  }
+
+  close(): void {
+    this.server?.close();
   }
 
   async register<I extends Object, O>(
@@ -68,7 +75,7 @@ export class ExpressHttpServerAdapter implements HttpServer {
   }
 
   listen(port: number): void {
-    this.app.listen(port);
+    this.server = this.app.listen(port);
   }
 
   private parseException(

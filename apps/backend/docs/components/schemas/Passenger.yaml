@@ -6,6 +6,7 @@ allOf:
       is_passenger:
         type: boolean
         description: "Set account as a passenger"
+        example: true
         default: false
     required:
       - is_passenger

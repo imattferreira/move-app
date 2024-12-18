@@ -1,2 +1,3 @@
+description: "Example of a datetime following the ISO-8601 spec"
 type: string
 example: "2024-12-12T00:22:24.676Z"

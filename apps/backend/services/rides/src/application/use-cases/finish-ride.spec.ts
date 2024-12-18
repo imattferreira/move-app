@@ -1,32 +1,31 @@
+import '~/main';
 import ConflictException from '~/application/exceptions/conflict-exception';
 import FinishRide from './finish-ride';
+import Identifier from '~/domain/value-objects/identifier';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import Position from '~/domain/entities/position';
-import PositionsRepositoryInMemory from '~/infra/repositories/in-memory/positions-repository';
+import type PositionsRepository from '../repositories/positions-repository';
 import Registry from '~/infra/registry/registry';
 import Ride from '~/domain/entities/ride';
-import RidesRepositoryInMemory from '~/infra/repositories/in-memory/rides-repository';
+import type RidesRepository from '../repositories/rides-repository';
 
 describe('FinishRide', () => {
   it('should be able finish a ride', async () => {
-    const positionsRepository = new PositionsRepositoryInMemory();
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('PositionsRepository', positionsRepository);
-    registry.provide('RidesRepository', ridesRepository);
-    registry.provide('Mediator', {});
-
+    const ridesRepository = registry.inject<RidesRepository>('RidesRepository');
+    const positionsRepository = registry.inject<PositionsRepository>(
+      'PositionsRepository'
+    );
     const finishRide = new FinishRide();
 
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
       -48.522234807851476
     );
-    ride.accept(Math.random().toString());
+    ride.accept(Identifier.create().getValue());
     ride.start();
 
     await ridesRepository.save(ride);
@@ -50,41 +49,27 @@ describe('FinishRide', () => {
   });
 
   it('should not finish a non-existing ride', async () => {
-    const positionsRepository = new PositionsRepositoryInMemory();
-    const ridesRepository = new RidesRepositoryInMemory();
-    const registry = Registry.getInstance();
-
-    registry.provide('PositionsRepository', positionsRepository);
-    registry.provide('RidesRepository', ridesRepository);
-    registry.provide('Mediator', {});
-
     const finishRide = new FinishRide();
 
     await expect(
-      () => finishRide.execute({ rideId: Math.random().toString() })
+      () => finishRide.execute({ rideId: Identifier.create().getValue() })
     ).rejects.toThrow(new NotFoundException('ride not found'));
   });
 
   it('should not finish a non started ride', async () => {
-    const positionsRepository = new PositionsRepositoryInMemory();
-    const ridesRepository = new RidesRepositoryInMemory();
     const registry = Registry.getInstance();
-
-    registry.provide('PositionsRepository', positionsRepository);
-    registry.provide('RidesRepository', ridesRepository);
-    registry.provide('Mediator', {});
-
+    const ridesRepository = registry.inject<RidesRepository>('RidesRepository');
     const finishRide = new FinishRide();
 
     const ride = Ride.create(
-      Math.random().toString(),
+      Identifier.create().getValue(),
       -27.584905257808835,
       -48.545022195325124,
       -27.496887588317275,
       -48.522234807851476
     );
 
-    ride.accept(Math.random().toString());
+    ride.accept(Identifier.create().getValue());
 
     await ridesRepository.save(ride);
 

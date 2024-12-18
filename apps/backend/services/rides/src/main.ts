@@ -5,61 +5,55 @@ import { FetchHttpClientAdapter } from './infra/http/http-client';
 import FinishRide from './application/use-cases/finish-ride';
 import GetRide from './application/use-cases/get-ride';
 import HttpAccountsGateway from './infra/gateways/http-accounts-gateway';
-import HttpPaymentsGateway from './infra/gateways/http-payments-gateway';
+import Mediator from './infra/mediators';
 import { PgPromiseAdapter } from './infra/database/database-connection';
 import PositionsController from './infra/controllers/positions-controller';
+import PositionsRepositoryInMemory from './infra/repositories/in-memory/positions-repository';
 import PsqlPositionsRepository from './infra/repositories/psql/positions-repository';
 import PsqlRidesRepository from './infra/repositories/psql/rides-repository';
-import QueueMediator from './infra/mediators/queue-mediator';
+import Registry from './infra/registry/registry';
 import RequestRide from './application/use-cases/request-ride';
 import RidesController from './infra/controllers/rides-controller';
+import RidesRepositoryInMemory from './infra/repositories/in-memory/rides-repository';
 import StartRide from './application/use-cases/start-ride';
 import UpdatePosition from './application/use-cases/update-position';
 
-const httpServer = new ExpressAdapter();
-const connection = new PgPromiseAdapter();
-const httpClient = new FetchHttpClientAdapter();
+const registry = Registry.getInstance();
 
-const ridesRepository = new PsqlRidesRepository(connection);
-const positionsRepository = new PsqlPositionsRepository(connection);
+registry.provide('HttpClient', new FetchHttpClientAdapter());
+registry.provide('AccountsGateway', new HttpAccountsGateway());
+registry.provide('Mediator', new Mediator());
+registry.provide('RequestRide', new RequestRide());
+registry.provide('GetRide', new GetRide());
+registry.provide('AcceptRide', new AcceptRide());
+registry.provide('StartRide', new StartRide());
+registry.provide('UpdatePosition', new UpdatePosition());
+registry.provide('FinishRide', new FinishRide());
 
-const accountsGateway = new HttpAccountsGateway(httpClient);
-const paymentsGateway = new HttpPaymentsGateway(httpClient);
+if (['development', 'production'].includes(process.env.NODE_ENV || '')) {
+  const httpServer = new ExpressAdapter();
 
-const queueMediator = new QueueMediator(paymentsGateway);
+  registry.provide('HttpServer', httpServer);
+  registry.provide('DatabaseConnection', new PgPromiseAdapter());
+  registry.provide('RidesRepository', new PsqlRidesRepository());
+  registry.provide('PositionsRepository', new PsqlPositionsRepository());
 
-const requestRide = new RequestRide(accountsGateway, ridesRepository);
-const getRide = new GetRide(
-  accountsGateway,
-  positionsRepository,
-  ridesRepository
-);
-const acceptRide = new AcceptRide(accountsGateway, ridesRepository);
-const startRide = new StartRide(ridesRepository);
-const updatePosition = new UpdatePosition(positionsRepository, ridesRepository);
-const finishRide = new FinishRide(
-  positionsRepository,
-  ridesRepository,
-  queueMediator
-);
+  new RidesController();
+  new PositionsController();
 
-new RidesController(
-  httpServer,
-  requestRide,
-  getRide,
-  acceptRide,
-  startRide,
-  finishRide
-);
-new PositionsController(httpServer, updatePosition);
+  // const signals = ['SIGINT', 'SIGTERM', 'SIGKILL'];
 
-// const signals = ['SIGINT', 'SIGTERM', 'SIGKILL'];
+  // signals.forEach((signal) => {
+  //   process.on(signal, async () => {
+  //     await connection.close();
+  //     process.exit(0);
+  //   });
+  // });
 
-// signals.forEach((signal) => {
-//   process.on(signal, async () => {
-//     await connection.close();
-//     process.exit(0);
-//   });
-// });
+  httpServer.listen(3000);
+}
 
-httpServer.listen(3000);
+if (process.env.NODE_ENV === 'testing') {
+  registry.provide('RidesRepository', new RidesRepositoryInMemory());
+  registry.provide('PositionsRepository', new PositionsRepositoryInMemory());
+}

@@ -5,7 +5,7 @@ import AccountsController from './infra/controllers/accounts-controller';
 import AccountsRepositoryInMemory from './infra/repositories/in-memory/accounts-repository';
 import { ExpressHttpServerAdapter } from './infra/http/http-server';
 import GetAccount from './application/use-cases/get-account';
-import { PgPromiseAdapter } from './infra/database/database-connection';
+import { PgPromiseAdapter } from './infra/connections/database-connection';
 import PsqlAccountsRepository from './infra/repositories/psql/accounts-repository';
 import Registry from './infra/registry/registry';
 import SignUp from './application/use-cases/signup';

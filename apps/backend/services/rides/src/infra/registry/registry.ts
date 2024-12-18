@@ -27,10 +27,6 @@ class Registry {
 
     return dep;
   }
-
-  cleanup() {
-    this.dependencies = {};
-  }
 }
 
 export default Registry;

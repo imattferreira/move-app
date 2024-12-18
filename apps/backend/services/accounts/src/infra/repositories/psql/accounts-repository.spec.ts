@@ -1,6 +1,6 @@
 import '~/../../../scripts/dotenv';
 import Account from '~/domain/entities/account';
-import { PgPromiseAdapter } from '~/infra/database/database-connection';
+import { PgPromiseAdapter } from '~/infra/connections/database-connection';
 import PsqlAccountsRepository from './accounts-repository';
 import crypto from 'node:crypto';
 

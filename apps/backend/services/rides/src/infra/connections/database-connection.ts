@@ -2,7 +2,7 @@ import type { IClient } from 'pg-promise/typescript/pg-subset';
 import config from '../config';
 import pgp from 'pg-promise';
 
-export default interface DatabaseConnection {
+interface DatabaseConnection {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   query(statement: string, params: unknown[]): Promise<any>;
   close(): Promise<void>;
@@ -25,3 +25,5 @@ export class PgPromiseAdapter implements DatabaseConnection {
     await this.connection.$pool.end();
   }
 }
+
+export default DatabaseConnection;

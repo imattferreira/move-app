@@ -1,6 +1,6 @@
 import Account from '~/domain/entities/account';
 import AccountsRepository from '~/application/repositories/accounts-repository';
-import DatabaseConnection from '~/infra/database/database-connection';
+import DatabaseConnection from '~/infra/connections/database-connection';
 import { inject } from '~/infra/registry';
 import { sql } from '~/infra/repositories/utils/query';
 

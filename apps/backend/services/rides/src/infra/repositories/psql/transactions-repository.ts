@@ -1,4 +1,4 @@
-import DatabaseConnection from '~/infra/database/database-connection';
+import DatabaseConnection from '~/infra/connections/database-connection';
 import Transaction from '~/domain/entities/transaction';
 import TransactionsRepository from '~/application/repositories/transactions-repository';
 import { inject } from '~/infra/registry';

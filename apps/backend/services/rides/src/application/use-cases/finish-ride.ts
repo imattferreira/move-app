@@ -1,6 +1,6 @@
-import Mediator from '~/application/mediators';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import PositionsRepository from '~/application/repositories/positions-repository';
+import Queue from '~/application/queues/queue';
 import RidesRepository from '~/application/repositories/rides-repository';
 import { inject } from '~/infra/registry';
 
@@ -9,8 +9,8 @@ type Input = {
 };
 
 class FinishRide {
-  @inject('Mediator')
-  private readonly mediator!: Mediator;
+  @inject('Queue')
+  private readonly queue!: Queue;
 
   @inject('PositionsRepository')
   private readonly positionsRepository!: PositionsRepository;
@@ -33,7 +33,7 @@ class FinishRide {
 
     await this.ridesRepository.update(ride);
     // TODO: test it
-    this.mediator.notify('ride-finished', { rideId: ride.getId() });
+    this.queue.publish('ride-finished', { rideId: ride.getId() });
   }
 }
 

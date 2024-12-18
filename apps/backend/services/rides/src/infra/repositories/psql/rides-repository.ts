@@ -1,4 +1,4 @@
-import DatabaseConnection from '~/infra/database/database-connection';
+import DatabaseConnection from '~/infra/connections/database-connection';
 import Ride from '~/domain/entities/ride';
 import RidesRepository from '~/application/repositories/rides-repository';
 import { inject } from '~/infra/registry';

@@ -4,10 +4,11 @@ import FinishRide from './finish-ride';
 import Identifier from '~/domain/value-objects/identifier';
 import NotFoundException from '~/application/exceptions/not-found-exception';
 import Position from '~/domain/entities/position';
-import type PositionsRepository from '../repositories/positions-repository';
+import type PositionsRepository from '~/application/repositories/positions-repository';
+// import type Queue from '~/application/queues/queue';
 import Registry from '~/infra/registry/registry';
 import Ride from '~/domain/entities/ride';
-import type RidesRepository from '../repositories/rides-repository';
+import type RidesRepository from '~/application/repositories/rides-repository';
 
 describe('FinishRide', () => {
   it('should be able finish a ride', async () => {
@@ -16,6 +17,8 @@ describe('FinishRide', () => {
     const positionsRepository = registry.inject<PositionsRepository>(
       'PositionsRepository'
     );
+    // TODO:
+    // const queue = registry.inject<Queue>('Queue');
     const finishRide = new FinishRide();
 
     const ride = Ride.create(

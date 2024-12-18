@@ -10,12 +10,14 @@
     "test:watch": "NODE_ENV=testing jest --watchAll"
   },
   "dependencies": {
+    "amqplib": "^0.10.5",
     "express": "^4.18.2",
     "pg-promise": "^11.5.4"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
     "@stylistic/eslint-plugin": "^2.11.0",
+    "@types/amqplib": "^0.10.6",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.4",
     "@types/node": "^22.10.1",

@@ -1,4 +1,4 @@
-import DatabaseConnection from '~/infra/database/database-connection';
+import DatabaseConnection from '~/infra/connections/database-connection';
 import Position from '~/domain/entities/position';
 import PositionsRepository from '~/application/repositories/positions-repository';
 import { inject } from '~/infra/registry';

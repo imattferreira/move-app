@@ -3,7 +3,7 @@
 // };
 //
 const config = {
-  DATABASE_URI: process.env.RIDES_DATABASE_URI as string,
+  DATABASE_URI: process.env.ACCOUNTS_DATABASE_URI as string,
 };
 
 if (!config.DATABASE_URI || typeof config.DATABASE_URI !== "string") {

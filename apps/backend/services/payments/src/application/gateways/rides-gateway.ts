@@ -1,3 +1,15 @@
+export type RequestRideInput = {
+  passengerId: string;
+  fromLat: number;
+  fromLong: number;
+  toLat: number;
+  toLong: number;
+};
+
+export type RequestRideOutput = {
+  rideId: string;
+};
+
 export type GetRideOutput = {
   id: string;
   passengerId: string;
@@ -14,7 +26,8 @@ export type GetRideOutput = {
 };
 
 interface RidesGateway {
-  getById(rideId: string): Promise<GetRideOutput>;
+  request(input: RequestRideInput): Promise<RequestRideOutput>;
+  getById(rideId: string): Promise<GetRideOutput | null>;
 }
 
 export default RidesGateway;

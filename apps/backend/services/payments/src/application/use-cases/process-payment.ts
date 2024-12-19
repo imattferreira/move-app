@@ -1,9 +1,9 @@
-import ConflictException from "~/application/exceptions/conflict-exception";
-import NotFoundException from "~/application/exceptions/not-found-exception";
-import Transaction from "~/domain/entities/transaction";
-import TransactionsRepository from "~/application/repositories/transactions-repository";
-import { inject } from "~/infra/registry";
-import RidesGateway from "~/application/gateways/rides-gateway";
+import ConflictException from '~/application/exceptions/conflict-exception';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import RidesGateway from '~/application/gateways/rides-gateway';
+import Transaction from '~/domain/entities/transaction';
+import TransactionsRepository from '~/application/repositories/transactions-repository';
+import { inject } from '~/infra/registry';
 
 type Input = {
   rideId: string;
@@ -14,21 +14,21 @@ type Output = {
 };
 
 class ProcessPayment {
-  @inject("RidesGateway")
+  @inject('RidesGateway')
   private readonly ridesGateway!: RidesGateway;
 
-  @inject("TransactionsRepository")
+  @inject('TransactionsRepository')
   private readonly transactionsRepository!: TransactionsRepository;
 
   async execute(input: Input): Promise<Output> {
     const ride = await this.ridesGateway.getById(input.rideId);
 
     if (!ride) {
-      throw new NotFoundException("ride not found");
+      throw new NotFoundException('ride not found');
     }
 
-    if (ride.status !== "completed") {
-      throw new ConflictException("ride not finished yet");
+    if (ride.status !== 'completed') {
+      throw new ConflictException('ride not finished yet');
     }
 
     const transaction = Transaction.create(ride.id, ride.fare);
@@ -36,7 +36,7 @@ class ProcessPayment {
     await this.transactionsRepository.save(transaction);
 
     return {
-      transactionId: transaction.getId(),
+      transactionId: transaction.getId()
     };
   }
 }

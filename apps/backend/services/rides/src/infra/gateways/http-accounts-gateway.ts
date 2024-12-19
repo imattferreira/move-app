@@ -1,6 +1,6 @@
 import
 AccountsGateway, {
-  GetAccountOuput,
+  GetAccountOutput,
   SignUpInput,
   SignUpOutput
 } from '~/application/gateways/accounts-gateway';
@@ -18,7 +18,7 @@ class HttpAccountsGateway implements AccountsGateway {
     );
   }
 
-  getById(accountId: string): Promise<GetAccountOuput> {
+  getById(accountId: string): Promise<GetAccountOutput | null> {
     return this.client.get(
       `http://localhost:3000/v1/accounts/${accountId}`
     );

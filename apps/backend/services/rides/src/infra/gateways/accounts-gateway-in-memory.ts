@@ -1,12 +1,27 @@
-import AccountsGateway, { GetAccountOuput, SignUpInput, SignUpOutput } from '~/application/gateways/accounts-gateway';
+import AccountsGateway, { GetAccountOutput, SignUpInput, SignUpOutput } from '~/application/gateways/accounts-gateway';
+import Identifier from '~/domain/value-objects/identifier';
 
 class AccountsGatewayInMemory implements AccountsGateway {
-  signup(data: SignUpInput): Promise<SignUpOutput> {
-    throw new Error('Method not implemented.');
+  private accounts: GetAccountOutput[];
+
+  constructor() {
+    this.accounts = [];
   }
 
-  getById(accountId: string): Promise<GetAccountOuput> {
-    throw new Error('Method not implemented.');
+  async signup(data: SignUpInput): Promise<SignUpOutput> {
+    const id = Identifier.create().getValue();
+
+    this.accounts.push({ ...data, id });
+
+    return {
+      accountId: id
+    };
+  }
+
+  async getById(accountId: string): Promise<GetAccountOutput | null> {
+    const account = this.accounts.find(a => a.id === accountId);
+
+    return account || null;
   }
 }
 

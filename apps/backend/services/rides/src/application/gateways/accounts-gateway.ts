@@ -11,7 +11,7 @@ export type SignUpOutput = {
   accountId: string;
 };
 
-export type GetAccountOuput = {
+export type GetAccountOutput = {
   id: string;
   name: string;
   email: string;
@@ -23,7 +23,7 @@ export type GetAccountOuput = {
 
 interface AccountsGateway {
   signup(data: SignUpInput): Promise<SignUpOutput>;
-  getById(accountId: string): Promise<GetAccountOuput>;
+  getById(accountId: string): Promise<GetAccountOutput | null>;
 }
 
 export default AccountsGateway;

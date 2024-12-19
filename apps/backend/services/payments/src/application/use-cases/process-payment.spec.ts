@@ -1,18 +1,17 @@
-import "~/main";
-import ConflictException from "~/application/exceptions/conflict-exception";
-import Identifier from "~/domain/value-objects/identifier";
-import NotFoundException from "~/application/exceptions/not-found-exception";
-import ProcessPayment from "./process-payment";
-import Registry from "~/infra/registry/registry";
-import TransactionsRepository from "~/application/repositories/transactions-repository";
-import RidesGateway from "../gateways/rides-gateway";
+import '~/main';
+import Identifier from '~/domain/value-objects/identifier';
+import NotFoundException from '~/application/exceptions/not-found-exception';
+import ProcessPayment from './process-payment';
+import Registry from '~/infra/registry/registry';
+import RidesGateway from '../gateways/rides-gateway';
+import TransactionsRepository from '~/application/repositories/transactions-repository';
 
-describe("ProcessPayment", () => {
-  it("should be able to process a payment of a completed ride", async () => {
+describe('ProcessPayment', () => {
+  it('should be able to process a payment of a completed ride', async () => {
     const registry = Registry.getInstance();
-    const ridesGateway = registry.inject<RidesGateway>("RidesGateway");
+    const ridesGateway = registry.inject<RidesGateway>('RidesGateway');
     const transactionsRepository = registry.inject<TransactionsRepository>(
-      "TransactionsRepository"
+      'TransactionsRepository'
     );
     const processPayment = new ProcessPayment();
 
@@ -43,17 +42,17 @@ describe("ProcessPayment", () => {
     // expect(transaction?.getDate()).toBeInstanceOf(Date);
   });
 
-  it("should not be able to process a payment of a non-existing ride", async () => {
+  it('should not be able to process a payment of a non-existing ride', async () => {
     const processPayment = new ProcessPayment();
 
     const input = { rideId: Identifier.create().getValue() };
 
     await expect(processPayment.execute(input)).rejects.toThrow(
-      new NotFoundException("ride not found")
+      new NotFoundException('ride not found')
     );
   });
 
-  it("should not be able to process a payment of a non-completed ride", async () => {
+  it('should not be able to process a payment of a non-completed ride', async () => {
     // const registry = Registry.getInstance();
     // const ridesRepository = registry.inject<RidesRepository>("RidesRepository");
     // const processPayment = new ProcessPayment();

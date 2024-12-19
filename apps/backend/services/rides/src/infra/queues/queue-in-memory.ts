@@ -11,7 +11,13 @@ class QueueInMemory implements Queue {
     event: string,
     callback: (data: T) => Promise<void>
   ): Promise<void> {
-    // TODO
+    setInterval(() => {
+      for (const e of this.events) {
+        if (e.event === event) {
+          callback(e.data as T);
+        }
+      }
+    }, 1000);
   }
 
   async publish(event: string, data: Record<string, unknown>): Promise<void> {

@@ -1,0 +1,16 @@
+{
+  "name": "@move-app/docs",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "license": "MIT",
+  "scripts": {
+    "build:docs": "redocly build-docs --config ./docs/redocly-build.yml -o ./dist-docs/index.html",
+    "start:docs": "redocly preview-docs -p 4000 --config ./docs/redocly.yml"
+  },
+  "dependencies": {
+    "@redocly/cli": "^1.25.7"
+  },
+  "devDependencies": {
+    "redoc": "^2.2.0"
+  }
+}

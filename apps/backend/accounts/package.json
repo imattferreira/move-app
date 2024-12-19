@@ -1,0 +1,37 @@
+{
+  "name": "@move-app/accounts",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --fix",
+    "migration:apply": "tsx ./scripts/migrator/index.ts --apply",
+    "migration:compose": "tsx ./scripts/migrator/index.ts --compose",
+    "migration:create": "tsx ./scripts/migrator/index.ts --migrate",
+    "start": "NODE_ENV=development tsx watch src/main.ts",
+    "test": "NODE_ENV=testing jest",
+    "test:coverage": "NODE_ENV=testing jest --coverage",
+    "test:watch": "NODE_ENV=testing jest --watchAll"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "pg-promise": "^11.5.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "@faker-js/faker": "^9.3.0",
+    "@stylistic/eslint-plugin": "^2.11.0",
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.4",
+    "@types/node": "^22.10.1",
+    "eslint": "^9.16.0",
+    "globals": "^15.12.0",
+    "jest": "^29.6.4",
+    "redoc": "^2.2.0",
+    "ts-jest": "^29.1.1",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.16.0"
+  }
+}

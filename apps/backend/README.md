@@ -2,7 +2,7 @@
 
 ### About
 
-**Backend** is the application resposible to guarantee to all business is applied correctly and also manipulate all necessary data to populate your clients.
+**Backend** is the application responsible to guarantee to all business is applied correctly and also manipulate all necessary data to populate your clients.
 
 ### Technologies
 

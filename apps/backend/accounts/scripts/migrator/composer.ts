@@ -14,7 +14,10 @@ function makeFile(sqls: string[]) {
   const sql = sqls.join('\n');
   const dir = path.resolve(ENTRYPOINT, 'composed.sql');
 
-  fs.unlinkSync(dir);
+  if (fs.existsSync(dir)) {
+    fs.unlinkSync(dir);
+  }
+
   fs.appendFileSync(dir, sql);
 }
 

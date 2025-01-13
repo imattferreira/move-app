@@ -10,7 +10,7 @@ class PsqlAccountsRepository implements AccountsRepository {
 
   async save(account: Account): Promise<void> {
     const query = sql`
-      INSERT INTO ccca.account (
+      INSERT INTO ccca.accounts (
       account_id,
       name,
       email,
@@ -44,7 +44,7 @@ class PsqlAccountsRepository implements AccountsRepository {
   }
 
   async findById(accountId: string): Promise<Account | null> {
-    const query = 'SELECT * FROM ccca.account WHERE account_id = $1';
+    const query = 'SELECT * FROM ccca.accounts WHERE account_id = $1';
     const params = [accountId];
 
     const [account] = await this.connection.query(query, params);
@@ -66,7 +66,7 @@ class PsqlAccountsRepository implements AccountsRepository {
   }
 
   async findByEmail(email: string): Promise<Account | null> {
-    const query = sql`SELECT * FROM ccca.account WHERE email = $1`;
+    const query = sql`SELECT * FROM ccca.accounts WHERE email = $1`;
     const params = [email];
 
     const [account] = await this.connection.query(query, params);
@@ -88,7 +88,7 @@ class PsqlAccountsRepository implements AccountsRepository {
   }
 
   async delete(accountId: string): Promise<void> {
-    const query = sql`DELETE FROM ccca.account WHERE account_id = $1;`;
+    const query = sql`DELETE FROM ccca.accounts WHERE account_id = $1;`;
     const params = [accountId];
 
     await this.connection.query(query, params);

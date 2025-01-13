@@ -1,7 +1,3 @@
-// const config = {
-//   DATABASE_URI: process.env.DATABASE_URI as string
-// };
-//
 const config = {
   DATABASE_URI: process.env.DATABASE_URI as string
 };

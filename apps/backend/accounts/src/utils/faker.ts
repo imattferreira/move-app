@@ -57,7 +57,7 @@ class Faker {
     return faker.person.fullName();
   }
 
-  static name(): string {
+  static fulName(): string {
     return faker.person.firstName();
   }
 

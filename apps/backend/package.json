@@ -1,0 +1,11 @@
+{
+  "name": "@move-app/main",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "license": "MIT",
+  "scripts": {
+    "docker:start": "docker compose up",
+    "docker:stop": "docker compose stop",
+    "docker:clean": "docker compose rm -fsv"
+  }
+}

@@ -1,4 +1,4 @@
-import GetAccount from '~/application/use-cases/get-account';
+import GetAccount from '~/application/query/get-account';
 import HttpServer from '~/infra/http/http-server';
 import SignUp from '~/application/use-cases/signup';
 import { inject } from '~/infra/registry';

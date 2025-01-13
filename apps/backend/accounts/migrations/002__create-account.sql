@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS ccca.account (
+CREATE TABLE IF NOT EXISTS ccca.accounts (
 	account_id   UUID              PRIMARY KEY,
 	name         TEXT    NOT NULL,
 	email        TEXT    NOT NULL,

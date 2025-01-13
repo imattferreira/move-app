@@ -9,9 +9,8 @@
     "migration:compose": "tsx ./scripts/migrator/index.ts --compose",
     "migration:create": "tsx ./scripts/migrator/index.ts --migrate",
     "start": "NODE_ENV=development tsx watch src/main.ts",
-    "test": "NODE_ENV=testing jest",
-    "test:coverage": "NODE_ENV=testing jest --coverage",
-    "test:watch": "NODE_ENV=testing jest --watchAll"
+    "test:unit": "NODE_ENV=testing::unit jest ./src/",
+    "test:e2e": "NODE_ENV=testing::e2e jest ./tests/"
   },
   "dependencies": {
     "express": "^4.18.2",

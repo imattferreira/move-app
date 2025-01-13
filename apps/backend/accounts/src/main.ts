@@ -1,10 +1,10 @@
 // TODO: validate UUID param before query with it in database
 // Composition-Root
-import '../../../scripts/dotenv';
+import '../scripts/dotenv';
 import AccountsController from './infra/controllers/accounts-controller';
 import AccountsRepositoryInMemory from './infra/repositories/in-memory/accounts-repository';
 import { ExpressHttpServerAdapter } from './infra/http/http-server';
-import GetAccount from './application/use-cases/get-account';
+import GetAccount from './application/query/get-account';
 import { PgPromiseAdapter } from './infra/connections/database-connection';
 import PsqlAccountsRepository from './infra/repositories/psql/accounts-repository';
 import Registry from './infra/registry/registry';
@@ -15,7 +15,12 @@ const registry = Registry.getInstance();
 registry.provide('SignUp', new SignUp());
 registry.provide('GetAccount', new GetAccount());
 
-if (['development', 'production'].includes(process.env.NODE_ENV || '')) {
+if (
+  [
+    'development',
+    'production',
+    'testing::e2e'
+  ].includes(process.env.NODE_ENV || '')) {
   const httpServer = new ExpressHttpServerAdapter();
 
   registry.provide('DatabaseConnection', new PgPromiseAdapter());
@@ -24,19 +29,9 @@ if (['development', 'production'].includes(process.env.NODE_ENV || '')) {
 
   new AccountsController();
 
-  // const signals = ['SIGINT', 'SIGTERM', 'SIGKILL'];
-
-  // signals.forEach((signal) => {
-  //   process.on(signal, async () => {
-  //     console.log({ signal });
-  //     // await connection.close();
-  //     httpServer.close();
-  //     process.exit(0);
-  //   });
-  // });
   httpServer.listen(3000);
 }
 
-if (process.env.NODE_ENV === 'testing') {
+if (process.env.NODE_ENV === 'testing::unit') {
   registry.provide('AccountsRepository', new AccountsRepositoryInMemory());
 }

@@ -8,7 +8,7 @@
     "migration:apply": "tsx ./scripts/migrator/index.ts --apply",
     "migration:compose": "tsx ./scripts/migrator/index.ts --compose",
     "migration:create": "tsx ./scripts/migrator/index.ts --migrate",
-    "start": "NODE_ENV=development tsx watch src/main.ts",
+    "start": "NODE_ENV=development tsx watch ./src/main.ts",
     "test:unit": "NODE_ENV=testing::unit jest ./src/",
     "test:e2e": "NODE_ENV=testing::e2e jest ./tests/"
   },

@@ -91,8 +91,8 @@ export class ExpressHttpServerAdapter implements HttpServer {
       case 'conflict':
         return { status: 409, message: exception.getMessage() };
       default:
-        if (process.env.NODE_ENV === 'production') {
-          console.log(exception);
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(exception);
         }
 
         return { status: 500, message: 'internal server error' };

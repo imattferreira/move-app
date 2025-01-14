@@ -4,7 +4,7 @@ import '../scripts/dotenv';
 import AccountsController from './infra/controllers/accounts-controller';
 import AccountsRepositoryInMemory from './infra/repositories/in-memory/accounts-repository';
 import { ExpressHttpServerAdapter } from './infra/http/http-server';
-import GetAccount from './application/query/get-account';
+import GetAccount from './application/queries/get-account';
 import { PgPromiseAdapter } from './infra/connections/database-connection';
 import PsqlAccountsRepository from './infra/repositories/psql/accounts-repository';
 import Registry from './infra/registry/registry';

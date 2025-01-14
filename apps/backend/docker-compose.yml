@@ -1,23 +1,37 @@
 services:
   psql_accounts:
+    container_name: psql_accounts
     image: postgres:14.3
     environment:
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: app
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - ./accounts/migrations/composed.sql:/docker-entrypoint-initdb.d/init.sql
 
-  # psql_rides:
-  #   image: postgres:14.3
-  #   environment:
-  #     POSTGRES_PASSWORD: 123456
-  #     POSTGRES_DB: app
-  #   ports:
-  #     - "5433:5432"
-  #   volumes:
-  #     - ./rides/migrations/composed.sql:/docker-entrypoint-initdb.d/init.sql
+  api_accounts:
+    container_name: api_accounts
+    build:
+      target: dev
+      context: ./accounts
+    depends_on:
+      - psql_accounts
+    ports:
+      - 3000:3000
+    volumes:
+      - ./src:/www/app
+
+  psql_rides:
+    container_name: psql_rides
+    image: postgres:14.3
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: app
+    ports:
+      - 5433:5432
+    volumes:
+      - ./rides/migrations/composed.sql:/docker-entrypoint-initdb.d/init.sql
 
   # psql_payments:
   #   image: postgres:14.3
@@ -29,8 +43,12 @@ services:
   #   volumes:
   #     - ./payments/migrations/composed.sql:/docker-entrypoint-initdb.d/init.sql
 
-  # rabbitmq:
-  #   image: rabbitmq:3-management
-  #   ports:
-  #     - 5672:5672
-  #     - 15672:15672
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    expose:
+      - 5672
+      - 15672
+    ports:
+      - 5672:5672
+      - 15672:15672
